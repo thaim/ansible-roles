@@ -1,0 +1,9 @@
+---
+
+- name: samba_client | install samba client to accecc samba server
+  sudo: yes
+  apt: name=smbclient state=latest
+
+- name: samba_client | install cifs utils
+  sudo: yes
+  apt: name=cifs-utils  state=latest

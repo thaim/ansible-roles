@@ -1,0 +1,14 @@
+---
+
+- name: java | add oracle java8 repository
+  sudo: yes
+  apt_repository: repo='ppa:webupd8team/java'
+
+- name: java | automatically accept the Oracle License
+  sudo: yes
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+
+- name: java | install Oracle JDK8
+  sudo: yes
+#  apt: pkg=oracle-java8-installer update-cache=yes state=latest force=yes
+  apt: pkg=oracle-java8-installer state=latest

@@ -1,0 +1,9 @@
+---
+
+- name: chrome | be sure google chrome package is downloaded
+  get_url: url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+           dest=/tmp/
+
+- name: chrome | be sure google chrome is installed
+  sudo: yes
+  apt: deb=/tmp/google-chrome-stable_current_amd64.deb

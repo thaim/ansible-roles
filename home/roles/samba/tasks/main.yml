@@ -1,0 +1,23 @@
+---
+
+- name: samba | be sure samba service is installed
+  sudo: yes
+  apt: name=smb
+       state=latest
+
+- name: samba | samba configuration for charset
+  sudo: yes
+  lineinfile: dest=/etc/samba/smb.conf
+              regexp={{ item.regexp }}
+              insertafter={{ item.insertafter }}
+              line={{ item.line }}
+  with_items:
+    - { regexp: '^dos charset', insertafter: '^[global]', line: 'dos charset = CP932' }
+    - { regexp: '^unix charset', insertafter: '^[global]', line: 'unix charset = UTF-8' }
+    - { regexp: '^hosts allow'}
+
+- name: samba | be sure samba service is running
+  sudo: yes
+  service: state=started
+           enabled=yes
+

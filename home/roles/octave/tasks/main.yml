@@ -1,0 +1,6 @@
+---
+
+- name: octave | be sure octave is installed
+  sudo: yes
+  apt: name=octave
+       state=latest

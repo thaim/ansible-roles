@@ -1,0 +1,5 @@
+---
+
+- name: virt-manager | be sure virt-manager is installed
+  sudo: yes
+  apt: name=virt-manager state=latest

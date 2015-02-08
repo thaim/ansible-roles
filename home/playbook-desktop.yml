@@ -1,0 +1,23 @@
+---
+
+- hosts: desktop
+  roles:
+    - english_path
+    - apt_update
+    - samba_client
+    - skk
+    - git
+    - virt-manager
+    - dropbox
+    - java
+    - eclipse
+    - android_studio
+    - emacs
+    - octave
+    - chrome
+    - mendeley_desktop
+#    - steam
+    - fbreader
+    - skype
+
+
