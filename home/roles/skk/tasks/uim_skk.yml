@@ -1,0 +1,11 @@
+---
+
+- name: skk | be sure uim is installed
+  sudo: yes
+  apt: name=uim
+       state=latest
+
+- name: skk | be sure uim_skk is installed
+  sudo: yes
+  apt: name=uim-skk
+       state=latest

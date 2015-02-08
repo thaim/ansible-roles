@@ -1,0 +1,8 @@
+---
+- name: automatically accept the Steam License
+  sudo: yes
+  shell: echo debconf shared/steam-license-agreement select 2 | debconf-set-selections
+
+- name: be sure steam is installed
+  sudo: yes
+  apt: name=steam state=latest

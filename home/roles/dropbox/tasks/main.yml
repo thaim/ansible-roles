@@ -1,0 +1,11 @@
+---
+
+- name: dropbox | be sure dropbox is installed
+  sudo: yes
+  apt: name=nautilus-dropbox
+
+- name: dropbox | be sure dropbox is running
+  command: dropbox start
+
+- name: dropbox | be sure dropbox autostart on login
+  command: dropbox autostart y

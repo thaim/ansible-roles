@@ -1,0 +1,6 @@
+---
+
+- hosts: samba-server
+  sudo: yes
+  roles:
+    - samba

@@ -1,0 +1,11 @@
+---
+
+- name: apt_update | be sure aptitude is installed
+  sudo: yes
+  apt: name=aptitude
+       update_cache=yes
+
+- name: apt_update | upgrade package
+  sudo: yes
+  apt: upgrade=yes
+       update_cache=yes

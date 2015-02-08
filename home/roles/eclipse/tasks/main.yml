@@ -1,0 +1,36 @@
+---
+
+- name: eclipse | be sure eclipse install dir is created
+  sudo: yes
+  file: path=/usr/local/bin/eclipse/
+        state=directory
+
+- name: eclipse | check if target eclipse is already installed
+  stat: path=/usr/local/bin/eclipse/eclipse-luna
+  register: eclipse_luna_dir
+
+- name: eclipse | download eclipse install package
+  get_url: url=http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//technology/epp/downloads/release/luna/SR1a/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
+           dest=/tmp/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
+
+- name: eclipse | unpack eclipse file
+  sudo: yes
+  unarchive: src=/tmp/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
+             dest=/usr/local/bin/eclipse
+             copy=no
+  register: eclipse_luna_new_create
+  when: not eclipse_luna_dir.stat.exists
+
+- name: eclipse | be sure dirname is renamed as version
+  sudo: yes
+  command: mv /usr/local/bin/eclipse/eclipse/ /usr/local/bin/eclipse/eclipse-luna/
+  when:
+    - not eclipse_luna_dir.stat.exists
+    - eclipse_luna_new_create|success
+
+- name: eclipse | change owner to user
+  sudo: yes
+  file: path=/usr/local/bin/eclipse/eclipse-luna
+        owner={{ USER_NAME }}
+        group={{ USER_NAME }}
+        recurse=yes

@@ -1,0 +1,16 @@
+---
+
+- name: emacs | be sure emacs is installed
+  sudo: yes
+  apt: name=emacs24
+       state=latest
+
+- name: emacs | check if dot.emacs.d exist
+  stat: path="{{ USER_HOME_DIR }}/.emacs.d/.git"
+  register: result
+
+# do not clone dot.emacs.d while broken
+# - name: emacs | be sure my dot emacs is copied from github
+#   git: repo=https://github.com/thaim/dot.emacs.d
+#        dest="{{ USER_HOME_DIR }}/.emacs.d"
+#   when: not result.stat.exists
