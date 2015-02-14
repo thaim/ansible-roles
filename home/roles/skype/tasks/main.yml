@@ -1,9 +1,17 @@
 ---
 
+- name: skype | check if skype is installed
+  shell: dpkg -l skype >/dev/null 2>&1; echo $?
+  register: install
+  changed_when: false
+  always_run: yes
+
 - name: skype | download install package
   get_url: url=http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
            dest=/tmp/
+  when: install.stdout != '0'
 
 - name: skype | be sure skype is installed
   sudo: yes
   apt: deb=/tmp/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+  when: install.stdout != '0'

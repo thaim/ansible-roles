@@ -12,6 +12,7 @@
 - name: eclipse | download eclipse install package
   get_url: url=http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//technology/epp/downloads/release/luna/SR1a/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
            dest=/tmp/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
+  when: not eclipse_luna_dir.stat.exists
 
 - name: eclipse | unpack eclipse file
   sudo: yes
