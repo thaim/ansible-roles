@@ -6,14 +6,14 @@
               insertafter="{{ item.insertafter }}"
               line="{{ item.line }}"
   with_items:
-    - { regexp: '^XDG_DESKTOP_DIR',   line: 'XDG_DESKTOP_DIR="$HOME/Desktop"',     insertafter: EOF }
-    - { regexp: '^XDG_DOWNLOAD_DIR',  line: 'XDG_DOWNLOAD_DIR="$HOME/Download"',   insertafter: EOF }
-    - { regexp: '^XDG_TEMPLATES_DIR', line: 'XDG_TEMPLATES_DIR="$HOME/Template"',  insertafter: EOF }
-    - { regexp: '^XDG_PUBLICSHARE',   line: 'XDG_PUBLICSHARE_DIR="$HOME/Public"',  insertafter: EOF }
-    - { regexp: '^XDG_DOCUMENTS_DIR', line: 'XDG_DOCUMENTS_DIR="$HOME/Documents"', insertafter: EOF }
-    - { regexp: '^XDG_MUSIC_DIR',     line: 'XDG_MUSIC_DIR="$HOME/Music"',         insertafter: EOF }
-    - { regexp: '^XDG_PICTURES_DIR',  line: 'XDG_PICTURES_DIR="$HOME/Pictures"',   insertafter: EOF }
-    - { regexp: '^XDG_VIDEOS_DIR',    line: 'XDG_VIDEOS_DIR="$HOME/Videos"',       insertafter: EOF }
+    - { regexp: '^XDG_DESKTOP_DIR',   line: 'XDG_DESKTOP_DIR=\"$HOME/Desktop\"',     insertafter: EOF }
+    - { regexp: '^XDG_DOWNLOAD_DIR',  line: 'XDG_DOWNLOAD_DIR=\"$HOME/Download\"',   insertafter: EOF }
+    - { regexp: '^XDG_TEMPLATES_DIR', line: 'XDG_TEMPLATES_DIR=\"$HOME/Template\"',  insertafter: EOF }
+    - { regexp: '^XDG_PUBLICSHARE',   line: 'XDG_PUBLICSHARE_DIR=\"$HOME/Public\"',  insertafter: EOF }
+    - { regexp: '^XDG_DOCUMENTS_DIR', line: 'XDG_DOCUMENTS_DIR=\"$HOME/Documents\"', insertafter: EOF }
+    - { regexp: '^XDG_MUSIC_DIR',     line: 'XDG_MUSIC_DIR=\"$HOME/Music\"',         insertafter: EOF }
+    - { regexp: '^XDG_PICTURES_DIR',  line: 'XDG_PICTURES_DIR=\"$HOME/Pictures\"',   insertafter: EOF }
+    - { regexp: '^XDG_VIDEOS_DIR',    line: 'XDG_VIDEOS_DIR=\"$HOME/Videos\"',       insertafter: EOF }
 
 #    test -d "{{USER_HOME_DIR }}/{{ item.before }}" && mv {{ USER_HOME_DIR }}/{{ item.before }} {{ USER_HOME_DIR }}/{{ item.after }}
 - name: english_path | change directory name of japanese in home directory into english
