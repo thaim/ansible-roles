@@ -1,0 +1,38 @@
+---
+
+- name: fonts | create work dir
+  file: path="{{ workdir }}" state=directory
+
+- name: fonts | install required package
+  sudo: yes
+  apt: name=fontforge
+
+- name: fonts | clone ricty repository into local
+  git: repo=https://github.com/yascentur/Ricty.git
+       dest="{{ workdir }}"
+
+- name: fonts | clone migu fonts into local
+  get_url: url=http://iij.dl.sourceforge.jp/mix-mplus-ipa/59022/migu-1m-20130617.zip
+           dest=/tmp/migu-1m.zip
+
+- name: fonts | clone inconsolata fonts into local
+  get_url: url=http://levien.com/type/myfonts/Inconsolata.otf
+           dest=/tmp/Inconsolata.otf
+
+- name: fonts | unarchive migu fonts
+  unarchive: src=/tmp/migu-1m.zip
+             dest="{{ workdir }}"
+             copy=no
+
+- name: fonts | run ricty generate script
+  shell: "cd {{ workdir }} && sh ricty_generator.sh /tmp/Inconsolata.otf {{ workdir }}/migu-1m-20130617/migu-1m-regular.ttf {{ workdir }}/migu-1m-20130617/migu-1m-bold.ttf"
+
+- name: fonts | create font dir if not exist
+  file: path={{ USER_HOME_DIR }}/.fonts state=directory
+
+- name: fonts | mv ricty fonts into fonts directory
+  shell: cp {{ workdir }}/Ricty-Bold.ttf {{ workdir }}/Ricty-Regular.ttf {{ workdir }}/RictyDiscord-Bold.ttf {{ workdir }}/RictyDiscord-Regular.ttf {{ USER_HOME_DIR }}/.fonts
+
+- name: fonts | update font cache
+  sudo: yes
+  command: fc-cache -fv

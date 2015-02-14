@@ -2,8 +2,9 @@
 
 - hosts: desktop
   roles:
-    - english_path
     - apt_update
+    - english_path
+    - fonts
     - samba_client
     - skk
     - git
