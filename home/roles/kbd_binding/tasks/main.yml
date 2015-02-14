@@ -1,0 +1,7 @@
+---
+
+- name: kbd_binding | allocate ctrl to caps lock
+  sudo: yes
+  lineinfile: dest='/etc/default/keyboard'
+              regexp='^XKBOPTIONS'
+              line='XKBOPTIONS=\"ctrl:nocaps\"'
