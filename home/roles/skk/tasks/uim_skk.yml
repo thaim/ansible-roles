@@ -9,3 +9,7 @@
   sudo: yes
   apt: name=uim-skk
        state=latest
+
+- name: skk | be sure uim-toolbar starts on login
+  copy: src=uim-toolbar-gtk.desktop
+        dest="{{ USER_HOME_DIR }}/.config/autostart/uim-toolbar-gtk.desktop"
