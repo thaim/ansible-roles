@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=uim-toolbar-gtk
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[ja]=uim-toolbar-gtk
+Name=uim-toolbar-gtk
+Comment[ja]=
+Comment=
