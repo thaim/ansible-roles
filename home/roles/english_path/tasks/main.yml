@@ -15,7 +15,19 @@
     - { regexp: '^XDG_PICTURES_DIR',  line: 'XDG_PICTURES_DIR=\"$HOME/Pictures\"',   insertafter: EOF }
     - { regexp: '^XDG_VIDEOS_DIR',    line: 'XDG_VIDEOS_DIR=\"$HOME/Videos\"',       insertafter: EOF }
 
-#    test -d "{{USER_HOME_DIR }}/{{ item.before }}" && mv {{ USER_HOME_DIR }}/{{ item.before }} {{ USER_HOME_DIR }}/{{ item.after }}
+- name: english_path | create new directory if not exist
+  file: path={{ USER_HOME_DIR }}/{{ item.dir }}
+        state=directory
+  with_items:
+    - { dir: 'Desktop'   }
+    - { dir: 'Download'  }
+    - { dir: 'Template'  }
+    - { dir: 'Public'    }
+    - { dir: 'Documents' }
+    - { dir: 'Music'     }
+    - { dir: 'Pictures'  }
+    - { dir: 'Videos'    }
+
 - name: english_path | change directory name of japanese in home directory into english
   sudo: yes
   shell: |
