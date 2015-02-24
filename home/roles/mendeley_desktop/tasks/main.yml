@@ -1,10 +1,12 @@
 ---
 
-- name: dendeley_desktop | download mendeley package
-  get_url: url=http://desktop-download.mendeley.com/download/apt/pool/main/m/mendeleydesktop/mendeleydesktop_{{ mendeleydesktop_version }}-stable_amd64.deb
-           dest=/tmp/mendeleydesktop.deb
+- name: mendeley_desktop | install mendeley desktop repository
+  sudo: yes
+  copy: src=mendeleydesktop.list
+        dest=/etc/apt/sources.list.d/
 
 - name: mendeley_desktop | be sure mendeley desktop is installed
   sudo: yes
-  apt: deb=/tmp/mendeleydesktop.deb
+  apt: name=mendeleydesktop
+       state=latest
 
