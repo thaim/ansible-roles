@@ -2,4 +2,4 @@
 
 - name: virt-manager | be sure virt-manager is installed
   sudo: yes
-  apt: name=virt-manager state=latest
+  apt: name=virt-manager,libvirt-bin,qemu-kvm state=latest
