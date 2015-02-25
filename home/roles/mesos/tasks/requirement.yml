@@ -1,0 +1,24 @@
+---
+
+- name: mesos | be sure devel python is installed
+  apt: name=python-dev,python-boto
+       state=latest
+
+- name: mesos | be sure devel libcurl is installed
+  apt: name=libcurl4-nss-dev
+       state=latest
+
+- name: mesos | be sure libsasl is installed
+  apt: name=libsasl2-dev
+       state=latest
+
+- name: mesos | be sure Maven is installed
+  apt: name=maven
+       state=latest
+
+- name: mesos |  be sure devel libapr1 is installed
+  apt: name=libapr1-dev
+       state=latest
+
+- name: mesos | be sure libsvn is installed
+  apt: name=libsvn-dev

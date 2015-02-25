@@ -1,0 +1,17 @@
+---
+
+- name: mesos | unarchive mesos
+  unarchive: src=/tmp/mesos-{{ mesos_ver }}.tar.gz
+             dest={{ WORK_DIR }}
+             copy=no
+
+- name: mesos | create build directory
+  file: path={{ WORK_DIR }}/mesos-{{ mesos_ver }}/build
+        state=directory
+
+- name: mesos | configure and build mesos
+  shell: cd {{ WORK_DIR }}/mesos-{{ mesos_ver }}/build; ../configure; make
+
+- name: mesos | install mesos
+  sudo: yes
+  shell: cd {{ WORK_DIR }}/mesos-{{ mesos_ver }}/build; make install
