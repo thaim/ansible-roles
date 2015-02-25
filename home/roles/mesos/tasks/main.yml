@@ -1,0 +1,9 @@
+---
+
+- name: mesos | be sure mesos release file is downloaded
+  get_url: url=http://www.apache.org/dist/mesos/{{ mesos_ver }}/mesos-{{ mesos_ver }}.tar.gz
+           dest={{ WORK_DIR }}
+
+- include: requirement.yml
+
+- include: build_mesos.yml
