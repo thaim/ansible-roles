@@ -1,0 +1,10 @@
+---
+
+- name: java | configure JAVA_HOME
+  lineinfile: dest="{{ USER_HOME_DIR }}/.profile"
+              regexp="^JAVA_HOME="
+              line="JAVA_HOME=$(readlink -f /usr/bin/javac | sed \"s:bin/javac::\")"
+
+- name: java | add java bin into execute path
+  lineinfile: dest="{{ USER_HOME_DIR }}/.profile"
+              line="PATH=$JAVA_HOME/bin:$PATH"

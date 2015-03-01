@@ -1,3 +1,5 @@
 ---
 
 - include: oracle_jdk8.yml
+
+- include: configure.yml
