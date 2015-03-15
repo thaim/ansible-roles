@@ -1,6 +1,6 @@
 ---
 
-- hosts: samba-server
-  sudo: yes
+- hosts: homeserver
   roles:
-    - samba
+#    - samba
+    - mesos
