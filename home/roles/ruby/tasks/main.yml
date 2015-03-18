@@ -1,0 +1,25 @@
+---
+
+- name: ruby | check rbenv is installed
+  shell: which rbenv >/dev/null; echo $?
+  register: rbenv_stat
+  changed_when: false
+
+- include: rbenv.yml
+  when: rbenv_stat.stdout != '0'
+
+- name: ruby | check if ruby is installed
+  shell: which ruby >/dev/null; echo $?
+  register: ruby_stat
+  changed_when: false
+
+- name: ruby | check if specified ruby version is installed
+  shell: ruby --version | grep -c {{ ruby_version }}
+  register: ruby_ver
+  changed_when: false
+  when: ruby_stat.stdout == '0'
+
+- include: ruby.yml
+  when:
+    - ruby_stat.stdout != '0'
+#    - ruby_stat.stdout == '0' and ruby_ver.stdout != '0'

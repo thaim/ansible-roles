@@ -1,0 +1,14 @@
+---
+
+- name: ruby | be sure required lib is installed
+  sudo: yes
+  apt: name=libffi-dev state=latest
+
+- name: ruby | be sure ruby is installed
+  command: rbenv install {{ ruby_version }}
+
+- name: ruby | update rbenv
+  command: rbenv rehash
+
+- name: ruby | specify global configure
+  command: rbenv global {{ ruby_version }}
