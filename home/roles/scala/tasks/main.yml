@@ -1,0 +1,26 @@
+---
+- name: scala | check if scala is installed
+  command: which scala
+  register: scala_path
+  changed_when: false
+  failed_when: false
+
+- name: scala | download scala module
+  get_url: url=http://downloads.typesafe.com/scala/{{ scala_version }}/scala-{{ scala_version }}.tgz
+           dest=/tmp/scala-{{ scala_version }}.tgz
+
+- name: scala | create scala directory
+  sudo: yes
+  file: path=/usr/local/bin/scala
+        state=directory
+
+- name: scala | unarchive scala module
+  sudo: yes
+  unarchive: src=/tmp/scala-{{ scala_version }}.tgz
+             dest=/usr/local/bin/scala
+             copy=no
+
+- name: scala | add scala path
+  lineinfile: dest={{ USER_HOME_DIR }}/.bashrc
+              line="export PATH=/usr/local/bin/scala/scala-{{ scala_version }}/bin:$PATH"
+              regexp="^export PATH=/usr/local/bin/scala/"

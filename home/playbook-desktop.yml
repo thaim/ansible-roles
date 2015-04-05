@@ -1,6 +1,7 @@
 ---
 
 - hosts: desktop
+  connection: local
   roles:
     - apt_update
     - english_path
@@ -11,6 +12,7 @@
     - virt-manager
     - dropbox
     - java
+    - scala
     - ruby
     - eclipse
     - maven
