@@ -4,8 +4,13 @@
   sudo: yes
   apt: name=libffi-dev state=latest
 
+- name: ruby | check if ruby installed version
+  command: rbenv version | cut -d ' ' -f 1
+  register: ruby_installed_version
+
 - name: ruby | be sure ruby is installed
   command: rbenv install {{ ruby_version }}
+  when: ruby_installed_version.stdout < {{ ruby_version }}
 
 - name: ruby | update rbenv
   command: rbenv rehash

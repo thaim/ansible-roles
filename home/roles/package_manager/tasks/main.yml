@@ -1,0 +1,8 @@
+---
+
+- name: install command line tools for xcode
+  shell: xcode-select --install
+  ignore_errors: true
+
+- name: install Homebrew
+  shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"

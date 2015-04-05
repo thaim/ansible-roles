@@ -1,5 +1,7 @@
 ---
 
-- name: git | be sure git is installed
-  sudo: yes
-  apt: name=git state=latest
+- include: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include: macos.yml
+  when: ansible_distribution == 'MacOSX'

@@ -1,0 +1,5 @@
+---
+
+- name: java | be sure Java for OS X is installed
+  sudo: yes
+  shell: brew cask install java

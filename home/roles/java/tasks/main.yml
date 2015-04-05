@@ -1,5 +1,9 @@
 ---
 
 - include: oracle_jdk8.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- include: JavaForOSX.yml
+  when: ansible_distribution == 'MacOSX'
 
 - include: configure.yml

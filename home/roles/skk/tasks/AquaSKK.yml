@@ -1,0 +1,14 @@
+---
+
+- name: skk | check if AquaSKK is installed
+  stat: path="/Library/Input Methods/AquaSKK.app"
+  register: aquaskk
+
+- name: skk | download AquaAKK
+  git: repo=https://github.com/codefirst/aquaskk
+       dest=/tmp/aquaskk
+  when: not aquaskk.stat.exists
+
+- name: skk | be sure AquaSKK is installed
+  command: cd /tmp/aquaskk/platform/mac && make install-rc
+  when: not aquaskk.stat.exists
