@@ -12,3 +12,4 @@
   file: path=/usr/local/bin/eclipse
         src=/usr/local/bin/eclipse-luna/eclipse
         state=link
+  when: not eclipse_luna_dir.stat.exists

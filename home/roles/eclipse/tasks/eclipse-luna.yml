@@ -2,7 +2,7 @@
 
 - name: eclipse | create working directory if not exists
   file: path={{ work_dir }}
-        stat=directory
+        state=directory
 
 - name: eclipse | download eclipse install package
   get_url: url=http://ftp.yz.yamagata-u.ac.jp/pub/eclipse//technology/epp/downloads/release/luna/SR1a/eclipse-jee-luna-SR1a-linux-gtk-x86_64.tar.gz
