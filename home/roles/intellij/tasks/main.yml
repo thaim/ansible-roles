@@ -1,0 +1,15 @@
+---
+
+- name: intellij | check if IntelliJ IDEA is installed
+  stat: path={{ installdir }}
+  register: intellij_bin
+  changed_when: false
+
+- include: IntelliJ.yml
+  when: not intellij_bin.stat.exists
+
+- name: intellij | create symlink to intellij idea
+  sudo: yes
+  file: path=/usr/local/bin/intellij
+        src={{ installdir }}/bin/idea.sh
+        state=link
