@@ -1,0 +1,5 @@
+---
+
+- name: scheme | be sure scheme interpleter gauche is installed
+  sudo: yes
+  apt: name=gauche
