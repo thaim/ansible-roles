@@ -1,0 +1,30 @@
+---
+
+# initialize db server
+- hosts: db-server
+  user: root
+  roles:
+    - { role: sudoers, sudoers_username: sryusuke }
+    - iptables
+
+# setup db server
+- hosts: db-server
+  user: sryusuke
+  roles:
+    - { role: mysql, mysql_version: 5.5 }
+
+# setup app server (middleware)
+- hosts: app-server
+  user: sryusuke
+  roles:
+    - { role: ruby, ruby_version: }
+    - rails
+    - php
+    - epel_repo
+
+# setup app server (application)
+- hosts: web-server
+  user: sryusuke
+  roles:
+    - { role: redmine, redmine_version: 3.0.1 }
+    - wordpress
