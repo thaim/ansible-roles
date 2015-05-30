@@ -2,7 +2,7 @@
 
 - name: samba | be sure samba service is installed
   sudo: yes
-  apt: name=smb
+  apt: name=samba
        state=latest
 
 - name: samba | samba configuration for charset
@@ -14,7 +14,7 @@
   with_items:
     - { regexp: '^dos charset', insertafter: '^[global]', line: 'dos charset = CP932' }
     - { regexp: '^unix charset', insertafter: '^[global]', line: 'unix charset = UTF-8' }
-    - { regexp: '^hosts allow'}
+    - { regexp: '^hosts allow', }
 
 - name: samba | be sure samba service is running
   sudo: yes
