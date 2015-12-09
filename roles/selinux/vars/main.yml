@@ -1,0 +1,4 @@
+---
+
+# enforcing / permissive / disabled
+SELINUX_MODE: disabled

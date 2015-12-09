@@ -1,0 +1,12 @@
+---
+
+- include: install_CentOS7.yml
+  when: ansible_distribution == 'CentOS'
+
+- include: install_Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- name: docker | add user as docker user
+  sudo: yes
+  user: name={{ DOCKER_USER }}
+        group=docker

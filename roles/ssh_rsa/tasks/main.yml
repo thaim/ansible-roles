@@ -1,0 +1,11 @@
+---
+
+- name: ssh_rsa | copy ssh key file
+  copy: src={{ SSH_ID_FILE }}
+        dest=/home/sryusuke/.ssh/
+        mode=600
+
+- name: ssh_rsa | add rsa file into config file
+  lineinfile: dest=/home/sryusuke/.ssh/config
+              line="IdentityFile {{ SSH_ID_FILE }}"
+              create=yes

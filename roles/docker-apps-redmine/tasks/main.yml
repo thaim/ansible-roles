@@ -1,0 +1,23 @@
+---
+
+- name: docker apps redmine | create apps directory
+  file: path={{ DOCKER_APP_PATH }}/redmine
+        state=directory
+        recurse=yes
+
+- name: docker apps redmine | create data directory
+  sudo: yes
+  file: path={{ DOCKER_DATA_PATH }}/redmine
+        state=directory
+        recurse=yes
+
+# - name: docker apps redmine | push docker image
+#   shell: docker push {{ ansible_hostname }}:{{ DOCKER_REGISTRY_EXPOSE_PORT }}/redmine:{{ DOCKER_APP_VERSION }}
+
+- name: docker apps redmine | copy docker script
+  git: repo=git@bitbucket.org:thaim/docker-redmine.git
+       dest={{ DOCKER_APP_PATH }}/redmine
+#       version={{ DOCKER_APP_VERSION }}
+
+- name: docker app redmine | start redmine
+  shell: docker-compose -f {{ DOCKER_APP_PATH }}/redmine/docker-compose.yml up -d

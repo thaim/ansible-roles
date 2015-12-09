@@ -1,0 +1,8 @@
+---
+
+- name: ssh | Deny Root login
+  sudo: yes
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="#PermitRootLogin"
+              line="PermitRootLogin no"
+              insertafter="# Authentication:"

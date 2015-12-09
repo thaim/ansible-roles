@@ -1,0 +1,12 @@
+---
+
+- hosts: vps
+  roles:
+    - { role: selinux, SELINUX_MODE: disabled }
+    - ssh
+    - { role: ssh_rsa, SSH_ID_FILE: /home/sryusuke/.ssh/id_rsa.devel }
+    - { role: ssh_hosts, HOST_NAME: bitbucket.org }
+    - git
+    - { role: docker, DOCKER_USER: sryusuke }
+    - docker-compose
+    - { role: docker-apps-redmine, DOCKER_APP_VERSION: latest }
