@@ -1,0 +1,9 @@
+[vm-ubuntu14]
+ubuntu_server
+
+[vm-centos6]
+
+[vm-centos7]
+
+[vm-coreos]
+
