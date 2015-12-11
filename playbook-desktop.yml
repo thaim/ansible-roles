@@ -10,10 +10,12 @@
     - skk
     - git
     - virt-manager
+    - docker
     - dropbox
     - java
     - scala
     - ruby
+#    - gradle
     - eclipse
     - intellij
     - maven

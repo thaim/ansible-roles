@@ -2,11 +2,13 @@
 
 - hosts: vps
   roles:
-    - { role: selinux, SELINUX_MODE: disabled }
-    - ssh
-    - { role: ssh_rsa, SSH_ID_FILE: /home/sryusuke/.ssh/id_rsa.devel }
-    - { role: ssh_hosts, HOST_NAME: bitbucket.org }
-    - git
-    - { role: docker, DOCKER_USER: sryusuke }
-    - docker-compose
+    - { role: selinux, SELINUX_MODE: disabled, tag: selinux }
+    - { role: ssh, tag: ssh }
+    - { role: ssh_rsa, SSH_ID_FILE: /home/sryusuke/.ssh/id_rsa.devel, tag: ssh_rsa }
+    - { role: ssh_hosts, HOST_NAME: bitbucket.org, tag:ssh_hosts }
+    - { role: git, tag: git }
+    - { role: docker, DOCKER_USER: sryusuke, tag: docker }
+    - { role: docker-compose, tag: docker-compose }
+    - { role: docker-machine, tag: docker-machine }
     - { role: docker-apps-redmine, DOCKER_APP_VERSION: latest }
+    - docker-apps-registry

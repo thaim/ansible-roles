@@ -1,6 +1,0 @@
----
-
-- hosts: homeserver
-  roles:
-#    - samba
-    - mesos
