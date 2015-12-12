@@ -1,0 +1,19 @@
+---
+
+- name: docker apps registry | create apps directory
+  file: path={{ DOCKER_APP_PATH }}/registry
+        state=directory
+        recurse=yes
+
+- name: docker apps registry | create data directory
+  sudo: yes
+  file: path={{ DOCKER_DATA_PATH }}/registry
+        state=directory
+        recurse=yes
+
+- name: docker apps registry | clone docker script
+  git: repo=git@bitbucket.org:thaim/docker-registry.git
+       dest={{ DOCKER_APP_PATH }}/registry
+
+- name: docker apps registry | start registry
+  command: docker-compose -f {{ DOCKER_APP_PATH }}/registry/docker-compose.yml up -d

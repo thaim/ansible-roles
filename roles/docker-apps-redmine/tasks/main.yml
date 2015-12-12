@@ -19,5 +19,5 @@
        dest={{ DOCKER_APP_PATH }}/redmine
 #       version={{ DOCKER_APP_VERSION }}
 
-- name: docker app redmine | start redmine
+- name: docker apps redmine | start redmine
   shell: docker-compose -f {{ DOCKER_APP_PATH }}/redmine/docker-compose.yml up -d
