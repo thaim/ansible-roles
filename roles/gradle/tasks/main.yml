@@ -1,0 +1,10 @@
+---
+
+- name: gradle | check if gradle is installed
+  shell: which gradle
+  register: gradle_status
+  failed_when: false
+  changed_when: false
+
+- include: install_gradle.yml
+  when: gradle_status.rc == 1

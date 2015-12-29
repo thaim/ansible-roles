@@ -1,0 +1,6 @@
+---
+
+- name: gradle | install gradle
+  apt: name=gradle
+
+- name: gradle | create JAVA_HOME 

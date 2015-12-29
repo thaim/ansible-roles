@@ -8,3 +8,5 @@
   sudo: yes
   lineinfile: dest=/etc/ssh/ssh_known_hosts
               line="{{ public_key.stdout }}"
+              create=yes
+              backup=yes

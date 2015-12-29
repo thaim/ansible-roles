@@ -1,0 +1,11 @@
+---
+
+- name: docker machine | download docker-machine
+  get_url: url=https://github.com/docker/machine/releases/download/v0.5.0/docker-machine_linux-amd64.zip
+           dest=/tmp/
+
+- name: docker machine | unarchive file
+  sudo: yes
+  unarchive: src=/tmp/docker-machine_linux-amd64.zip
+             dest=/usr/local/bin/
+             copy=no
