@@ -3,31 +3,32 @@
 - hosts: desktop
   connection: local
   roles:
-    - apt_update
     - english_path
     - fonts
     - samba_client
     - skk
     - git
-    - virt-manager
-    - docker
-    - dropbox
+    - { role: mercurial, tags: 'mercurial' }
     - java
     - scala
     - ruby
+    - python
+    - { role: golang, tags: 'golang' }
 #    - gradle
+    - virt-manager
     - eclipse
     - intellij
     - maven
+    - dropbox
     - android_studio
     - emacs
     - octave
+    - { role: docker, tags: 'docker' }
+    - { role: docker-compose, tags: 'docker-compose' }
     - lha
     - scheme
     - chrome
     - mendeley_desktop
-#    - steam
     - fbreader
     - skype
     - kbd_binding
-
