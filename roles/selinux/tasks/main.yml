@@ -1,16 +1,4 @@
----
 
-- name: selinux | change selinux mode
-  sudo: yes
-  selinux: state="{{ SELINUX_MODE }}"
-  tags: selinux
+- include: CentOS7.yml
+  when:  ansible_distribution == 'CentOS'
 
-- name: selinux | set current selinux mode
-  sudo: yes
-  shell: setenforce {{ SELINUX_MODE }}
-  when: SELINUX_MODE == 'Enforcing'
-
-- name: selinux | set current selinux mode
-  sudo: yes
-  shell: setenforce Permissive
-  when: SELINUX_MODE != 'Enforcing'
