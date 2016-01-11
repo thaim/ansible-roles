@@ -13,6 +13,7 @@
 - name: docker | start docker
   sudo: yes
   service: name=docker
+           enabled=yes
            state=started
 
 # check for require of docker-selinux
