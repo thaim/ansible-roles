@@ -1,5 +1,7 @@
 ---
 
-- name: unzip | be sure unzip is installed
-  sudo: yes
-  yum: name=unzip
+- include: install_CentOS.yml
+  when: ansible_distribution == 'CentOS'
+
+- include: install_Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
