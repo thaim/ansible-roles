@@ -1,4 +1,6 @@
 ---
 
 dependencies:
-    - { role: build-essential }
+    - { role: build-essential, when: ansible_distribution == 'Ubuntu' }
+    - { role: bzip2, when: ansible_distribution == 'CentOS' }
+    - { role: gcc, when: ansible_distribution == 'CentOS' }
