@@ -1,4 +1,5 @@
-home/inventory
-vps/inventory
+# ansible temp file
+*.retry
 
+# temp file
 *~
