@@ -1,0 +1,11 @@
+---
+
+- name: gcc | check if gcc is installed
+  shell: rpm -q gcc >/dev/null; echo $?
+  changed_when: false
+  failed_when: false
+  register: gcc_status
+
+- name: gcc | install gcc
+  become: yes
+  yum: name=gcc
