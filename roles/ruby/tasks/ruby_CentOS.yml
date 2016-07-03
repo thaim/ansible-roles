@@ -1,16 +1,14 @@
 ---
 
-- name: ruby | be sure required lib is installed
-  sudo: yes
-  apt: name=libffi-dev state=latest
+- include: ruby_required_libs_{{ ansible_distribution }}.yml
 
 - name: ruby | check if ruby installed version
   command: rbenv version | cut -d ' ' -f 1
+  changed_when: false
   register: ruby_installed_version
 
 - name: ruby | be sure ruby is installed
-  command: rbenv install {{ ruby_version }}
-  when: ruby_installed_version.stdout < {{ RUBY_VERSION }}
+  command: rbenv install {{ RUBY_VERSION }}
 
 - name: ruby | update rbenv
   command: rbenv rehash

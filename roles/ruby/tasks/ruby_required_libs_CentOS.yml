@@ -1,0 +1,46 @@
+---
+
+- name: ruby | check if libffi-devel is installed
+  shell: rpm -q libffi-devel >/dev/null; echo $?
+  changed_when: false
+  failed_when: false
+  register: libffi_status
+
+- name: ruby | install libffi-devel
+  become: yes
+  yum: name=libffi-devel
+       state=latest
+  when: libffi_status.stdout != '0'
+
+- name: ruby | check if openssl-devel is installed
+  shell: rpm -q openssl-devel >/dev/null; echo $?
+  changed_when: false
+  failed_when: false
+  register: openssl_status
+
+- name: ruby | install openssl-devel
+  become: yes
+  yum: name=openssl-devel
+  when: openssl_status.stdout != '0'
+
+- name: ruby | check if readline-devel is installed
+  shell: rpm -q readline-devel >/dev/null; echo $?
+  changed_when: false
+  failed_when: false
+  register: readline_status
+
+- name: ruby | install readline-devel
+  become: yes
+  yum: name=readline-devel
+  when: readline_status.stdout != '0'
+
+- name: ruby | check if zlib-devel is installed
+  shell: rpm -q zlib-devel >/dev/null; echo $?
+  changed_when: false
+  failed_when: false
+  register: zlib_status
+
+- name: ruby | install zlib-devel
+  become: yes
+  yum: name=zlib-devel
+  when: zlib_status.stdout != '0'

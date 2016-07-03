@@ -1,0 +1,29 @@
+---
+
+- name: ruby | be sure openssl-devel is installed
+  become: yes
+  become_user: root
+  yum: name=openssl-devel
+       state=latest
+
+- name: ruby | clone rbenv repository
+  git: repo=https://github.com/sstephenson/rbenv.git
+       dest="{{ USER_HOME_DIR }}/.rbenv"
+
+- name: ruby | clone ruby-build repository
+  git: repo=https://github.com/sstephenson/ruby-build.git
+       dest="{{ USER_HOME_DIR }}/.rbenv/plugins/ruby-build"
+
+- name: ruby | add rbenv path into environment path
+  lineinfile: dest="{{ USER_HOME_DIR }}/.bashrc"
+              line="{{ item.line }}"
+              regexp="{{ item.regexp }}"
+              insertafter="{{ item.insertafter }}"
+  with_items:
+    - { line: 'export PATH="$HOME/.rbenv/bin:$PATH"', regexp: '^export PATH="$HOME/.rbenv/bin:$PATH"', insertafter: EOF }
+    - { line: 'eval "$(rbenv init -)"',               regexp: '^eval "$(rbenv init -)"',               insertafter: EOF }
+  register: bashrc
+
+- name: ruby | update path
+  shell: source ${{ USER_HOME_DIR }}/.bashrc
+  when: bashrc.changed
