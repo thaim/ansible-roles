@@ -1,9 +1,12 @@
 [vm-ubuntu14]
-ubuntu_server
 
 [vm-centos6]
 
 [vm-centos7]
+192.168.122.192
 
 [vm-coreos]
+
+[buildserver:children]
+vm-centos7
 
