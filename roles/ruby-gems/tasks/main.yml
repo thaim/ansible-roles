@@ -1,0 +1,29 @@
+---
+
+# rails
+- name: ruby gems | check if rails is installed
+  command: gem list -i rails -v {{ RAILS_VERSION }}
+  changed_when: false
+  failed_when: false
+  register: gem_rails_status
+
+- include: rails.yml
+  when:
+    - RUBY_GEMS_RAILS is defined
+    - RUBY_GEMS_RAILS == 'yes'
+    - gem_rails_status.stdout == 'false'
+
+
+# sqlite3
+- name: ruby gems | check if sqlit3 is installed
+  command: gem list -i rails -v {{ RAILS_VERSION }}
+  changed_when: false
+  failed_when: false
+  register: gem_sqlite_status
+
+- include: sqlite.yml
+  when:
+    - RUBY_GEMS_SQLITE is defined
+    - RUBY_GEMS_SQLITE == 'yes'
+    - gem_sqlite_status.stdout == 'false'
+
