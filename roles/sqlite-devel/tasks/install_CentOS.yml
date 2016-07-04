@@ -1,0 +1,11 @@
+---
+
+- name: sqlite-devel | check if sqlite-devel is installed
+  shell: rpm -q sqlite-devel; echo $?
+  changed_when: false
+  register: sqlite_devel_status
+
+- name: sqlite-devel | install sqlite-devel
+  become: yes
+  yum: name=sqlite-devel
+  when: sqlite_devel_status.stdout != '0'
