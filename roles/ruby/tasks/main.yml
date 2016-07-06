@@ -22,4 +22,12 @@
 - include: ruby_{{ ansible_distribution }}.yml
   when:
     - ruby_stat.stdout != '0'
-#    - ruby_stat.stdout == '0' and ruby_ver.stdout != '0'
+
+- include: ruby_extra_libs_{{ ansible_distribution }}.yml
+  when:
+    - RUBY_INSTALL_EXTRA_LIBS == 'yes'
+
+- include: ruby_open_firewall.yml
+  when:
+    - ansible_distribution == "CentOS"
+    - ansible_distribution_major_version == "7"

@@ -1,0 +1,12 @@
+---
+
+- name: ruby | open firewalld for rails(3000)
+  become: yes
+  firewalld: port=3000/tcp
+             permanent=true
+             state=enabled
+
+- name: ruby | restart firewalld and reload config
+  become: yes
+  service: name=firewalld
+           state=restarted
