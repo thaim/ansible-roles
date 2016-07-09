@@ -7,9 +7,8 @@
 
 - name: docker | add docker repo
   sudo: yes
-  copy: src=docker.list.trusty
+  copy: src=docker.list.{{ ansible_distribution_release }}
         dest=/etc/apt/sources.list.d/docker.list
-  when: ansible_distribution_release == 'trusty'
 
 - name: docker | install docker engine package
   sudo: yes
