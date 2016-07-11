@@ -1,0 +1,22 @@
+---
+
+- name: opencv | install dependency
+  become: yes
+  apt: name={{ item }}
+       state=present
+  with_items:
+    - build-essential
+    - cmake
+    - git
+    - pkg-config
+    - libjpeg8-dev
+    - libtiff5-dev
+    - libjasper-dev
+    - libpng12-dev
+    - libavcodec-dev
+    - libavformat-dev
+    - libswscale-dev
+    - libv4l-dev
+    - libgtk2.0-dev
+    - libatlas-base-dev
+    - gfortran

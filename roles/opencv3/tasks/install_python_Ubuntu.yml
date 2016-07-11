@@ -1,0 +1,11 @@
+---
+
+- name: opencv | install python-dev
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - python3-dev
+    - python-pip
+
+- name: opencv | install numpy
+  command: pip install numpy

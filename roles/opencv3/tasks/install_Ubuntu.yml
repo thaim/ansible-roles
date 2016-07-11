@@ -1,0 +1,38 @@
+---
+
+- include: install_dependency_Ubuntu.yml
+
+- name: opencv | download opencv
+  git: repo=git://github.com/opencv/opencv
+       dest=/tmp
+       version=3.1.0
+
+- name: opencv | download opencv contrib
+  git: repo=git://github.com/opencv/opencv_contrib
+       dest=/tmp
+        version=3.1.0
+
+- include: install_python_Ubuntu.yml
+
+- name: opencv | create build directory
+  file: path=/tmp/opencv/build
+        state=directory
+
+- name: opencv | copy cmake script
+  copy: src=cmake.sh
+        dest=/tmp/opencv/build/cmake.sh
+        mode=755
+
+- name: opencv | cmake
+  command: cmake.sh
+  args:
+    chdir: /tmp/opencv/build
+
+- name: opencv | make
+  make: chdir=/tmp/opencv/build
+        NUM_THREADS=2
+
+- name: opencv | install opencv
+  become: yes
+  make: chdir=/tmp/opencv/build
+        target=install
