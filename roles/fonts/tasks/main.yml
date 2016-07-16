@@ -1,5 +1,7 @@
 ---
 
+USER_HOME_DIR: "/home/{{ user }}"
+
 - name: fonts | check if ricty regular fonts are installed
   stat: path={{ USER_HOME_DIR }}/.fonts/Ricty-Regular.ttf
   register: rr
