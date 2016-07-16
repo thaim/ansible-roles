@@ -1,23 +1,20 @@
 ---
 
-USER_HOME_DIR: "/home/{{ user }}"
-
 - name: fonts | check if ricty regular fonts are installed
-  stat: path={{ USER_HOME_DIR }}/.fonts/Ricty-Regular.ttf
+  stat: path=/home/{{ user }}/.fonts/Ricty-Regular.ttf
   register: rr
 
 - name: fonts | check if ricty bold fonts are installed
-  stat: path={{ USER_HOME_DIR }}/.fonts/Ricty-Bold.ttf
+  stat: path=/home/{{ user }}/.fonts/Ricty-Bold.ttf
   register: rb
 
 - name: fonts | check if ricty discord regular fonts are installed
-  stat: path={{ USER_HOME_DIR }}/.fonts/RictyDiscord-Regular.ttf
+  stat: path=/home/{{ user }}/.fonts/RictyDiscord-Regular.ttf
   register: rdr
 
 - name: fonts | check if ricty discord bold fonts are installed
-  stat: path={{ USER_HOME_DIR }}/.fonts/RictyDiscord-Bold.ttf
+  stat: path=/home/{{ user }}/.fonts/RictyDiscord-Bold.ttf
   register: rdb
-
 
 - include: ricty.yml
   when: not rr.stat.exists or not rb.stat.exists or not rdr.stat.exists or not rdb.stat.exists
