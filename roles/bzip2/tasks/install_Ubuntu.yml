@@ -1,0 +1,11 @@
+---
+
+- name: bzip2 | check if bzip2 is installed
+  shell: dpkg -s bzip2 >/dev/null 2>&1; echo $?
+  changed_when: false
+  failed_when: false
+  register: bzip2_status
+
+- name: bzip2 | install bzip2
+  become: yes
+  apt: name=bzip2
