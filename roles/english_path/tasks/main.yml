@@ -1,7 +1,7 @@
 ---
 
 - name: english_path | save configure about directory name
-  lineinfile: dest="{{ USER_HOME_DIR }}/.config/user-dirs.dirs"
+  lineinfile: dest={{ ansible_env.HOME }}/.config/user-dirs.dirs
               regexp="{{ item.regexp }}"
               insertafter="{{ item.insertafter }}"
               line="{{ item.line }}"
@@ -19,7 +19,7 @@
 - name: english_path | change directory name of japanese in home directory into english
   sudo: yes
   shell: |
-    if [ -d {{ USER_HOME_DIR }}/{{ item.before }} ]; then mv {{ USER_HOME_DIR }}/{{ item.before }} {{ USER_HOME_DIR }}/{{ item.after }}; fi
+    if [ -d {{ ansible_env.HOME }}/{{ item.before }} ]; then mv {{ USER_HOME_DIR }}/{{ item.before }} {{ ansible_env.HOME }}/{{ item.after }}; fi
   with_items:
     - { before: 'デスクトップ', after: 'Desktop'   }
     - { before: 'ダウンロード', after: 'Download'  }

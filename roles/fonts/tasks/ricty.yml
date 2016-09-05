@@ -46,11 +46,11 @@
   shell: "cd {{ workdir }} && sh ricty_generator.sh auto"
 
 - name: fonts | create font dir if not exist
-  file: path=/home/{{ user }}/.fonts
+  file: path={{ ansible_env.HOME }}/.fonts
         state=directory
 
 - name: fonts | mv ricty fonts into fonts directory
-  shell: cp {{ workdir }}/Ricty*.ttf /home/{{ user }}/.fonts
+  shell: cp {{ workdir }}/Ricty*.ttf {{ ansible_env.HOME }}/.fonts
 
 - name: fonts | update font cache
   sudo: yes

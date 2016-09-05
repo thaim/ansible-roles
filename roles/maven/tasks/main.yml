@@ -6,6 +6,6 @@
        state=latest
 
 - name: maven | configure m2_home
-  lineinfile: dest="{{ USER_HOME_DIR }}"/.profile
+  lineinfile: dest={{ ansible_env.HOME }}/.profile
               line="M2_HOME=/usr/share/maven"
               regexp="^M2_HOME="
