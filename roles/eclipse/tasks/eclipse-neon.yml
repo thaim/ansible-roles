@@ -1,0 +1,28 @@
+---
+
+- name: eclipse | create working directory if not exists
+  file: path={{ work_dir }}
+        state=directory
+
+- name: eclipse | download eclipse install package
+  get_url: url={{ mirror }}/technology/epp/downloads/release/neon/R/eclipse-jee-neon-R-linux-gtk-x86_64.tar.gz
+           dest={{ work_dir }}/eclipse-jee-neon-R-linux-gtk-x86_64.tar.gz
+
+- name: eclipse | unpack eclipse file
+  unarchive: src={{ work_dir }}/eclipse-jee-neon-R-linux-gtk-x86_64.tar.gz
+             dest={{ work_dir }}/
+             copy=no
+  register: eclipse_neon_new_create
+
+- name: eclipse | be sure dirname is renamed as version
+  become: yes
+  command: mv {{ work_dir }}/eclipse/ /usr/local/bin/eclipse-neon/
+  when:
+    - eclipse_neon_new_create|success
+
+- name: eclipse | change owner to user
+  become: yes
+  file: path=/usr/local/bin/eclipse-neon
+        owner={{ ansible_env.USER }}
+        group={{ ansible_env.USER }}
+        recurse=yes

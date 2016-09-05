@@ -1,3 +1,5 @@
 ---
 
 work_dir: /tmp/eclipse
+
+mirror: 'http://ftp.jaist.ac.jp/pub/eclipse'

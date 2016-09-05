@@ -24,6 +24,6 @@
 - name: eclipse | change owner to user
   sudo: yes
   file: path=/usr/local/bin/eclipse-luna
-        owner={{ USER_NAME }}
-        group={{ USER_NAME }}
+        owner={{ ansible_env.USER }}
+        group={{ ansible_env.USER }}
         recurse=yes

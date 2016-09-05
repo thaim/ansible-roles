@@ -1,15 +1,15 @@
 ---
 
 - name: eclipse | check if target eclipse is already installed
-  stat: path=/usr/local/bin/eclipse-luna
-  register: eclipse_luna_dir
+  stat: path=/usr/local/bin/eclipse-neon
+  register: eclipse_neon_dir
 
-- include: eclipse-luna.yml
-  when: not eclipse_luna_dir.stat.exists
+- include: eclipse-neon.yml
+  when: not eclipse_neon_dir.stat.exists
 
-- name: eclipse | create symlink to eclipse-luna
+- name: eclipse | create symlink to eclipse-neon
   sudo: yes
   file: path=/usr/local/bin/eclipse
-        src=/usr/local/bin/eclipse-luna/eclipse
+        src=/usr/local/bin/eclipse-neon/eclipse
         state=link
-  when: not eclipse_luna_dir.stat.exists
+  when: not eclipse_neon_dir.stat.exists
