@@ -1,0 +1,6 @@
+---
+
+- name: subversion | install subversion
+  become: yes
+  apt: name=subversion
+
