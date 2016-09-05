@@ -15,7 +15,7 @@
   when: running.stdout != '1'
 
 - name: dropbox | check if dropbox autostart on login
-  stat: path={{ USER_HOME_DIR }}/.config/autostart/dropbox.desktop
+  stat: path={{ ansible_env.HOME }}/.config/autostart/dropbox.desktop
   register: autostart
 
 - name: dropbox | be sure dropbox autostart on login

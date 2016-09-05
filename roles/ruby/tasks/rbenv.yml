@@ -6,14 +6,14 @@
 
 - name: ruby | clone rbenv repository
   git: repo=https://github.com/sstephenson/rbenv.git
-       dest="{{ USER_HOME_DIR }}/.rbenv"
+       dest={{ ansible_env.HOME }}/.rbenv
 
 - name: ruby | clone ruby-build repository
   git: repo=https://github.com/sstephenson/ruby-build.git
-       dest="{{ USER_HOME_DIR }}/.rbenv/plugins/ruby-build"
+       dest={{ ansible_env.HOME }}/.rbenv/plugins/ruby-build
 
 - name: ruby | add rbenv path into environment path
-  lineinfile: dest="{{ USER_HOME_DIR }}/.bashrc"
+  lineinfile: dest={{ ansible_env.HOME }}/.bashrc
               line="{{ item.line }}"
               regexp="{{ item.regexp }}"
               insertafter="{{ item.insertafter }}"
@@ -23,5 +23,5 @@
   register: bashrc
 
 - name: ruby | update path
-  shell: source ${{ USER_HOME_DIR }}/.bashrc
+  shell: source {{ ansible_env.HOME }}/.bashrc
   when: bashrc.changed
