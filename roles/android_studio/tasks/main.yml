@@ -1,7 +1,7 @@
 ---
 
 - name: android_studio | download android studio package
-  get_url: url=https://dl.google.com/dl/android/studio/ide-zips/1.0.1/android-studio-ide-135.1641136-linux.zip
+  get_url: url=https://dl.google.com/dl/android/studio/ide-zips/{{ ANDROID_STUDIO_VERSION }}/android-studio-ide-{{ ANDROID_STUDIO_RELEASE }}-linux.zip
            dest=/tmp/
 
 - name: android_studio | check if android studio already installed
@@ -9,16 +9,23 @@
   register: result
 
 - name: android_studio | install android studio
-  sudo: yes
-  unarchive: src=/tmp/android-studio-ide-135.1641136-linux.zip
+  become: yes
+  unarchive: src=/tmp/android-studio-ide-{{ ANDROID_STUDIO_RELEASE }}-linux.zip
              dest=/usr/local/bin
              copy=no
   when: not result.stat.exists
 
 - name: android_studio | change file owner to user
-  sudo: yes
+  become: yes
   file: path=/usr/local/bin/android-studio
-        owner={{ USER_NAME }}
-        group={{ USER_NAME }}
+        owner={{ ansible_env.USER }}
+        group={{ ansible_env.USER }}
         recurse=yes
+  when: not result.stat.exists
+
+- name: android_studio | create symlink to android studio
+  become: yes
+  file: path=/usr/local/bin/android-studio.sh
+        src=/usr/local/bin/android-studio/bin/studio.sh
+        state=link
   when: not result.stat.exists
