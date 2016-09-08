@@ -1,6 +1,9 @@
 ---
 
-- include: uim_skk.yml
+# - include: uim_skk.yml
+#   when: ansible_distribution == 'Ubuntu'
+
+- include: ibus_skk.yml
   when: ansible_distribution == 'Ubuntu'
 
 - include: AquaSKK.yml

@@ -1,0 +1,9 @@
+---
+
+- name: skk | be sure bus-skk is installed
+  become: yes
+  apt: name=ibus-skk
+
+- name: skk | be sure skkdic is installed
+  become: yes
+  apt: name=skkdic
