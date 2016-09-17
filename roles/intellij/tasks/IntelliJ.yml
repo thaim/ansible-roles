@@ -5,7 +5,7 @@
         state=directory
 
 - name: intellij | download IntelliJ IDEA tarball
-  get_url: url=https://d1opms6zj7jotq.cloudfront.net/idea/ideaIC-{{ intellij_ver }}.tar.gz
+  get_url: url=https://download.jetbrains.com/idea/ideaIC-2016.2.3.tar.gz
            dest={{ workdir }}/ideaIC-{{ intellij_ver }}.tar.gz
 
 - name: intellij | unarchive IntelliJ IDEA tarbarll
