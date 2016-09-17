@@ -1,0 +1,5 @@
+---
+
+- name: lame | install lame
+  become: yes
+  apt: name=lame
