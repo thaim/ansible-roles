@@ -1,0 +1,10 @@
+---
+
+- name: asunder | install repository
+  become: yes
+  apt_repository: repo='ppa:webupd8team/unstable'
+
+- name: asunder | install asunder
+  become: yes
+  apt: name='asunder'
+
