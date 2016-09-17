@@ -7,8 +7,13 @@
 
 - name: virt-manager | install spice connection
   sudo: yes
-  apt: name=qemu-kvm-spice,spice-client,spice-client-gtk
+  apt: name=qemu-kvm-spice,spice-client-gtk
 
 - name: virt-manager | install spice-client
   sudo: yes
   apt: name=python-spice-client-gtk
+
+- name: virt-manager | install ask-password
+  become: yes
+  apt: name=ssh-askpass,ssh-askpass-gnome
+
