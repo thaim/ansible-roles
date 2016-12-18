@@ -1,0 +1,10 @@
+---
+
+- name: nodejs | download repo install script
+  get_url: url=https://deb.nodesource.com/setup_6.x
+           dest=/tmp/setup_6.sh
+           mode=0755
+
+- name: nodejs | add nodejs repository
+  become: yes
+  command: /tmp/setup_6.sh

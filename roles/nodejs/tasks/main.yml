@@ -1,0 +1,16 @@
+---
+
+- name: nodejs | check if nodejs is installed
+  shell: which node >/dev/null1; echo $?
+  register: node_stat
+  changed_when: false
+
+- name: nodejs | check installed nodejs version
+  shell: node -v 2>/dev/null;
+  register: nodejs_version
+  changed_when: false
+  failed_when: false
+
+- include: install_{{ ansible_distribution }}.yml
+  when: ( node_stat != '0' ) or
+        ( nodejs_version < {{ NODEJS_VERSION }} )
