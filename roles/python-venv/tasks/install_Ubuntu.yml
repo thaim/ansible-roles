@@ -1,0 +1,5 @@
+---
+
+- name: install python3-venv
+  become: yes
+  apt: name=python3-venv
