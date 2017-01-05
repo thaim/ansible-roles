@@ -8,3 +8,8 @@
 - name: nodejs | add nodejs repository
   become: yes
   command: /tmp/setup_6.sh
+
+- name: nodejs | install nodejs
+  become: yes
+  apt:
+    name: nodejs

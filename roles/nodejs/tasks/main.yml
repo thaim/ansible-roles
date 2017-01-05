@@ -8,6 +8,7 @@
 - name: nodejs | check installed nodejs version
   shell: node -v 2>/dev/null;
   register: nodejs_version
+  when: node_stat.stdout == '0'
   changed_when: false
   failed_when: false
 
