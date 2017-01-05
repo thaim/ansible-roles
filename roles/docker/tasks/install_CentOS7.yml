@@ -1,17 +1,17 @@
 ---
 
 - name: docker | add docker repo
-  sudo: yes
+  become: yes
   copy: src=docker.repo
         dest=/etc/yum.repos.d/docker.repo
 
 
 - name: docker | install docker engine package
-  sudo: yes
+  become: yes
   yum: name=docker-engine
 
 - name: docker | start docker
-  sudo: yes
+  become: yes
   service: name=docker
            enabled=yes
            state=started
