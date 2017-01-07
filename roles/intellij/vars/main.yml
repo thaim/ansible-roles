@@ -1,7 +1,7 @@
 ---
 
-intellij_ver: 14.1.1
+# target version
+INTELLIJ_VERSION: 2016.3.2
 
-workdir: /tmp/ideaIC-{{ intellij_ver }}
-
-installdir: /usr/local/bin/intellijj-community
+# directory to locate intellij files
+INTELLIJ_ISNTALL_DIR: /usr/local/bin/intellij-community
