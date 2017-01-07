@@ -1,5 +1,0 @@
----
-
-- name: git | be sure git is installed
-  sudo: yes
-  apt: name=git state=latest

@@ -1,10 +1,6 @@
 ---
 
-- include: ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- include: install_{{ ansible_distribution }}.yml
 
-- include: macos.yml
-  when: ansible_distribution == 'MacOSX'
+# needs to configure global .gitconfig and .gitignore files
 
-- include: CentOS7.yml
-  when: ansible_distribution == 'CentOS'

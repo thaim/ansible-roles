@@ -7,5 +7,7 @@
 
 - name: git | be sure git is installed
   become: yes
-  yum: name=git state=latest
+  yum:
+    name: git
+    state: latest
   when: git_status.stdout != '0'
