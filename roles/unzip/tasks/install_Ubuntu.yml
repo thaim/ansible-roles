@@ -1,5 +1,6 @@
 ---
 
 - name: unzip | be sure unzip is installed
-  sudo: yes
-  apt: name=unzip
+  become: yes
+  apt:
+    name: unzip

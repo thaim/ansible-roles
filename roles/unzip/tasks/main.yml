@@ -1,7 +1,3 @@
 ---
 
-- include: install_CentOS.yml
-  when: ansible_distribution == 'CentOS'
-
-- include: install_Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- include: install_{{ ansible_distribution }}.yml
