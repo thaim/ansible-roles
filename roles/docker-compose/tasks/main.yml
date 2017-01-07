@@ -1,7 +1,8 @@
 ---
 
 - name: docker-compose | install docker-compose module
-  sudo: yes
-  get_url: url=https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
-           dest=/usr/local/bin/docker-compose
-           mode=0755
+  become: yes
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ DOCKER_COMPOSE_VERSION }}/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
