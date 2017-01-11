@@ -1,0 +1,5 @@
+[alias]
+    unstage  = reset -q HEAD --
+    tags     = tag
+    branches = branch -a
+    remotes  = remote -v

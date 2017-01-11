@@ -3,4 +3,10 @@
 - include: install_{{ ansible_distribution }}.yml
 
 # needs to configure global .gitconfig and .gitignore files
-
+- name: git | copy git config file
+  copy:
+    src: gitconfig
+    dest: /home/{{ ansible_env.USER }}/.gitconfig
+    owner: {{ ansible_env.USER }}
+    group: {{ ansible_env.USER }}
+    mode: 0644
