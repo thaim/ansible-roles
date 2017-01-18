@@ -9,3 +9,38 @@
   become: yes
   pip:
     name: awscli
+
+- name: python | install module beautifulsoup4
+  become: yes
+  pip:
+    name: beautifulsoup4
+
+- name: python | install module requests
+  become: yes
+  pip:
+    name: requests
+
+- name: python | install module cssselect
+  become: yes
+  pip:
+    name: cssselect
+
+- name: python | install module lxml
+  become: yes
+  pip:
+    name: lxml
+
+- name: python | install module PyYAML
+  become: yes
+  pip:
+    name: PyYAML
+
+- name: python | install module mysqlclient
+  become: yes
+  pip:
+    name: mysqlclient
+
+- name: python | install module pymongo
+  become: yes
+  pip:
+    name: pymongo
