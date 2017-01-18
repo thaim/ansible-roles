@@ -1,9 +1,11 @@
 ---
 
 - name: python | install module gitpython
-  sudo: yes
-  pip: name=gitpython
+  become: yes
+  pip:
+    name: gitpython
 
 - name: python | install module awscli
-  sudo: yes
-  pip: name=awscli
+  become: yes
+  pip:
+    name: awscli
