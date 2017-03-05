@@ -18,10 +18,10 @@
               regexp="{{ item.regexp }}"
               insertafter="{{ item.insertafter }}"
   with_items:
-    - { line: 'export PATH=\"$HOME/.rbenv/bin:$PATH\"', regexp: '^export PATH=\"\$HOME/.rbenv/bin:\$PATH\"', insertafter: EOF }
-    - { line: 'eval \"$(rbenv init -)\"',               regexp: '^eval \"\$\(rbenv init -\)\"',               insertafter: EOF }
+    - { line: 'export PATH="$HOME/.rbenv/bin:$PATH"', regexp: '^export PATH=\"\$HOME/.rbenv/bin:\$PATH\"', insertafter: EOF }
+    - { line: 'eval "$(rbenv init -)"',               regexp: '^eval \"\$\(rbenv init -\)\"',               insertafter: EOF }
   register: bashrc
 
-- name: ruby | update path
-  shell: source {{ ansible_env.HOME }}/.bashrc
-  when: bashrc.changed
+- name: ruby | load env
+  shell: source ~/.bashrc executable=/bin/bash
+

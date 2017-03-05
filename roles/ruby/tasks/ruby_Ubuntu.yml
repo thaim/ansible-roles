@@ -1,19 +1,29 @@
 ---
 
 - name: ruby | be sure required lib is installed
-  sudo: yes
-  apt: name=libffi-dev state=latest
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - libffi-dev
+    - libreadline-dev
 
 - name: ruby | check if ruby installed version
-  command: rbenv version | cut -d ' ' -f 1
+  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv version | cut -d ' ' -f 1 2>/dev/null"
   register: ruby_installed_version
+  changed_when: false
+
+- debug:
+    var: ruby_installed_version
 
 - name: ruby | be sure ruby is installed
-  command: rbenv install {{ ruby_version }}
-  when: ruby_installed_version.stdout < {{ RUBY_VERSION }}
+  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}"
+#  when: ruby_installed_version.stdout < {{ RUBY_VERSION }}
+
 
 - name: ruby | update rbenv
-  command: rbenv rehash
+  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv rehash"
 
 - name: ruby | specify global configure
-  command: rbenv global {{ RUBY_VERSION }}
+  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv global {{ RUBY_VERSION }}"
