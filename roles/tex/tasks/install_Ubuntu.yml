@@ -1,0 +1,11 @@
+---
+
+- name: install texlive
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - texlive-binaries
+    - texlive-lang-japanese
+    - texlive-fonts-recommended
+    - texlive-fonts-extra
