@@ -1,4 +1,0 @@
----
-
-- include: playbook-desktop.yml
-- include: playbook-server.yml
