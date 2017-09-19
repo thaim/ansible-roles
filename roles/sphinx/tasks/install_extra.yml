@@ -1,0 +1,14 @@
+---
+
+- name: sphinx | install commonmark
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - commonmark
+    - recommonmark
+  when: SPHINX_INSTALL_COMMONMARK == True
+
+- name: sphinx | install sphinx_rtd_theme
+  pip:
+    name: sphinx_rtd_theme
+  when: SPHINX_INSTALL_RTD_THEME == True

@@ -1,0 +1,16 @@
+---
+
+- name: sphinx | check if sphinx is installed
+  command: which sphinx
+  changed_when: false
+  failed_when: false
+  register: sphinx_check
+
+- include: install.yml
+  when: sphinx_check.stdout == ''
+
+- debug:
+    var: SPHINX_INSTALL_EXTRA
+
+- include: install_extra.yml
+  when: SPHINX_INSTALL_EXTRA == True
