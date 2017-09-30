@@ -2,18 +2,21 @@
 
 - name: docker | add docker repo
   become: yes
-  copy: src=docker.repo
-        dest=/etc/yum.repos.d/docker.repo
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
 
 
 - name: docker | install docker engine package
   become: yes
-  yum: name=docker-engine
+  yum:
+    name: docker-ce
 
 - name: docker | start docker
   become: yes
-  service: name=docker
-           enabled=yes
-           state=started
+  service:
+    name: docker
+    enabled: yes
+    state: started
 
 # check for require of docker-selinux
