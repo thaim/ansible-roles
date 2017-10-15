@@ -1,0 +1,10 @@
+---
+
+- name: gcloud | check if gcloud is installed
+  command: which gcloud
+  changed_when: false
+  failed_when: false
+  register: gcloud_installed
+
+- include_tasks: install.yml
+  when: gcloud_installed.stdout == ''
