@@ -1,6 +1,0 @@
----
-
-RUBY_GEMS_RAILS: 'yes'
-RAILS_VERSION: '4.2.1'
-
-RUBY_GEMS_SQLITE: 'yes'

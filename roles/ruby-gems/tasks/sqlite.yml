@@ -1,5 +1,0 @@
----
-
-- name: ruby gems | install sqlite
-  gem: name=sqlite
-       version="{{ SQLITE_VERSION }}"

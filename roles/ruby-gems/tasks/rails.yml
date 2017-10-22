@@ -1,5 +1,0 @@
----
-
-- name: ruby gems | install rails
-  gem: name=rails
-       version="{{ RAILS_VERSION }}"
