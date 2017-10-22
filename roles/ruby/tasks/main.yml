@@ -1,5 +1,6 @@
 ---
 
+# rbenvのイストール
 - name: ruby | check rbenv is installed
   shell: which rbenv >/dev/null; echo $?
   register: rbenv_stat
@@ -8,20 +9,22 @@
 - include: rbenv_{{ ansible_distribution }}.yml
   when: rbenv_stat.stdout != '0'
 
+# rubyのインストール
 - name: ruby | check if ruby is installed
-  shell: which ruby >/dev/null; echo $?
+  stat:
+    path: "{{ ansible_env.HOME }}/.rbenv/shims/ruby"
   register: ruby_stat
-  changed_when: false
 
 - name: ruby | check if specified ruby version is installed
-  shell: ruby --version | grep -c {{ RUBY_VERSION }}
+  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv versions | grep -c {{ RUBY_VERSION }}"
   register: ruby_ver
   changed_when: false
-  when: ruby_stat.stdout == '0'
+  failed_when:  false
+  when: ruby_stat.stat.exists
 
 - include: ruby_{{ ansible_distribution }}.yml
-  when:
-    - ruby_stat.stdout != '0'
+  when: ( ruby_stat.stat.exists == False ) or
+        ( ruby_ver.stdout == '0' )
 
 - include: ruby_extra_libs_{{ ansible_distribution }}.yml
   when:
@@ -31,3 +34,6 @@
   when:
     - ansible_distribution == "CentOS"
     - ansible_distribution_major_version == "7"
+
+# 汎用gemのインストール
+- include: common_gems.yml

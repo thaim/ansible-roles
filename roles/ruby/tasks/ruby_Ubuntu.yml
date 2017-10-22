@@ -14,12 +14,10 @@
   register: ruby_installed_version
   changed_when: false
 
-- debug:
-    var: ruby_installed_version
-
 - name: ruby | be sure ruby is installed
   shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}"
-#  when: ruby_installed_version.stdout < {{ RUBY_VERSION }}
+  when: ( ruby_installed_version.stdout == 'system' ) or
+        ( ruby_installed_version.stdout | version_compare("{{ RUBY_VERSION }}", '<') )
 
 
 - name: ruby | update rbenv

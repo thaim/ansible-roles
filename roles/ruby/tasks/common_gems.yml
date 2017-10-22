@@ -1,0 +1,6 @@
+- name: install bundler
+  gem:
+    name: bundler
+    state: latest
+    executable: .rbenv/shims/gem
+    user_install: False
