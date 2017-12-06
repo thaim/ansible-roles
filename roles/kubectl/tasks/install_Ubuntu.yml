@@ -1,0 +1,8 @@
+---
+
+- name: download and install kubectl with specified version
+  become: yes
+  get_url:
+    url: "https://storage.googleapis.com/kubernetes-release/release/{{ KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
+    dest: /usr/local/bin
+    mode: 0755
