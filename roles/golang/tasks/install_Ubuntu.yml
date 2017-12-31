@@ -1,30 +1,27 @@
 ---
+# install golang from ppa
+# see: https://github.com/golang/go/wiki/Ubuntu
 
-- name: golang | check if golang is installed
-  command: which go
-  changed_when: false
-  failed_when: false
-  register: install_golang
+- name: golang | add ppa repository for golang
+  become: yes
+  apt_repository:
+    repo: 'ppa:gophers/archive'
 
-- name: golang | download golang from archive
-  get_url: url="https://storage.googleapis.com/golang/go{{ GOLANG_VERSION}}.linux-amd64.tar.gz"
-           dest=/tmp/
-  when: install_golang.rc == 1
+# - name: golang | check if golang is installed
+#   command: which go
+#   changed_when: false
+#   failed_when: false
+#   register: install_golang
 
-- name: goalng | install golang
-  sudo: yes
-  unarchive: src="/tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
-             dest=/usr/local/bin
-             copy=no
-  when: install_golang.rc == 1
+- name: golang | install golang
+  become: yes
+  apt:
+    name: golang-{{ GOLANG_VERSION }}-go
+    update_cache: yes
 
-- name: golang | setup environment variable 'GOROOT'
-  lineinfile: dest={{ USER_HOME_DIR }}/.profile
-              regexp="{{ item.regexp }}"
-              insertafter="{{ item.insertafter }}"
-              line="{{ item.line }}"
-              create=yes
-  with_items:
-    - { regexp: '^export GOROOT=', line: 'export GOROOT=/usr/local/bin/go', insertafter: EOF }
-    - { regexp: '^export PATH=$GOROOT/bin', line: 'export PATH=$PATH:$GOROOT/bin', insertafter: EOF }
-    - { regexp: '^export GOPATH=', line: 'export GOPATH={{ USER_HOME_DIR }}/.go', insertafter: EOF }
+- name: golang | add binaries path into PATH
+  lineinfile:
+    dest: "{{ ansible_user_dir }}/.bashrc"
+    line: 'export PATH="$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
+    regexp: 'export PATH="\$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
+    insertafter: EOF

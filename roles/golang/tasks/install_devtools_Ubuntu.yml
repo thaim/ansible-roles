@@ -1,0 +1,22 @@
+---
+
+# install gore
+# REPL for golang
+#- name: golang | check if gore installed
+
+- name: golang | install gore
+#  shell: go version
+  shell: bash -lc "go get github.com/motemen/gore"
+
+  # shell: source "{{ ansible_user_dir }}/.bashrc" && go get github.com/motemen/gore
+  # args:
+  #   executable: /bin/bash
+
+# install gocode
+# コード補完
+
+# install pp
+# Pretty print for golang
+
+# install godoc
+# command reference library

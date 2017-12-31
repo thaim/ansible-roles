@@ -1,0 +1,11 @@
+---
+
+- name: golang | setup environment variable 'GOPATH'
+  lineinfile: dest={{ ansible_user_dir }}/.bashrc
+              regexp="{{ item.regexp }}"
+              insertafter="{{ item.insertafter }}"
+              line="{{ item.line }}"
+              create=yes
+  with_items:
+    - { regexp: '^export GOPATH=',                    line: 'export GOPATH="{{ GOLANG_GOPATH }}"', insertafter: EOF }
+    - { regexp: '^export PATH="\$PATH:\$GOPATH/bin"', line: 'export PATH="$PATH:$GOPATH/bin"',     insertafter: EOF }
