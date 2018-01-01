@@ -6,7 +6,7 @@
   register: rbenv_stat
   changed_when: false
 
-- include: rbenv_{{ ansible_distribution }}.yml
+- include: rbenv.yml
   when: rbenv_stat.stdout != '0'
 
 # rubyのインストール

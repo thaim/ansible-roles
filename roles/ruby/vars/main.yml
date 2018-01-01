@@ -2,3 +2,9 @@
 
 RUBY_VERSION: 2.4.2
 
+
+# rbenvのPATHセットアップを行うシェル設定ファイル
+# bashでは~/.bash_profile (Ubuntu Desktopのみ ~/.bashrc)など。
+# see: https://github.com/rbenv/rbenv/wiki/Unix-shell-initialization
+RUBY_SHELL_INIT_FILE: '.bash_profile'
+
