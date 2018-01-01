@@ -1,5 +1,11 @@
 ---
 
+- name: ansible | add ansible ppa repository
+  become: yes
+  apt_repository:
+    repo: 'ppa:ansible/ansible'
+
 - name: ansible | install latest ansible
   become: yes
-  apt: name=ansible
+  apt:
+    name: ansible
