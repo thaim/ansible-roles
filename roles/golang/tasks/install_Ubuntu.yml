@@ -21,7 +21,7 @@
 
 - name: golang | add binaries path into PATH
   lineinfile:
-    dest: "{{ ansible_user_dir }}/.bashrc"
+    dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
     line: 'export PATH="$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
     regexp: 'export PATH="\$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
     insertafter: EOF

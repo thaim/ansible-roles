@@ -6,5 +6,9 @@ GOLANG_VERSION: 1.8
 # GOやその他開発用ファイル/リポジトリ置き場
 GOLANG_GOPATH: "$HOME"
 
+# GOのPATH設定を記述するファイル
+# see: https://golang.org/doc/install
+GOLANG_SHELL_INIT_FILE: '.bash_profile'
+
 # 開発に便利なツール群のインストール
 GOLANG_ISNTALL_DEVTOOLS: yes
