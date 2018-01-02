@@ -1,0 +1,7 @@
+---
+
+- name: install ghq
+  shell: /bin/bash -lc 'go get github.com/motemen/ghq'
+
+- name: configure ghq root
+  shell: /bin/bash -lc 'git config --global ghq.root "$GOPATH/src"'
