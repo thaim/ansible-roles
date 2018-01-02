@@ -1,4 +1,3 @@
-
 ---
 
 # install gore
@@ -23,9 +22,8 @@
 
 # official lint tool for go lang
 - name: install golint
-  shell: /bin/bash -lc "go get github.com/golang/lint/golint
+  shell: /bin/bash -lc "go get github.com/golang/lint/golint"
 
-# official document viewer
-- name: install godoc
-  shell: /bin/bash -lc "go get olang.org/tools/cmd/godoc"
-
+# dependnecy manager in vendor
+- name: install glide
+  shell: /bin/bash -lc "go get github.com/Masterminds/glide"
