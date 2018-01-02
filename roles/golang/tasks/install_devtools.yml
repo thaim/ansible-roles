@@ -1,3 +1,4 @@
+
 ---
 
 # install gore
@@ -19,4 +20,12 @@
 # command reference library
 - name: install godoc
   shell: /bin/bash -lc "go get golang.org/x/tools/cmd/godoc"
+
+# official lint tool for go lang
+- name: install golint
+  shell: /bin/bash -lc "go get github.com/golang/lint/golint
+
+# official document viewer
+- name: install godoc
+  shell: /bin/bash -lc "go get olang.org/tools/cmd/godoc"
 

@@ -4,5 +4,5 @@
 
 - include: configure_{{ ansible_distribution }}.yml
 
-- include: install_devtools_{{ ansible_distribution }}.yml
+- include: install_devtools.yml
   when: GOLANG_INSTALL_DEVTOOLS
