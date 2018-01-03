@@ -1,0 +1,8 @@
+---
+
+- name: install OpenNebula host package
+  become: yes
+  apt:
+    name: 'opennebula-node'
+  notify: restart libvirt-bin
+

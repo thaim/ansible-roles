@@ -1,0 +1,18 @@
+---
+
+- name: add OpenNebula key
+  become: yes
+  apt_key:
+    url: https://downloads.opennebula.org/repo/repo.key
+
+- name: add OpenNebula repository
+  become: yes
+  copy:
+    src: opennebula.list
+    dest: /etc/apt/sources.list.d/opennebula.list
+
+- include: install_front.yml
+  when: OPENNEBULA_ROLE == 'front'
+
+- include: install_host.yml
+  when: OPENNEBULA_ROLE == 'host'

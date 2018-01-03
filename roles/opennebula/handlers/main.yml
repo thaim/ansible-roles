@@ -1,0 +1,8 @@
+---
+
+- name: restart libvirt-bin
+  become: yes
+  service:
+    name: libvirt-bin
+    state: restarted
+

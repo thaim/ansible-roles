@@ -1,0 +1,7 @@
+---
+
+OPENNEBULA_VERSION: 5.4
+
+# 'host' or 'front'
+OPENNEBULA_ROLE: 'host'
+

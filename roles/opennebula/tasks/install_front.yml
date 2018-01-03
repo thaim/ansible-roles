@@ -1,0 +1,15 @@
+---
+
+- name: install OpenNebula front package
+  become: yes
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - opennebula
+    - opennebula-sunstone
+    - opennebula-gate
+    - opennebula-flow
+
+- name: install dependency gems
+  become: yes
+  shell: /usr/share/one/install_gems --yes
