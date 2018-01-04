@@ -1,0 +1,8 @@
+---
+
+- name: update apt source url
+  become: yes
+  replace:
+    dest: '/etc/apt/sources.list'
+    regexp: '{{ APT_REPOSITORY_URL }}'
+    replace: '{{ APT_MIRROR_URL }}'
