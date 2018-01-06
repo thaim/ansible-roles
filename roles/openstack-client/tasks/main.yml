@@ -1,0 +1,6 @@
+---
+
+- name: install openstack client
+  pip:
+    name: python-openstackclient
+    extra_args: --user
