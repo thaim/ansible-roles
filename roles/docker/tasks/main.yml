@@ -2,6 +2,9 @@
 
 - include: install_{{ ansible_distribution }}.yml
 
+- include: configure_{{ ansible_distribution }}.yml
+  when: DOCKER_APPLY_CUSTOM|default(no) == 'yes'
+
 - name: docker | add user as docker user
   become: yes
   user: name={{ DOCKER_USER }}
