@@ -1,0 +1,4 @@
+---
+# install pip or pip3 depends on python version
+
+- include_tasks: install_{{ ansible_distribution }}.yml
