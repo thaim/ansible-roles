@@ -6,3 +6,11 @@
     dest: '/etc/apt/sources.list'
     regexp: '{{ APT_REPOSITORY_URL }}'
     replace: '{{ APT_MIRROR_URL }}'
+
+- name: update all apt packages
+  become: yes
+  apt:
+    name: '*'
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
