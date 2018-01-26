@@ -3,3 +3,23 @@
     tags     = tag
     branches = branch -a
     remotes  = remote -v
+    graph    = log --graph -10 --branches --remotes --tags --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order
+
+[user]
+	email = thaim24@gmail.com
+	name = thaim
+
+[core]
+	editor = vim
+
+[push]
+	default = simple
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[ghq]
+	root = /home/thaim/src
