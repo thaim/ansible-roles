@@ -1,5 +1,6 @@
 ---
 
 - name: build-essentials | be sure build-essential is installed
+  become: yes
   apt: name=build-essential
        state=latest
