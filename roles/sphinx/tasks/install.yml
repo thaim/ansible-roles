@@ -3,3 +3,4 @@
 - name: sphinx | install sphinx
   pip:
     name: sphinx
+    extra_args: --user
