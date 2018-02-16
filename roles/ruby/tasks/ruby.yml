@@ -10,7 +10,7 @@
 
 - name: ruby | be sure ruby is installed
   command: rbenv install {{ ruby_version }}
-  when: ruby_installed_version.stdout < {{ RUBY_VERSION }}
+  when: ruby_installed_version.stdout < RUBY_VERSION
 
 - name: ruby | update rbenv
   command: rbenv rehash
