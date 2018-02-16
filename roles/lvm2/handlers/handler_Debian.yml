@@ -1,0 +1,7 @@
+---
+
+- name: restart lvm2
+  become: yes
+  service:
+    name: lvm2
+    status: restarted

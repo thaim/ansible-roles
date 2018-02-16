@@ -1,0 +1,8 @@
+---
+
+- name: lvm2 | install lvm2
+  become: yes
+  become_method: su
+  apt:
+    name: lvm2
+  notify: restart lvm2
