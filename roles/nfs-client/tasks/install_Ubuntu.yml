@@ -1,0 +1,8 @@
+---
+
+
+- name: install nfsclient
+  become: yes
+  apt:
+    name: nfs-common
+    update_cache: yes
