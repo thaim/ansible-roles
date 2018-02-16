@@ -2,4 +2,5 @@
 
 - name: lvm2 | install lvm2
   become: yes
-  apt: name=lvm2
+  apt:
+    name: lvm2
