@@ -1,0 +1,10 @@
+---
+
+- name: check if RubyMine is installed
+  command: which rubymine
+  changed_when: false
+  failed_when: false
+  registry: install_status
+
+- include_tasks: install.yml
+  when: install_status.rc != '0'

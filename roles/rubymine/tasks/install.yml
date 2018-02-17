@@ -1,0 +1,21 @@
+---
+
+- name: download rubymine archive
+  get_url:
+    url: https://download.jetbrains.com/ruby/RubyMine-{{ RUBYMINE_VERSION }}.tar.gz
+    dest: /tmp/RubyMine.tar.gz
+
+- name: unarchive package
+  become: yes
+  unarchive:
+    src: /tmp/RubyMine.tar.gz
+    dest: /usr/local/
+    remote_src: yes
+
+- name: add PATH
+  lineinfile:
+    dest: "{{ ansible_user_dir }}/.profile"
+    line: 'export PATH="$PATH:/usr/local/RubyMine-{{ RUBYMINE_VERSION }}/bin"'
+    regexp: '^export PATH="\$PATH:/usr/local/RubyMine"'
+    insertafter: EOF
+
