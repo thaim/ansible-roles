@@ -1,0 +1,10 @@
+---
+
+- name: openshift-client | check if oc is installed
+  command: which oc
+  changed_when: false
+  failed_when: false
+  register: whichoc
+
+- include_tasks: install_{{ ansible_distribution }}.yml
+  when: whichoc.rc != 0

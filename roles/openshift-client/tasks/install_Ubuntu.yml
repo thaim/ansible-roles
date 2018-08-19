@@ -1,0 +1,21 @@
+---
+
+- name: openshift-client | download openshift client archive
+  get_url:
+    url: "{{ OPENSHIFT_CLIENT_RELEASE_URL }}/v3.10.0/{{ OPENSHIFT_CLIENT_RELEASE_FILE_3_10_0 }}.tar.gz"
+    dest: /tmp/
+
+
+- name: openshift-client | unarchive installer
+  unarchive:
+    src: /tmp/{{ OPENSHIFT_CLIENT_RELEASE_FILE_3_10_0 }}.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: openshift-client | copy binary file
+  become: yes
+  copy:
+    src: /tmp/{{ OPENSHIFT_CLIENT_RELEASE_FILE_3_10_0 }}/oc
+    dest: /usr/local/bin/
+    remote_src: yes
+    mode: 0755
