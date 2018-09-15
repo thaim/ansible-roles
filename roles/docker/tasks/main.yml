@@ -10,7 +10,7 @@
   when: docker_install.rc != 0
 
 - include: configure_{{ ansible_distribution }}.yml
-  when: DOCKER_APPLY_CUSTOM|default(no) == 'yes'
+  when: DOCKER_APPLY_CUSTOM|default(false) == true
 
 - name: docker | add user as docker user
   become: yes
