@@ -7,7 +7,6 @@
   with_items:
     - "{{ OPENSHIFT_VERSION }}"
 
-
 - name: openshift-client | unarchive installer
   unarchive:
     src: "/tmp/openshift-origin-client-tools-v{{ OPENSHIFT_VERSION }}-{{ OPENSHIFT_CLI_HASH[item] }}-linux-64bit.tar.gz"

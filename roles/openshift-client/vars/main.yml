@@ -1,3 +1,7 @@
 ---
 
 OPENSHIFT_CLIENT_RELEASE_URL: 'https://github.com/openshift/origin/releases/download'
+
+OPENSHIFT_CLI_HASH:
+  3.10.0: 'dd10d17'
+  3.11.0: '0cbc58b'
