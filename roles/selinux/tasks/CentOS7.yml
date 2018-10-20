@@ -2,15 +2,16 @@
 
 - name: selinux | change selinux mode
   become: yes
-  selinux: state="{{ SELINUX_MODE }}"
-  tags: selinux
+  selinux:
+    state: "{{ SELINUX_MODE }}"
+    policy: "targeted"
 
 - name: selinux | set current selinux mode
   become: yes
   shell: setenforce {{ SELINUX_MODE }}
-  when: SELINUX_MODE == 'Enforcing'
+  when: SELINUX_MODE == 'enforcing'
 
 - name: selinux | set current selinux mode
   become: yes
   shell: setenforce Permissive
-  when: SELINUX_MODE != 'Enforcing'
+  when: SELINUX_MODE != 'enforcing'
