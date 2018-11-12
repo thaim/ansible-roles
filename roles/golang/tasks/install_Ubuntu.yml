@@ -1,27 +1,10 @@
 ---
-# install golang from ppa
-# see: https://github.com/golang/go/wiki/Ubuntu
 
-- name: golang | add ppa repository for golang
-  become: yes
-  apt_repository:
-    repo: 'ppa:gophers/archive'
-
-# - name: golang | check if golang is installed
-#   command: which go
-#   changed_when: false
-#   failed_when: false
-#   register: install_golang
+- name: golang | download tarballs
+  get_url:
+    url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+    dest: "/tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
 
 - name: golang | install golang
   become: yes
-  apt:
-    name: golang-{{ GOLANG_VERSION }}-go
-    update_cache: yes
-
-- name: golang | add binaries path into PATH
-  lineinfile:
-    dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
-    line: 'export PATH="$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
-    regexp: 'export PATH="\$PATH:/usr/lib/go-{{ GOLANG_VERSION }}/bin"'
-    insertafter: EOF
+  command: tar -C /usr/local -xzf /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz

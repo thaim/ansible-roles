@@ -1,8 +1,15 @@
 ---
 
-- include: install_{{ ansible_distribution }}.yml
+- name: golang | check if golang is installed
+  shell: /bin/bash -lc 'which go'
+  changed_when: false
+  failed_when: false
+  register: install_golang
 
-- include: configure_{{ ansible_distribution }}.yml
+- include_tasks: install_{{ ansible_distribution }}.yml
+  when: install_golang.rc != 0
 
-- include: install_devtools.yml
+- include_tasks: configure_{{ ansible_distribution }}.yml
+
+- include_tasks: install_devtools.yml
   when: GOLANG_INSTALL_DEVTOOLS
