@@ -1,8 +1,9 @@
 ---
 
 - name: git | check if git is isntalled
-  command: which git >/dev/null; echo $?
+  command: which git
   changed_when: false
+  failed_when: false
   register: git_status
 
 - name: git | be sure git is installed
@@ -10,4 +11,4 @@
   yum:
     name: git
     state: latest
-  when: git_status.stdout != '0'
+  when: git_status.rc != 0
