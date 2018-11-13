@@ -3,11 +3,10 @@
 - name: ruby | be sure required lib is installed
   become: yes
   apt:
-    name: "{{ item }}"
+    name:
+      - libffi-dev
+      - libreadline-dev
     state: latest
-  with_items:
-    - libffi-dev
-    - libreadline-dev
 
 - name: ruby | check if ruby installed version
   shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv version | cut -d ' ' -f 1 2>/dev/null"

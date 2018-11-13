@@ -28,7 +28,7 @@
 
 - include: ruby_extra_libs_{{ ansible_distribution }}.yml
   when:
-    - RUBY_INSTALL_EXTRA_LIBS == 'yes'
+    - RUBY_INSTALL_EXTRA_LIBS|default(true) == true
 
 - include: ruby_open_firewall.yml
   when:
