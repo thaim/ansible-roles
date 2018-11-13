@@ -9,7 +9,7 @@
   become: yes
   copy:
     src: yarn.list
-    dest: /etc/apt/source.list.d/yarn.list
+    dest: /etc/apt/sources.list.d/yarn.list
 
 - name: yarn | install yarn
   become: yes
