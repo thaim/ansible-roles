@@ -1,19 +1,13 @@
 ---
 
-- name: golang | add binaries path into PATH
+- name: golang | setup environment variable 'GOPATH'
   lineinfile:
     dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
-    line: 'export PATH="$PATH:/usr/local/go/bin"'
-    regexp: '^export PATH="\$PATH:/usr/local/go/bin"'
-    insertafter: EOF
-
-
-- name: golang | setup environment variable 'GOPATH'
-  lineinfile: dest={{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}
-              regexp="{{ item.regexp }}"
-              insertafter="{{ item.insertafter }}"
-              line="{{ item.line }}"
-              create=yes
+    regexp: "{{ item.regexp }}"
+    insertafter: "{{ item.insertafter }}"
+    line: "{{ item.line }}"
+    create: yes
   with_items:
+    - { regexp: '^export PATH="\$PATH:/usr/local/go/bin"', line: 'export PATH="$PATH:/usr/local/go/bin"', insertafter: EOF }
     - { regexp: '^export GOPATH=',                    line: 'export GOPATH="{{ GOLANG_GOPATH }}"', insertafter: EOF }
     - { regexp: '^export PATH="\$PATH:\$GOPATH/bin"', line: 'export PATH="$PATH:$GOPATH/bin"',     insertafter: EOF }

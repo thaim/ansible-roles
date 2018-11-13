@@ -1,29 +1,77 @@
 ---
 
-# install gore
 # REPL for golang
+- name: check gore insatlled
+  shell: /bin/bash -lc "which gore"
+  register: status_gore
+  changed_when: false
+  failed_when: false
+
 - name: golang | install gore
   shell: /bin/bash -lc "go get github.com/motemen/gore"
+  when: status_gore.rc != 0
 
-# install gocode
+
 # コード補完
+- name: check gocode insatlled
+  shell: /bin/bash -lc "which gocode"
+  register: status_gocode
+  changed_when: false
+  failed_when: false
+
 - name: install gocode
   shell: /bin/bash -lc "go get github.com/nsf/gocode"
+  when: status_gocode.rc != 0
 
-# install pp
+
 # Pretty print for golang
 - name: install pp
   shell: /bin/bash -lc "go get github.com/k0kubun/pp"
 
-# install godoc
+
 # command reference library
+- name: check godoc insatlled
+  shell: /bin/bash -lc "which godoc"
+  register: status_godoc
+  changed_when: false
+  failed_when: false
+
 - name: install godoc
   shell: /bin/bash -lc "go get golang.org/x/tools/cmd/godoc"
+  when: status_godoc.rc != 0
+
 
 # official lint tool for go lang
+- name: check golint insatlled
+  shell: /bin/bash -lc "which golint"
+  register: status_golint
+  changed_when: false
+  failed_when: false
+
 - name: install golint
   shell: /bin/bash -lc "go get github.com/golang/lint/golint"
+  when: status_golint.rc != 0
+
 
 # dependnecy manager in vendor
+- name: check glide insatlled
+  shell: /bin/bash -lc "which glide"
+  register: status_glide
+  changed_when: false
+  failed_when: false
+
 - name: install glide
   shell: /bin/bash -lc "go get github.com/Masterminds/glide"
+  when: status_glide.rc != 0
+
+
+# manage remote repository clones
+- name: check ghq insatlled
+  shell: /bin/bash -lc "which ghq"
+  register: status_ghq
+  changed_when: false
+  failed_when: false
+
+- name: install ghq
+  shell: /bin/bash -lc "go get github.com/motemen/ghq"
+  when: status_ghq.rc != 0
