@@ -3,5 +3,3 @@
 # 書き換え対象とするリポジトリURL
 APT_REPOSITORY_URL: 'http://jp.archive.ubuntu.com/ubuntu/'
 
-# 書き換えるミラーリポジトリURL
-APT_MIRROR_URL: 'http://jp.archive.ubuntu.com/ubuntu/'

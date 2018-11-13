@@ -1,0 +1,4 @@
+---
+
+# 書き換えるミラーリポジトリURL
+APT_MIRROR_URL: 'http://jp.archive.ubuntu.com/ubuntu/'
