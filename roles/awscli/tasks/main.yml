@@ -1,7 +1,7 @@
 ---
 
+
 - name: install awscli
-  become: yes
   pip:
     name: awscli
     extra_args: --user
@@ -12,3 +12,11 @@
     regexp: "^export PATH=~/.local/bin:$PATH"
     line: "export PATH=~/.local/bin:$PATH"
     insertafter: "EOF"
+
+
+
+- name: awscli | install aws EB CLI
+  pip:
+    name: awsebcli
+    extra_args: --upgrade --user
+  when: AWSCLI_OPTION_AWSEBCLI == 'yes'

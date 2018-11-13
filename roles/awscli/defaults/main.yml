@@ -1,0 +1,5 @@
+---
+
+# Elastic Beanstalk コマンドラインインターフェイス (EB CLI)
+# https://docs.aws.amazon.com/ja_jp/elasticbeanstalk/latest/dg/eb-cli3.html
+AWSCLI_OPTION_AWSEBCLI: no

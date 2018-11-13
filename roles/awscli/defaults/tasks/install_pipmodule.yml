@@ -1,0 +1,6 @@
+---
+
+- name: awx | install docker.py
+  become: yes
+  pip:
+    name: docker-py
