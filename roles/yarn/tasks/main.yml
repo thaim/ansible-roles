@@ -1,0 +1,10 @@
+---
+
+- name: yarn | check if yarn is installed
+  command: which yarn
+  register: yarn_status
+  changed_when: false
+  failed_when: false
+
+- include_module: install_{{ ansible_distribution }}.yml
+  when: yarn_status.rc != 0

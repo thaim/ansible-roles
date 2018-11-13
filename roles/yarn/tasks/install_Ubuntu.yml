@@ -1,0 +1,18 @@
+---
+
+- name: yarn | add gpg for official yarn repository
+  become: yes
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+
+- name: yarn | add source list for yarn official repository
+  become: yes
+  copy:
+    src: yarn.list
+    dest: /etc/apt/source.list.d/yarn.list
+
+- name: yarn | install yarn
+  become: yes
+  apt:
+    name: yarn
+    update_cache: yes
