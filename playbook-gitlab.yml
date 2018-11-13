@@ -1,0 +1,32 @@
+---
+# 各種公式開発環境
+
+# GitLab Development Kit
+# https://gitlab.com/gitlab-org/gitlab-development-kit/blob/master/doc/prepare.md
+- hosts: gitlab
+  roles:
+    - { role: git,  tags: git,  GIT_INSTALLER: 'extra' }
+    - { role: ruby, tags: ruby, RUBY_VERSION: 2.4.5 }
+    - { role: golang, tags: golang }
+    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 8 }
+    - { role: yarn, tags: yarn }
+  tasks:
+    - name: install denendency packages
+      become: yes
+      apt:
+        name:
+#          - git
+          - postgresql
+          - postgresql-contrib
+          - libpq-dev
+          - redis-server
+          - libicu-dev
+          - cmake
+          - g++
+          - libre2-dev
+          - libkrb5-dev
+          - libsqlite3-dev
+#          - golang-1.10-go
+          - ed
+          - pkg-config
+          - graphicsmagick
