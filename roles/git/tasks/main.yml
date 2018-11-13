@@ -1,6 +1,13 @@
 ---
 
+- name: git | check if git installed
+  command: which git
+  register: status_git
+  changed_when: false
+  failed_when: false
+
 - include: install_{{ ansible_distribution }}.yml
+  when: status_git.rc != 0
 
 # needs to configure global .gitconfig and .gitignore files
 - name: git | copy git config file
