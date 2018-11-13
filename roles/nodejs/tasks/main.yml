@@ -4,6 +4,7 @@
   shell: which node
   register: node_stat
   changed_when: false
+  failed_when: false
 
-- include_modules: install_{{ ansible_distribution }}.yml
+- include_tasks: install_{{ ansible_distribution }}.yml
   when: node_stat.rc != 0
