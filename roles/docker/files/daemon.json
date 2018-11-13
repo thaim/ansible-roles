@@ -1,5 +1,4 @@
 {
-    "live-restore": true,
     "insecure-registries": [
         "service.sryusuke.info",
         "hub.sryusuke.info"

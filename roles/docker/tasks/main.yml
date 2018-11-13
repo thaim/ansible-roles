@@ -6,10 +6,10 @@
   changed_when: false
   register: docker_install
 
-- include: install_{{ ansible_distribution }}.yml
+- include_tasks: install_{{ ansible_distribution }}.yml
   when: docker_install.rc != 0
 
-- include: configure_{{ ansible_distribution }}.yml
+- include_tasks: configure_{{ ansible_distribution }}.yml
   when: DOCKER_APPLY_CUSTOM|default(false) == true
 
 - name: docker | add user as docker user

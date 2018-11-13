@@ -3,7 +3,7 @@
 - name: docker | add docker repo
   become: yes
   get_url:
-    url: https://download.docker.com/linux/centos/docker-ce.repo
+    url: https://download.docker.com/linux/centos/docker.repo
     dest: /etc/yum.repos.d/docker-ce.repo
 
 
