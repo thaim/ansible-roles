@@ -1,6 +1,6 @@
 ---
 
 - name: sphinx | install sphinx
+  become: yes
   pip:
     name: sphinx
-    extra_args: --user

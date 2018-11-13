@@ -3,6 +3,7 @@
 - name: sphinx | install commonmark
   pip:
     name: "{{ item }}"
+    extra_args: --user
   with_items:
     - commonmark
     - recommonmark
@@ -11,4 +12,5 @@
 - name: sphinx | install sphinx_rtd_theme
   pip:
     name: sphinx_rtd_theme
+    extra_args: --user
   when: SPHINX_INSTALL_RTD_THEME == True
