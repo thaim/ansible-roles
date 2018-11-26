@@ -1,0 +1,15 @@
+---
+
+- name: kubectl | install kubectx
+  become: yes
+  get_url:
+    url: "https://raw.githubusercontent.com/ahmetb/kubectx/{{ kubectl_kubectx_version }}/kubectx"
+    dest: /usr/local/bin
+    mode: 0755
+
+- name: kubectl | install kubens
+  become: yes
+  get_url:
+    url: "https://raw.githubusercontent.com/ahmetb/kubectx/{{ kubectl_kubectx_version }}/kubens"
+    dest: /usr/local/bin
+    mode: 0755

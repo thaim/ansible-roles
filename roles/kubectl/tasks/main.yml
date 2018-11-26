@@ -1,4 +1,7 @@
 
 ---
 
-- include: install_{{ ansible_distribution }}.yml
+- include_tasks: install_{{ ansible_distribution }}.yml
+
+- include_tasks: install_extra.yml
+  when: kubectl_install_extra == True

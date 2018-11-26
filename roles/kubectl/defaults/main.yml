@@ -1,0 +1,5 @@
+---
+
+kubectl_install_extra: True
+
+kubectl_kubectx_version: v0.6.1
