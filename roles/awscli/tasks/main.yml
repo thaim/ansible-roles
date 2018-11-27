@@ -13,10 +13,11 @@
     line: "export PATH=~/.local/bin:$PATH"
     insertafter: "EOF"
 
-
-
 - name: awscli | install aws EB CLI
   pip:
     name: awsebcli
     extra_args: --upgrade --user
   when: AWSCLI_OPTION_AWSEBCLI == 'yes'
+
+- import_tasks: install_git_secrets.yml
+
