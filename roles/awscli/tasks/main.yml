@@ -19,5 +19,10 @@
     extra_args: --upgrade --user
   when: AWSCLI_OPTION_AWSEBCLI == 'yes'
 
-- import_tasks: install_git_secrets.yml
+- name: awscli | check if git-secrets directory exist
+  stat:
+    path: {{ ansible_user_dir }}/.git-templates/git-secrets
+  register: result
 
+- include_tasks: install_git_secrets.yml
+  when: not result.stat.exists
