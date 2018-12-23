@@ -5,10 +5,10 @@
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
-- name: gcloud | add docker repo
+- name: gcloud | add sdk repo
   become: yes
-  copy:
-    src: gcloud-sdk-{{ ansible_distribution_release }}.list
+  template:
+    src: gcloud-sdk.list.j2
     dest: /etc/apt/sources.list.d/google-cloud-sdk.list
 
 - name: gcloud | install Google Cloud SDK
