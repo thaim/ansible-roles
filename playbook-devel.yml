@@ -1,0 +1,10 @@
+- hosts: all
+  roles:
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: ghq, tags: ghq }
+    - { role: nfs-client, tags: nfs-client }
+    - { role: docker, tags: docker }
+    - { role: docker-compose, tags: docker-compose }
+    - { role: ansible, tags: ansible }
+    - { role: awscli, tags: awscli }
+    - { role: gcloud, tags: gcloud }
