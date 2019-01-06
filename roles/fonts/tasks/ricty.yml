@@ -16,11 +16,10 @@
     dest: "{{ workdir.path }}/{{ item.dest }}"
   with_items:
     - { src: 'http://www.rs.tus.ac.jp/yyusa/ricty/ricty_generator.sh', dest: 'ricty_generator.sh' }
-    - { src: 'http://www.rs.tus.ac.jp/yyusa/ricty/ricty_discord_converter.pe', dest: 'ricty_discord_converter.pe' }
 
 - name: fonts | clone migu fonts into local
   get_url:
-    url: "http://iij.dl.sourceforge.jp/mix-mplus-ipa/59022/migu-1m-20130617.zip"
+    url: "https://ja.osdn.net/frs/redir.php?m=jaist&f=mix-mplus-ipa%2F63545%2Fmigu-1m-20150712.zip"
     dest: "{{ workdir.path }}/migu-1m.zip"
 
 - name: fonts | clone inconsolata fonts into local
@@ -43,8 +42,8 @@
     dest: "{{ workdir.path }}/{{ item.dest }}"
     remote_src: True
   with_items:
-    - { src: "migu-1m-20130617/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
-    - { src: "migu-1m-20130617/migu-1m-bold.ttf",    dest: "migu-1m-bold.ttf" }
+    - { src: "migu-1m-20150712/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
+    - { src: "migu-1m-20150712/migu-1m-bold.ttf",    dest: "migu-1m-bold.ttf" }
 
 # generator require ttf in same directory:
 #   Inconsolata-Regular.ttf, Inconsolata-Bold.ttf,
