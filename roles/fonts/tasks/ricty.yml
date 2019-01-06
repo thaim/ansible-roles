@@ -1,40 +1,47 @@
 ---
 
 - name: fonts | create work dir
-  file: path={{ workdir }}
-        state=directory
+  file:
+    path: "{{ workdir }}"
+    state: "directory"
 
 - name: fonts | install required package
-  sudo: yes
-  apt: name=fontforge
+  become: yes
+  apt:
+    name: fontforge
 
 - name: fonts | download ricty generator script
-  get_url: url={{ item.src }}
-           dest={{ workdir }}/{{ item.dest }}
+  get_url:
+    url: "{{ item.src }}"
+    dest: "{{ workdir }}/{{ item.dest }}"
   with_items:
     - { src: 'http://www.rs.tus.ac.jp/yyusa/ricty/ricty_generator.sh', dest: 'ricty_generator.sh' }
     - { src: 'http://www.rs.tus.ac.jp/yyusa/ricty/ricty_discord_converter.pe', dest: 'ricty_discord_converter.pe' }
 
 - name: fonts | clone migu fonts into local
-  get_url: url=http://iij.dl.sourceforge.jp/mix-mplus-ipa/59022/migu-1m-20130617.zip
-           dest={{ workdir }}/migu-1m.zip
+  get_url:
+    url: "http://iij.dl.sourceforge.jp/mix-mplus-ipa/59022/migu-1m-20130617.zip"
+    dest: "{{ workdir }}/migu-1m.zip"
 
 - name: fonts | clone inconsolata fonts into local
-  get_url: url={{ item.src }}
-           dest={{ workdir }}/{{ item.dest }}
+  get_url:
+    url: "{{ item.src }}"
+    dest: "{{ workdir }}/{{ item.dest }}"
   with_items:
     - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
     - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
 
 - name: fonts | unarchive migu fonts
-  unarchive: src={{ workdir }}/migu-1m.zip
-             dest="{{ workdir }}"
-             copy=no
+  unarchive:
+    src: "{{ workdir }}/migu-1m.zip"
+    dest: "{{ workdir }}"
+    copy: no
 
 - name: fonts | copy migu fonts
-  copy: src={{ workdir }}/{{ item.src }}
-        dest={{ workdir }}/{{ item.dest }}
-        remote_src=True
+  copy:
+    src: "{{ workdir }}/{{ item.src }}"
+    dest: "{{ workdir }}/{{ item.dest }}"
+    remote_src: True
   with_items:
     - { src: "migu-1m-20130617/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
     - { src: "migu-1m-20130617/migu-1m-bold.ttf",    dest: "migu-1m-bold.ttf" }
@@ -46,12 +53,13 @@
   shell: "cd {{ workdir }} && sh ricty_generator.sh auto"
 
 - name: fonts | create font dir if not exist
-  file: path={{ ansible_env.HOME }}/.fonts
-        state=directory
+  file:
+    path: "{{ ansible_env.HOME }}/.fonts"
+    state: directory
 
 - name: fonts | mv ricty fonts into fonts directory
   shell: cp {{ workdir }}/Ricty*.ttf {{ ansible_env.HOME }}/.fonts
 
 - name: fonts | update font cache
-  sudo: yes
+  become: yes
   command: fc-cache -fv
