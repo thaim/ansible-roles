@@ -6,3 +6,10 @@
     url: "https://storage.googleapis.com/kubernetes-release/release/{{ KUBECTL_VERSION }}/bin/linux/amd64/kubectl"
     dest: /usr/local/bin
     mode: 0755
+
+- name: apply kubectl completion
+  lineinfile:
+    dest: "{{ ansible_user_dir }}/.profile"
+    regexp: "^source <(kubectl completion bash)"
+    line: "source <(kubectl completion bash)"
+    insertafter: "EOF"
