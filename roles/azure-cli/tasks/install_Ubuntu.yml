@@ -1,0 +1,29 @@
+---
+
+- name: azure-cli | install dendencies
+  become: yes
+  apt:
+    pkg:
+      - apt-transport-https
+      - lsb-release
+      - software-properties-common
+      - dirmngr
+
+- name: azure-cli | add source list
+  become: yes
+  template:
+    src: azure-cli.list.j2
+    dest: /etc/apt/sources.list.d/azure-cli.list
+
+- name: azure-cli | add gpg key
+  become: yes
+  apt_key:
+    keyserver: packages.microsoft.com
+    id: BC528686B50D79E339D3721CEB3E94ADBE1229CF
+    keyring: /etc/apt/trusted.gpg.d/Microsoft.gpg
+
+- name: azure-cli | install azure-cli package
+  become: yes
+  apt:
+    name: azure-cli
+    update_cache: yes
