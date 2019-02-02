@@ -6,7 +6,7 @@
 - hosts: all
   roles:
     - { role: git,  tags: git,  GIT_INSTALLER: 'extra' }
-    - { role: ruby, tags: ruby, RUBY_VERSION: 2.4.5 }
+    - { role: ruby, tags: ruby, RUBY_VERSION: 2.5.3 }
     - { role: golang, tags: golang }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 8 }
     - { role: yarn, tags: yarn }
