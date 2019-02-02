@@ -8,3 +8,5 @@
     - { role: ansible, tags: ansible }
     - { role: awscli, tags: awscli }
     - { role: gcloud, tags: gcloud }
+    - { role: azure-cli, tags: azure-cli }
+    - { role: kubectl, tags: kubectl }
