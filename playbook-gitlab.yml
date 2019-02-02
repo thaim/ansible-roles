@@ -3,7 +3,7 @@
 
 # GitLab Development Kit
 # https://gitlab.com/gitlab-org/gitlab-development-kit/blob/master/doc/prepare.md
-- hosts: gitlab
+- hosts: all
   roles:
     - { role: git,  tags: git,  GIT_INSTALLER: 'extra' }
     - { role: ruby, tags: ruby, RUBY_VERSION: 2.4.5 }
