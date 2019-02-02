@@ -12,6 +12,9 @@
 - include_tasks: configure_{{ ansible_distribution }}.yml
   when: DOCKER_APPLY_CUSTOM|default(false) == true
 
+- include_tasks: add_library_{{ ansible_distribution }}.yml
+  when: DOCKER_APPLY_CUSTOM|default(false) == true
+
 - name: docker | add user as docker user
   become: yes
   user: name={{ DOCKER_USER }}
