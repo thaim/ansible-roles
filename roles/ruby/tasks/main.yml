@@ -21,14 +21,14 @@
 # 関連ライブラリのインストール
 - include_tasks: required_libs_{{ ansible_distribution }}.yml
   when: ( rbenv_stat.stdout != '0' ) or
-        ( ruby_stat.stat.exists == False )
+        ( not ruby_stat.stat.exists )
 
 # rbenv, ruby, 汎用gemのインストール
 - include_tasks: rbenv.yml
   when: rbenv_stat.stdout != '0'
 
 - include_tasks: ruby_{{ ansible_distribution }}.yml
-  when: ( ruby_stat.stat.exists == False ) or
+  when: ( not ruby_stat.stat.exists ) or
         ( ruby_ver.stdout == '0' )
 
 - include_tasks: ruby_open_firewall.yml
