@@ -4,6 +4,7 @@
 - name: ruby | install required libraries
   become: yes
   yum:
+    update_cache: yes
     name:
       - gcc
       - gcc-c++

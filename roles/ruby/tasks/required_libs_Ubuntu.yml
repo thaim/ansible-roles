@@ -4,6 +4,7 @@
 - name: ruby | install required libraries
   become: yes
   apt:
+    update_cache: yes
     name:
       - build-essential
       - sqlite3
