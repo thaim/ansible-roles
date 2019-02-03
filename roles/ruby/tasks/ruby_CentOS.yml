@@ -1,7 +1,5 @@
 ---
 
-- include_tasks: ruby_required_libs_{{ ansible_distribution }}.yml
-
 - name: ruby | check if ruby installed version
   command: rbenv version | cut -d ' ' -f 1
   changed_when: false

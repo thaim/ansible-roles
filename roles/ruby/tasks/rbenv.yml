@@ -1,20 +1,5 @@
 ---
 
-- name: ruby | be sure libssl-dev is installed
-  become: yes
-  apt:
-    name: libssl-dev
-    state: latest
-  when: ansible_distribution == 'Ubuntu'
-
-- name: ruby | be sure openssl-devel is installed
-  become: yes
-  yum:
-    name: openssl-devel
-    state: latest
-  when: ansible_distribution == 'CentOS'
-
-
 - name: ruby | clone rbenv repository
   git:
     repo: https://github.com/sstephenson/rbenv.git

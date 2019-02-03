@@ -1,9 +1,5 @@
 ---
 
-- name: ruby | be sure required lib is installed
-  sudo: yes
-  apt: name=libffi-dev state=latest
-
 - name: ruby | check if ruby installed version
   command: rbenv version | cut -d ' ' -f 1
   register: ruby_installed_version

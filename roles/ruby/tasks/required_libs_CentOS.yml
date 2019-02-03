@@ -1,0 +1,15 @@
+---
+# rbenv や rubyに必要なライブラリのインストール
+
+- name: ruby | install required libraries
+  become: yes
+  yum:
+    name:
+      - gcc
+      - gcc-c++
+      - libffi-devel
+      - openssl-devel
+      - readline-devel
+      - zlib-devel
+      - bzip2
+      - sqlite-devel

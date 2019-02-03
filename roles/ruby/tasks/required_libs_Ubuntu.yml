@@ -1,0 +1,13 @@
+---
+# rbenv や rubyに必要なライブラリのインストール
+
+- name: ruby | install required libraries
+  become: yes
+  apt:
+    name:
+      - build-essential
+      - sqlite3
+      - libsqlite3-dev
+      - libssl-dev
+      - libffi-dev
+      - libreadline-dev

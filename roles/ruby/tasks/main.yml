@@ -1,15 +1,11 @@
 ---
 
-# rbenvのイストール
+# rbenvおよびrubyのイストールチェック
 - name: ruby | check rbenv is installed
   shell: which rbenv >/dev/null; echo $?
   register: rbenv_stat
   changed_when: false
 
-- include_tasks: rbenv.yml
-  when: rbenv_stat.stdout != '0'
-
-# rubyのインストール
 - name: ruby | check if ruby is installed
   stat:
     path: "{{ ansible_env.HOME }}/.rbenv/shims/ruby"
@@ -22,18 +18,22 @@
   failed_when:  false
   when: ruby_stat.stat.exists
 
+# 関連ライブラリのインストール
+- include_tasks: required_libs_{{ ansible_distribution }}.yml
+  when: ( rbenv_stat.stdout != '0' ) or
+        ( ruby_stat.stat.exists == False )
+
+# rbenv, ruby, 汎用gemのインストール
+- include_tasks: rbenv.yml
+  when: rbenv_stat.stdout != '0'
+
 - include_tasks: ruby_{{ ansible_distribution }}.yml
   when: ( ruby_stat.stat.exists == False ) or
         ( ruby_ver.stdout == '0' )
-
-- include_tasks: ruby_extra_libs_{{ ansible_distribution }}.yml
-  when:
-    - RUBY_INSTALL_EXTRA_LIBS|default(true) == true
 
 - include_tasks: ruby_open_firewall.yml
   when:
     - ansible_distribution == "CentOS"
     - ansible_distribution_major_version == "7"
 
-# 汎用gemのインストール
 - import_tasks: common_gems.yml

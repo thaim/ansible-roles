@@ -1,6 +1,0 @@
----
-
-- name: install libs for sqlite3
-  become: yes
-  apt:
-    name: libsqlite3-dev
