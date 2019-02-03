@@ -1,3 +1,0 @@
----
-
-- include: install_{{ ansible_distribution }}.yml
