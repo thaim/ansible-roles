@@ -2,6 +2,7 @@
   roles:
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: ghq, tags: ghq }
+    - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
     - { role: docker, tags: docker }
     - { role: docker-compose, tags: docker-compose }
