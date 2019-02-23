@@ -1,0 +1,7 @@
+---
+
+- name: heroku | install heroku
+  become: yes
+  snap:
+    name: heroku
+    classic: yes

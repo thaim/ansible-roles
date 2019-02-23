@@ -1,0 +1,10 @@
+---
+
+- name: heroku | check if heroku cli installed
+  command: which heroku
+  changed_when: false
+  failed_when: false
+  register: heroku
+
+- include_tasks: install_{{ ansible_distribution }}.yml
+  when: heroku.rc != 0
