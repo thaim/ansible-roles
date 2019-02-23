@@ -1,9 +1,16 @@
 - hosts: all
   roles:
+    - { role: kernelconf, tags: kernelconf }
+    - { role: apt, tags: apt, APT_DEVTOOL: True }
+    - { role: dev-library, tags: dev-library }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: ghq, tags: ghq }
     - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
+    - { role: ruby, tags: ruby }
+    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 10 }
+    - { role: yarn, tags: yarn }
+    - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
     - { role: docker-compose, tags: docker-compose }
     - { role: ansible, tags: ansible }
