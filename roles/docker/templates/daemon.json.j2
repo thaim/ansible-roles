@@ -1,0 +1,12 @@
+{
+    "insecure-registries": [
+        {% for item in DOCKER_INSECURE_REGISTRIES %}
+        "{{ item }}"{% if loop.index != loop.length %},{% endif %}
+        {% endfor %}
+    ],
+    "registry-mirrors": [
+        {% for item in DOCKER_REGISTRY_MIRRORS %}
+        "{{ item }}"{% if loop.index != loop.length %},{% endif %}
+        {% endfor %}
+    ]
+}

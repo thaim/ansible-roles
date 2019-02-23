@@ -1,9 +1,0 @@
-{
-    "insecure-registries": [
-        "service.sryusuke.info",
-        "hub.sryusuke.info"
-    ],
-    "registry-mirrors": [
-        "http://hub.sryusuke.info"
-    ]
-}
