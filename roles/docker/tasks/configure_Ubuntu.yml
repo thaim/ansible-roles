@@ -5,7 +5,7 @@
   lineinfile:
     path: /etc/systemd/system/multi-user.target.wants/docker.service
     regexp: '^ExecStart'
-    line: 'ExecStart=/usr/bin/dockerd -H fd:// -H 0.0.0.0'
+    line: 'ExecStart=/usr/bin/dockerd -H unix:// -H 0.0.0.0'
 
 - name: copy docker daemon file
   become: yes
