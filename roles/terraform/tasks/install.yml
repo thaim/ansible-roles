@@ -9,4 +9,6 @@
   become: yes
   unarchive:
     src: "/tmp/terraform.zip"
-    dest: "/usr/local/bin/"
+    dest: /usr/local/bin/
+    copy: no
+    mode: 0755
