@@ -1,0 +1,15 @@
+---
+
+- name: awscli | check if aws ecs cli is installed
+  command: which ecs-cli
+  register: install_ecscli
+  changed_when: false
+  failed_when: false
+
+- name: awscli | install aws ecs cli
+  become: yes
+  get_url:
+    url: https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+    dest: /usr/local/bin/ecs-cli
+    mode: 0755
+  when: install_ecscli.rc != 0

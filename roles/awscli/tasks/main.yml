@@ -19,6 +19,8 @@
     extra_args: --upgrade --user
   when: AWSCLI_OPTION_AWSEBCLI == 'yes'
 
+- include_tasks: install_aws_ecs_cli.yml
+
 - name: awscli | check if git-secrets directory exist
   stat:
     path: "{{ ansible_user_dir }}/.git-templates/git-secrets"
