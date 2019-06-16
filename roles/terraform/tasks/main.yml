@@ -1,0 +1,17 @@
+---
+
+- name: terraform | check if terraform is installed
+  command: which terraform
+  changed_when: false
+  failed_when: false
+  register: terraform_exist
+
+- name: terraform | check if terraform is specified version
+  command: terraform --version
+  changed_when: false
+  failed_when: false
+  register: terraform_version
+
+- include_tasks: install.yml
+  when: terraform_version.stdout | regex_replace('.* v(.*)$', '\\1')
+                                 is version_compare(TERRAFORM_VERSION, '!=')

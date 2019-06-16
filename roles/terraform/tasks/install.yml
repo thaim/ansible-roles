@@ -1,0 +1,12 @@
+---
+
+- name: terraform | download install module
+  get_url:
+    url: "{{ TERRAFORM_DOWNLOAD_URL }}"
+    dest: "/tmp/terraform.zip"
+
+- name: terraform | install terraform
+  become: yes
+  unarchive:
+    src: "/tmp/terraform.zip"
+    dest: "/usr/local/bin/"
