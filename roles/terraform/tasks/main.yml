@@ -15,3 +15,12 @@
 - include_tasks: install.yml
   when: terraform_version.stdout | regex_replace('.* v(.*)$', '\\1')
                                  is version_compare(TERRAFORM_VERSION, '!=')
+
+- name: terraform | check if terraform-docs is installed
+  command: which terraform-docs
+  changed_when: false
+  failed_when: false
+  register: terraform_docs_exist
+
+- include_tasks: install_terraform_docs.yml
+  when: terraform_docs_exist.rc != 0
