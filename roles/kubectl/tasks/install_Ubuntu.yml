@@ -32,6 +32,6 @@
 - name: apply kubectl completion
   lineinfile:
     dest: "{{ ansible_user_dir }}/.profile"
-    regexp: "^source <(kubectl completion bash)"
+    regexp: "^source <\\(kubectl completion bash\\)"
     line: "source <(kubectl completion bash)"
     insertafter: "EOF"
