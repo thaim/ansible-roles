@@ -3,3 +3,5 @@
 kubectl_install_extra: True
 
 kubectl_kubectx_version: v0.6.1
+
+kubectl_kubesec_version: 0.9.2
