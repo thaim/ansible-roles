@@ -1,0 +1,11 @@
+---
+
+- name: R | download RStudio deb
+  get_url:
+    url: "https://download1.rstudio.org/desktop/{{ ansible_distribution_release }}/amd64/rstudio-{{ rlang_rstudio_version }}-amd64.deb"
+    dest: /tmp/rstudio.deb
+
+- name: R | install RStudio
+  become: yes
+  apt:
+    deb: /tmp/rstudio.deb

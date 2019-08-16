@@ -1,0 +1,5 @@
+---
+
+- include_tasks: install_{{ ansible_distribution }}.yml
+
+- include_tasks: install_RStudio_{{ ansible_distribution }}.yml
