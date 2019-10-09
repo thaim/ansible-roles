@@ -1,0 +1,12 @@
+---
+
+- name: clone tfenv
+  git:
+    repo: https://github.com/tfutils/tfenv
+    dest: "{{ ansible_user_dir }}/.tfenv"
+
+- name: add path
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
+    line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
