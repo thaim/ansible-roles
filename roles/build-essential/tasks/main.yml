@@ -4,3 +4,12 @@
   become: yes
   apt: name=build-essential
        state=latest
+
+- name: build-essential | install make tools
+  become: yes
+  apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - make
+    - texinfo

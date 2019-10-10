@@ -1,8 +1,0 @@
----
-
-- name: install modules into user environment
-  pip:
-    name: item
-    extra_args: --user
-  with_items:
-    - awscli
