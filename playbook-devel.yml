@@ -1,8 +1,6 @@
 - hosts: all
   roles:
-    - { role: kernelconf, tags: kernelconf }
     - { role: apt, tags: apt, APT_DEVTOOL: True }
-    - { role: dev-library, tags: dev-library }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
