@@ -1,10 +1,12 @@
 - hosts: all
   roles:
     - { role: apt, tags: apt, APT_DEVTOOL: True }
+    - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
+    - { role: python, tags: python }
     - { role: ruby, tags: ruby }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 10 }
     - { role: yarn, tags: yarn }
