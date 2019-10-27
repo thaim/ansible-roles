@@ -19,3 +19,4 @@
     - { role: gcloud, tags: gcloud }
     - { role: azure-cli, tags: azure-cli }
     - { role: kubectl, tags: kubectl }
+    - { role: hugo, tags: hugo }
