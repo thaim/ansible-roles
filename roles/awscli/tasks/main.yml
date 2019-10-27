@@ -13,14 +13,20 @@
     line: "export PATH=~/.local/bin:$PATH"
     insertafter: "EOF"
 
+
+# option: eb_cli
 - name: awscli | install aws EB CLI
   pip:
     name: awsebcli
     extra_args: --upgrade --user
   when: AWSCLI_OPTION_AWSEBCLI == 'yes'
 
+
+# option: ecs_cli
 - include_tasks: install_aws_ecs_cli.yml
 
+
+# option: git-secrets
 - name: awscli | check if git-secrets directory exist
   stat:
     path: "{{ ansible_user_dir }}/.git-templates/git-secrets"
