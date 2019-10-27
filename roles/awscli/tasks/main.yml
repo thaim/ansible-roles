@@ -34,3 +34,15 @@
 
 - include_tasks: install_git_secrets.yml
   when: not result.stat.exists
+
+
+# option: fargatecli
+- name: awscli | check if fargate cli already installed
+  command: which fargate
+  register: fargatecli_result
+  changed_when: false
+  failed_when: false
+
+- include_tasks: install_fargatecli.yml
+  when: (AWSCLI_OPTION == 'all' and fargatecli_result.rc != 0) or
+        (AWSCLI_OPTION == 'select' and AWSCLI_OPTION_FARGATECLI | default(no) == yes and fargatecli_result.rc != 0)
