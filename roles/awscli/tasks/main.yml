@@ -9,7 +9,7 @@
 - name: setup environment variable for pip local bin
   lineinfile:
     dest: "{{ ansible_user_dir }}/.profile"
-    regexp: "^export PATH=~/.local/bin:$PATH"
+    regexp: '^export PATH=~/.local/bin:\$PATH'
     line: "export PATH=~/.local/bin:$PATH"
     insertafter: "EOF"
 
