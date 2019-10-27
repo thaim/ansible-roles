@@ -1,0 +1,10 @@
+---
+
+- name: hugo | check if hugo is installed
+  command: which hugo
+  changed_when: false
+  failed_when: false
+  register: hugo_stats
+
+- include_tasks: install_{{ ansible_distribution }}.yml
+  when: hugo_stats.rc != 0

@@ -1,0 +1,16 @@
+---
+
+- name: hugo | get latest hugo version
+  uri:
+    url: https://api.github.com/repos/gohugoio/hugo/releases/latest
+  register: result
+
+- name: hugo | download hugo deb package
+  get_url:
+    url: "https://github.com/gohugoio/hugo/releases/download/{{ result.json.tag_name }}/hugo_{{ result.json.tag_name | regex_replace('^v') }}_Linux-64bit.deb"
+    dest: /tmp/hugo.deb
+
+- name: hugo | install hugo from deb
+  become: yes
+  apt:
+    deb: /tmp/hugo.deb
