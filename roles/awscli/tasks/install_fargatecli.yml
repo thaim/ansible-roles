@@ -1,0 +1,17 @@
+---
+
+- name: awscli | get latest version for fargatecli
+  uri:
+    url: https://api.github.com/repos/awslabs/fargatecli/releases/latest
+  register: result
+
+- name: awscli | download installer
+  get_url:
+    url: "https://github.com/awslabs/fargatecli/releases/download/{{ result.json.tag_name }}/fargate-{{ result.json.tag_name }}-linux-amd64.zip"
+    dest: /tmp/fargate.zip
+
+- name: awscli | install faragtecli
+  become: yes
+  unarchive:
+    src: /tmp/fargate.zip
+    dest: /usr/local/bin/
