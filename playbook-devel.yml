@@ -15,7 +15,7 @@
     - { role: docker-compose, tags: docker-compose }
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
-    - { role: awscli, tags: awscli }
+    - { role: awscli, tags: awscli, AWSCLI_OPTION: 'all' }
     - { role: gcloud, tags: gcloud }
     - { role: azure-cli, tags: azure-cli }
     - { role: kubectl, tags: kubectl }
