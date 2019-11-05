@@ -22,3 +22,4 @@
     - { role: azure-cli, tags: azure-cli }
     - { role: kubectl, tags: kubectl }
     - { role: hugo, tags: hugo }
+    - { role: redis, tags: redis }
