@@ -11,8 +11,8 @@
 
 # needs to configure global .gitconfig and .gitignore files
 - name: git | copy git config file
-  copy:
-    src: gitconfig
+  template:
+    src: gitconfig.j2
     dest: /home/{{ ansible_env.USER }}/.gitconfig
     owner: "{{ ansible_env.USER }}"
     mode: 0644
