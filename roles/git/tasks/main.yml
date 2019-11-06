@@ -16,3 +16,10 @@
     dest: /home/{{ ansible_env.USER }}/.gitconfig
     owner: "{{ ansible_env.USER }}"
     mode: 0644
+
+- name: git | copy global gitignore file
+  copy:
+    src: gitignore_global
+    dest: /home/{{ ansible_env.USER }}/.gitignore_global
+    owner: "{{ ansible_env.USER }}"
+    mode: 0644
