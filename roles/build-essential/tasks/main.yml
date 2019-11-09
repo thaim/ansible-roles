@@ -11,6 +11,7 @@
     name: "{{ packages }}"
   vars:
     packages:
+    - automake
     - make
     - texinfo
     - unzip
