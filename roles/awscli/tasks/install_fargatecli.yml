@@ -15,3 +15,10 @@
   unarchive:
     src: /tmp/fargate.zip
     dest: /usr/local/bin/
+  when: ansible_system == 'Linux'
+
+- name: awscli | install faragtecli
+  unarchive:
+    src: /tmp/fargate.zip
+    dest: /usr/local/bin/
+  when: ansible_system == 'Darwin'
