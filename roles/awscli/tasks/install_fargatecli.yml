@@ -7,7 +7,7 @@
 
 - name: awscli | download installer
   get_url:
-    url: "https://github.com/awslabs/fargatecli/releases/download/{{ result.json.tag_name }}/fargate-{{ result.json.tag_name }}-linux-amd64.zip"
+    url: "https://github.com/awslabs/fargatecli/releases/download/{{ result.json.tag_name }}/fargate-{{ result.json.tag_name }}-{{ ansible_system | lower }}-amd64.zip"
     dest: /tmp/fargate.zip
 
 - name: awscli | install faragtecli
