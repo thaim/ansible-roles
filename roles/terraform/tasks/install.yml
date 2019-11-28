@@ -12,3 +12,12 @@
     dest: /usr/local/bin/
     copy: no
     mode: 0755
+  when: ansible_system == 'Linux'
+
+- name: terraform | install terraform
+  unarchive:
+    src: "/tmp/terraform.zip"
+    dest: /usr/local/bin/
+    copy: no
+    mode: 0755
+  when: ansible_system == 'Darwin'
