@@ -1,0 +1,10 @@
+---
+
+- name: golang | download tarballs
+  get_url:
+    url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.Darwin-amd64.tar.gz"
+    dest: "/tmp/go{{ GOLANG_VERSION }}.Darwin-amd64.tar.gz"
+
+- name: golang | install golang
+  become: yes
+  command: tar -C /usr/local -xzf /tmp/go{{ GOLANG_VERSION }}.Darwin-amd64.tar.gz
