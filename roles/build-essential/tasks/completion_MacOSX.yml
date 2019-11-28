@@ -1,0 +1,10 @@
+---
+
+- name: build-essentials | install bash-completion
+  homebrew:
+    name: bash-completion
+
+- name: build-essentials | apply in profile
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    line: '. /usr/local/etc/profile.d/bash_completion.sh'
