@@ -19,3 +19,4 @@
   become: yes
   user: name={{ DOCKER_USER }}
         group=docker
+  when: ansible_system == 'Linux'

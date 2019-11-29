@@ -1,0 +1,5 @@
+---
+
+- name: docker | install docker desktop for mac
+  homebrew_cask:
+    name: docker
