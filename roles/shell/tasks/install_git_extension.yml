@@ -1,0 +1,16 @@
+---
+
+- name: shell | create directory to store extensions if not exist
+  file:
+    path: "{{ ansible_user_dir }}/.shell.d"
+    state: directory
+
+- name: shell | download and store git-prompt.sh
+  get_url:
+    url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh"
+    dest: "{{ ansible_user_dir }}/.shell.d/git-prompt.sh"
+
+- name: shell | download and store git-completion.bash
+  get_url:
+    url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+    dest: "{{ ansible_user_dir }}/.shell.d/git-completion.bash"
