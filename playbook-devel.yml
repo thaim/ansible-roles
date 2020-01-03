@@ -5,6 +5,7 @@
     - { role: apt, tags: apt, APT_DEVTOOL: True }
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
