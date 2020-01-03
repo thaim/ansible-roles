@@ -6,8 +6,17 @@
   failed_when: false
   register: install_golang
 
+- name: golang | check installed golang version
+  shell: /bin/bash -lc 'go version'
+  changed_when: false
+  failed_when: false
+  register: install_golang_version
+  when: install_golang.rc == 0
+
 - include_tasks: install_{{ ansible_distribution }}.yml
-  when: install_golang.rc != 0
+  when: install_golang.rc != 0 or
+        install_golang_version.stdout | regex_replace('go version go(.*) .*', '\\1')
+                                      is version(GOLANG_VERSION, '!=')
 
 - include_tasks: configure_{{ ansible_distribution }}.yml
 

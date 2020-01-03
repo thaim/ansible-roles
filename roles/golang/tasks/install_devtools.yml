@@ -19,7 +19,7 @@
   changed_when: false
   failed_when: false
 
-- name: install gocode
+- name: golang | install gocode
   shell: /bin/bash -lc "go get github.com/nsf/gocode"
   when: status_gocode.rc != 0
 
