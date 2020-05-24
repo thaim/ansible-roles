@@ -1,0 +1,11 @@
+---
+
+- name: rust | check if rust already installed
+  command: bash -lc "which cargo"
+  register: cargo
+  changed_when: false
+  failed_when: false
+
+- name: rust | install rust
+  shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+  when: cargo.stdout == ""
