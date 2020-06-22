@@ -1,0 +1,11 @@
+---
+
+- name: dev-library | install
+  become: yes
+  apt:
+    name:
+      - libssl-dev
+      - libffi-dev
+      - jq
+      - libmysqlclient-dev
+      - libpq-dev

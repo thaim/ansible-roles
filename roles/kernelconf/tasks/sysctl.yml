@@ -1,0 +1,7 @@
+---
+
+- name: kernelconf | set more inotify max_user_watches value
+  become: yes
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: 525288

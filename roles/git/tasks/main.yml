@@ -10,12 +10,14 @@
   when: status_git.rc != 0
 
 # needs to configure global .gitconfig and .gitignore files
+# create backups due to these files are frequently modified locally
 - name: git | copy git config file
   template:
     src: gitconfig.j2
     dest: /home/{{ ansible_env.USER }}/.gitconfig
     owner: "{{ ansible_env.USER }}"
     mode: 0644
+    backup: yes
 
 - name: git | copy global gitignore file
   copy:
@@ -23,3 +25,4 @@
     dest: /home/{{ ansible_env.USER }}/.gitignore_global
     owner: "{{ ansible_env.USER }}"
     mode: 0644
+    backup: yes
