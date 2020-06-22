@@ -6,6 +6,7 @@
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
+    - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
