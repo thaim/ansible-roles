@@ -27,8 +27,8 @@
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
   with_items:
-    - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
-    - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
+    - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/static/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
+    - { src: "https://github.com/google/fonts/raw/master/ofl/inconsolata/static/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
 
 - name: fonts | unarchive migu fonts
   unarchive:
