@@ -1,22 +1,13 @@
 ---
 
-- name: terraform | check if terraform is installed
-  command: which terraform
+- name: check if tfenv installed
+  command: which tfenv
   changed_when: false
   failed_when: false
-  register: terraform_exist
+  register: tfenv_install
 
-- name: terraform | check if terraform is specified version
-  command: terraform --version
-  changed_when: false
-  failed_when: false
-  when: terraform_exist.rc == 0
-  register: terraform_version
-
-- include_tasks: install.yml
-  when: terraform_exist.rc != 0 or
-        terraform_version.stdout | regex_replace('.* v(.*)$', '\\1')
-                                 is version(TERRAFORM_VERSION, '!=')
+- include_tasks: install_tfenv.yml
+  when: tfenv_install.rc != 0
 
 
 - name: terraform | check if terraform-docs is installed
@@ -28,12 +19,3 @@
 - include_tasks: install_terraform_docs.yml
   when: terraform_docs_exist.rc != 0
 
-
-- name: check if tfenv installed
-  command: which tfenv
-  changed_when: false
-  failed_when: false
-  register: tfenv_install
-
-- include_tasks: install_tfenv.yml
-  when: tfenv_install.rc != 0
