@@ -18,9 +18,7 @@
 - name: azure-cli | add gpg key
   become: yes
   apt_key:
-    keyserver: packages.microsoft.com
-    id: BC528686B50D79E339D3721CEB3E94ADBE1229CF
-    keyring: /etc/apt/trusted.gpg.d/Microsoft.gpg
+    url: https://packages.microsoft.com/keys/microsoft.asc
 
 - name: azure-cli | install azure-cli package
   become: yes
