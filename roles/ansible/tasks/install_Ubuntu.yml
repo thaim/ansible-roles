@@ -4,6 +4,8 @@
   become: yes
   apt_repository:
     repo: 'ppa:ansible/ansible'
+  when: ansible_distribution_major_version < "20"
+
 
 - name: ansible | install latest ansible
   become: yes

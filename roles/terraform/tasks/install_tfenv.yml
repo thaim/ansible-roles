@@ -10,3 +10,9 @@
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
     line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
+
+- name: install terraform
+  command: tfenv install {{ TERRAFORM_VERSION }}
+
+- name: use specified terraform version
+  command: tfenv use {{ TERRAFORM_VERSION }}
