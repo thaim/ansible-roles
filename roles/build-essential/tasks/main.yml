@@ -1,11 +1,11 @@
 ---
 
-- name: build-essentials | be sure build-essential is installed
+- name: be sure build-essential is installed
   become: yes
   apt: name=build-essential
        state=latest
 
-- name: build-essential | install make tools
+- name: install make tools
   become: yes
   apt:
     name: "{{ packages }}"
