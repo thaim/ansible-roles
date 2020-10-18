@@ -1,0 +1,9 @@
+---
+
+- name: update inotify max_user_watches
+  become: yes
+  sysctl:
+    name: fs.inotify.max_user_watches
+    value: '524288'
+    reload: yes
+

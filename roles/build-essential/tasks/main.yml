@@ -16,3 +16,7 @@
     - texinfo
     - unzip
     - jq
+    - libmysqlclient-dev
+    - sysstat
+
+- include_tasks: kernel_param.yml
