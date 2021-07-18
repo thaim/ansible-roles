@@ -16,7 +16,6 @@ jobs:
         targets: |
           playbook-devel.yml
         override-deps: |
-          ansible==2.10
-          ansible-lint==4.2.0
+          ansible-lint==5.1.2
         args: ""
       continue-on-error: true
