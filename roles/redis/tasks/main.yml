@@ -1,6 +1,5 @@
 ---
 
-
 - name: redis | check if redis already installed
   command: which redis
   changed_when: false
@@ -9,4 +8,3 @@
 
 - include_tasks: install_{{ ansible_distribution }}.yml
   when: redis_status.rc != 0
-
