@@ -9,3 +9,5 @@ rules:
     max-end: 0
   line-length:
     max: 160
+  truthy:
+    allowed-values: ["true", "false", "yes", "no"]
