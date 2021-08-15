@@ -1,6 +1,6 @@
 ---
 
-kubectl_install_extra: True
+kubectl_install_extra: true
 
 kubectl_kubectx_version: v0.6.1
 

@@ -3,4 +3,4 @@
     name: bundler
     state: latest
     executable: "{{ ansible_env.HOME }}/.rbenv/shims/gem"
-    user_install: False
+    user_install: false
