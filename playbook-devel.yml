@@ -25,3 +25,9 @@
     - { role: kubectl, tags: kubectl }
     - { role: hugo, tags: hugo }
     - { role: redis, tags: redis }
+
+- hosts: devos
+  roles:
+    - { role: build-essential, tags: build-essential }
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
