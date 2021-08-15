@@ -42,6 +42,7 @@
     dest: "{{ workdir.path }}/{{ item.dest }}"
     remote_src: true
   with_items:
+    # yamllint disable rule:commas
     - { src: "migu-1m-20150712/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
     - { src: "migu-1m-20150712/migu-1m-bold.ttf",    dest: "migu-1m-bold.ttf" }
 

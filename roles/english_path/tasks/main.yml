@@ -6,6 +6,7 @@
               insertafter="{{ item.insertafter }}"
               line="{{ item.line }}"
   with_items:
+    # yamllint disable rule:commas
     - { regexp: '^XDG_DESKTOP_DIR',   line: 'XDG_DESKTOP_DIR=\"$HOME/Desktop\"',     insertafter: EOF }
     - { regexp: '^XDG_DOWNLOAD_DIR',  line: 'XDG_DOWNLOAD_DIR=\"$HOME/Download\"',   insertafter: EOF }
     - { regexp: '^XDG_TEMPLATES_DIR', line: 'XDG_TEMPLATES_DIR=\"$HOME/Template\"',  insertafter: EOF }
@@ -20,11 +21,11 @@
   shell: |
     if [ -d {{ ansible_env.HOME }}/{{ item.before }} ]; then mv {{ ansible_env.HOME }}/{{ item.before }} {{ ansible_env.HOME }}/{{ item.after }}; fi
   with_items:
-    - { before: 'デスクトップ', after: 'Desktop'   }
-    - { before: 'ダウンロード', after: 'Download'  }
-    - { before: 'テンプレート', after: 'Template'  }
-    - { before: '公開',         after: 'Public'    }
+    - { before: 'デスクトップ', after: 'Desktop' }
+    - { before: 'ダウンロード', after: 'Download' }
+    - { before: 'テンプレート', after: 'Template' }
+    - { before: '公開',         after: 'Public' }
     - { before: 'ドキュメント', after: 'Documents' }
-    - { before: 'ミュージック', after: 'Music'     }
-    - { before: 'ピクチャ',     after: 'Pictures'  }
-    - { before: 'ビデオ',       after: 'Videos'    }
+    - { before: 'ミュージック', after: 'Music' }
+    - { before: 'ピクチャ',     after: 'Pictures' }
+    - { before: 'ビデオ',       after: 'Videos' }

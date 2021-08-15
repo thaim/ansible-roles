@@ -17,5 +17,6 @@
     regexp: "{{ item.regexp }}"
     insertafter: "{{ item.insertafter }}"
   with_items:
+    # yamllint disable rule:commas
     - { line: 'export PATH="$HOME/.rbenv/bin:$PATH"', regexp: '^export PATH=\"\$HOME/.rbenv/bin:\$PATH\"', insertafter: EOF }
     - { line: 'eval "$(rbenv init -)"',               regexp: '^eval \"\$\(rbenv init -\)\"',               insertafter: EOF }
