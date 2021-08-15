@@ -15,6 +15,7 @@
 - name: shell | setup git prompt
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
+    # yamllint disable rule:line-length
     block: |
       GIT_PS1_SHOWDIRTYSTATE=true
       GIT_PS1_SHOWUPSTREAM=true
