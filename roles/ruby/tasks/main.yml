@@ -15,7 +15,7 @@
   shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv versions | grep -c {{ RUBY_VERSION }}"
   register: ruby_ver
   changed_when: false
-  failed_when:  false
+  failed_when: false
   when: ruby_stat.stat.exists
 
 # 関連ライブラリのインストール
