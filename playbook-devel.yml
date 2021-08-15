@@ -11,7 +11,7 @@
     - { role: nfs-client, tags: nfs-client }
     - { role: python, tags: python }
     - { role: ruby, tags: ruby }
-    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 10 }
+    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
     - { role: yarn, tags: yarn }
     - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
