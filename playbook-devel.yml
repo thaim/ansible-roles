@@ -2,7 +2,7 @@
 
 - hosts: all
   roles:
-    - { role: apt, tags: apt, APT_DEVTOOL: True }
+    - { role: apt, tags: apt, APT_DEVTOOL: true }
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }

@@ -12,4 +12,4 @@
   template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
-    trim_blocks: False
+    trim_blocks: false
