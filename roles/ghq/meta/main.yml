@@ -1,6 +1,6 @@
 ---
 
 dependencies:
-- role: golang
-  vars:
-    GOLANG_INSTALL_DEVTOOLS: false
+  - role: golang
+    vars:
+      GOLANG_INSTALL_DEVTOOLS: false
