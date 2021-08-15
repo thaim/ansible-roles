@@ -16,4 +16,3 @@
 - name: virt-manager | install ask-password
   become: yes
   apt: name=ssh-askpass,ssh-askpass-gnome
-

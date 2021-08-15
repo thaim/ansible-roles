@@ -9,4 +9,3 @@
   sudo: yes
   apt: name=mendeleydesktop
        state=latest
-

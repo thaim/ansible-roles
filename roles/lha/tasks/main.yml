@@ -4,6 +4,3 @@
   sudo: yes
   apt: name=lha-sjis
        state=latest
-
-
-

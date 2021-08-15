@@ -18,4 +18,3 @@
     line: 'export PATH="$PATH:/usr/local/RubyMine-{{ RUBYMINE_VERSION }}/bin"'
     regexp: '^export PATH="\$PATH:/usr/local/RubyMine"'
     insertafter: EOF
-
