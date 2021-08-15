@@ -1,0 +1,12 @@
+---
+
+- name: get latet release assets
+  uri:
+    url: https://api.github.com/repos/rhysd/actionlint/releases/latest
+  register: actionlint_release
+
+- set_fact:
+    actionlint_url: '{{ actionlint_release.json | json_query("assets[*].browser_download_url") | select("contains", "linux_amd64") | list | first }}'
+
+- set_fact:
+    actionlint_version: '{{ actionlint_url | regex_replace(".*download/v([0-9.]*)/.*", "\1") }}'

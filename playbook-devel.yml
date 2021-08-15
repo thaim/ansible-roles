@@ -16,6 +16,7 @@
     - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
     - { role: docker-compose, tags: docker-compose }
+    - { role: github-cli, tags: github-cli }
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
     - { role: awscli, tags: awscli, AWSCLI_OPTION: 'all' }
