@@ -8,6 +8,7 @@
     line: "{{ item.line }}"
     create: yes
   with_items:
+    # yamllint disable rule:commas
     - { regexp: '^export PATH="\$PATH:/usr/local/go/bin"', line: 'export PATH="$PATH:/usr/local/go/bin"', insertafter: EOF }
-    - { regexp: '^export GOPATH=',                    line: 'export GOPATH="{{ GOLANG_GOPATH }}"', insertafter: EOF }
-    - { regexp: '^export PATH="\$PATH:\$GOPATH/bin"', line: 'export PATH="$PATH:$GOPATH/bin"',     insertafter: EOF }
+    - { regexp: '^export GOPATH=',                         line: 'export GOPATH="{{ GOLANG_GOPATH }}"',   insertafter: EOF }
+    - { regexp: '^export PATH="\$PATH:\$GOPATH/bin"',      line: 'export PATH="$PATH:$GOPATH/bin"',       insertafter: EOF }

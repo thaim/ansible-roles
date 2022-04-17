@@ -2,4 +2,3 @@
 
 - name: sudoers | add sudo user
   user: name={{ sudoers_username }}
-        

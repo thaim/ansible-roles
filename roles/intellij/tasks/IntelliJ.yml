@@ -2,7 +2,6 @@
 
 workdir: /tmp/ideaIC-{{ INTELLIJ_VERSION }}
 
-
 - name: intellij | create working directory if not exists
   file:
     path: {{ workdir }}

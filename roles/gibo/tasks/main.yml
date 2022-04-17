@@ -8,4 +8,3 @@
 
 - name: gibo | initialize gibo and creaqte local gitignore files
   command: "{{ ansible_user_dir }}/bin/gibo update"
-

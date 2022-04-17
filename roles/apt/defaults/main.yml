@@ -5,4 +5,4 @@ APT_MIRROR_URL: 'http://jp.archive.ubuntu.com/ubuntu/'
 
 # 開発環境向けカスタマイズの適用有無
 # apt-fileのインストール
-APT_DEVTOOL: False
+APT_DEVTOOL: false

@@ -20,4 +20,3 @@
   sudo: yes
   service: state=started
            enabled=yes
-

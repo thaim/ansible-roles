@@ -18,4 +18,3 @@
 
 - include_tasks: install_terraform_docs.yml
   when: terraform_docs_exist.rc != 0
-

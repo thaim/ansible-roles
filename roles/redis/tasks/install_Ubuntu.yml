@@ -1,8 +1,6 @@
 ---
 
-
 - name: redis | install redis
   become: yes
   apt:
     name: redis
-

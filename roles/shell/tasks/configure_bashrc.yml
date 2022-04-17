@@ -15,8 +15,8 @@
 - name: shell | setup git prompt
   blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
+    # yamllint disable rule:line-length
     block: |
       GIT_PS1_SHOWDIRTYSTATE=true
       GIT_PS1_SHOWUPSTREAM=true
       export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[1;31m\]$(__git_ps1 " (%s)")\[\033[00m\]\n\$ '
-

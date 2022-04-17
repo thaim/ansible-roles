@@ -10,4 +10,4 @@
   when: sphinx_check.rc != 0
 
 - include: install_extra.yml
-  when: SPHINX_INSTALL_EXTRA == True
+  when: SPHINX_INSTALL_EXTRA | bool

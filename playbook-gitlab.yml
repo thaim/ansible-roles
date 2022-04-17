@@ -5,7 +5,7 @@
 # https://gitlab.com/gitlab-org/gitlab-development-kit/blob/master/doc/prepare.md
 - hosts: all
   roles:
-    - { role: git,  tags: git,  GIT_INSTALLER: 'extra' }
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: ruby, tags: ruby, RUBY_VERSION: 2.5.3 }
     - { role: golang, tags: golang }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 8 }

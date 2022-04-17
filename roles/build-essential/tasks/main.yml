@@ -11,12 +11,12 @@
     name: "{{ packages }}"
   vars:
     packages:
-    - automake
-    - make
-    - texinfo
-    - unzip
-    - jq
-    - libmysqlclient-dev
-    - sysstat
+      - automake
+      - make
+      - texinfo
+      - unzip
+      - jq
+      - libmysqlclient-dev
+      - sysstat
 
 - include_tasks: kernel_param.yml
