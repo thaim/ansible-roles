@@ -1,0 +1,4 @@
+---
+
+- name: mackerel | check if mackerel already exist
+  

@@ -6,6 +6,7 @@
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
+    - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
     - { role: nfs-client, tags: nfs-client }
@@ -13,6 +14,7 @@
     - { role: ruby, tags: ruby }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
     - { role: yarn, tags: yarn }
+    - { role: rust, tags: rust }
     - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
     - { role: docker-compose, tags: docker-compose }

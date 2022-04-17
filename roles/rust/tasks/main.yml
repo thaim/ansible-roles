@@ -1,0 +1,32 @@
+---
+
+- name: rust | check if rust already installed
+  command: bash -lc "which cargo"
+  register: cargo
+  changed_when: false
+  failed_when: false
+
+- name: rust | install rust
+  shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+  when: cargo.stdout == ""
+
+
+- name: rust | check nightly already installed
+  command: bash -lc "which nightly"
+  register: nightly
+  changed_when: false
+  failed_when: false
+
+- name: rust | install nightly
+  command: bash -lc "rustup install nightly"
+  when: nightly.stdout == ""
+
+- name: rust | check if racer already installed
+  command: bash -lc "which racer"
+  register: racer
+  changed_when: false
+  failed_when: false
+
+- name: rust | install racer (Rust Code Completion tool)
+  command: bash -lc "cargo install racer"
+  when: racer.stdout == ""
