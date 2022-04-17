@@ -1,0 +1,12 @@
+---
+
+- name: download symbola fonts
+  get_url:
+    url: https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
+    dest: /tmp/symbola.zip
+
+- name: unarchive zip file
+  unarchive:
+    src: /tmp/symbola.zip
+    dest: ~/.fonts/
+    remote_src: yes

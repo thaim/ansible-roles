@@ -11,11 +11,12 @@
     - { role: nfs-client, tags: nfs-client }
     - { role: python, tags: python }
     - { role: ruby, tags: ruby }
-    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 10 }
+    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
     - { role: yarn, tags: yarn }
     - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
     - { role: docker-compose, tags: docker-compose }
+    - { role: github-cli, tags: github-cli }
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
     - { role: awscli, tags: awscli, AWSCLI_OPTION: 'all' }
@@ -24,3 +25,9 @@
     - { role: kubectl, tags: kubectl }
     - { role: hugo, tags: hugo }
     - { role: redis, tags: redis }
+
+- hosts: devos
+  roles:
+    - { role: build-essential, tags: build-essential }
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: shell, tags: shell, SHELL_TYPE: 'bash' }

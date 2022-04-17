@@ -6,5 +6,13 @@
   changed_when: false
   failed_when: false
 
+- name: check nodejs installed version
+  shell: node --version
+  register: node_version
+  changed_when: false
+  failed_when: false
+  when: node_stat.rc == 0
+
 - include_tasks: install_{{ ansible_distribution }}.yml
-  when: node_stat.rc != 0
+  when: node_stat.rc != 0 or
+        node_version.stdout | regex_replace('v(.*)', '\\1') is version(NODEJS_MAJOR_VERSION, '<')

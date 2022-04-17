@@ -22,3 +22,5 @@
 
 - include: ricty.yml
   when: not rr.stat.exists or not rb.stat.exists or not rdr.stat.exists or not rdb.stat.exists
+
+- include: symbola.yml

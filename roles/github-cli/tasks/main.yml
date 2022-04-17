@@ -1,0 +1,7 @@
+---
+
+# - include_tasks: install_{{ ansible_distribution }}_githubcli.yml
+#   when: GITHUBCLI_GITHUBCLI
+
+- include_tasks: install_{{ ansible_distribution }}_actionlint.yml
+  when: GITHUBCLI_ACTIONLINT
