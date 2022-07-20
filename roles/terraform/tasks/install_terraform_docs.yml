@@ -1,4 +1,0 @@
----
-
-- name: terraform | install terraform-docs
-  command: go get github.com/segmentio/terraform-docs
