@@ -8,13 +8,3 @@
 
 - include_tasks: install_tfenv.yml
   when: tfenv_install.rc != 0
-
-
-- name: terraform | check if terraform-docs is installed
-  command: which terraform-docs
-  changed_when: false
-  failed_when: false
-  register: terraform_docs_exist
-
-- include_tasks: install_terraform_docs.yml
-  when: terraform_docs_exist.rc != 0
