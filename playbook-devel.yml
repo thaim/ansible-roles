@@ -17,7 +17,6 @@
     - { role: rust, tags: rust }
     - { role: heroku, tags: heroku }
     - { role: docker, tags: docker }
-    - { role: docker-compose, tags: docker-compose }
     - { role: github-cli, tags: github-cli }
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
