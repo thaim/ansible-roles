@@ -25,3 +25,9 @@
     state: started
 
 # check for require of docker-selinux
+
+
+- name: docker | install docker compose plugin
+  become: yes
+  apt:
+    name: docker-compose-plugin
