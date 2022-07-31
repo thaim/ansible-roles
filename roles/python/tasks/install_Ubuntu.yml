@@ -4,3 +4,20 @@
   become: yes
   apt:
     name: python3-venv
+
+# setup pyenv
+# see: https://github.com/pyenv/pyenv
+
+- name: install pyenv
+  pip:
+    name:
+      - pipenv
+
+- name: setup shell environment for pyenv
+  blockinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK Pyenv"
+    block: |
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init - )"
