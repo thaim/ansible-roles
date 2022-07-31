@@ -8,25 +8,8 @@
   failed_when: false
 
 - name: golang | install gore
-  shell: /bin/bash -lc "go get github.com/motemen/gore"
+  shell: /bin/bash -lc "go install github.com/x-motemen/gore/cmd/gore@latest"
   when: status_gore.rc != 0
-
-
-# コード補完
-- name: check gocode insatlled
-  shell: /bin/bash -lc "which gocode"
-  register: status_gocode
-  changed_when: false
-  failed_when: false
-
-- name: golang | install gocode
-  shell: /bin/bash -lc "go get github.com/nsf/gocode"
-  when: status_gocode.rc != 0
-
-
-# Pretty print for golang
-- name: install pp
-  shell: /bin/bash -lc "go get github.com/k0kubun/pp"
 
 
 # command reference library
@@ -37,7 +20,7 @@
   failed_when: false
 
 - name: install godoc
-  shell: /bin/bash -lc "go get golang.org/x/tools/cmd/godoc"
+  shell: /bin/bash -lc "go install golang.org/x/tools/cmd/godoc@latest"
   when: status_godoc.rc != 0
 
 
@@ -53,18 +36,6 @@
   when: status_golint.rc != 0
 
 
-# dependnecy manager in vendor
-- name: check glide insatlled
-  shell: /bin/bash -lc "which glide"
-  register: status_glide
-  changed_when: false
-  failed_when: false
-
-- name: install glide
-  shell: /bin/bash -lc "go get github.com/Masterminds/glide"
-  when: status_glide.rc != 0
-
-
 # manage remote repository clones
 - name: check ghq insatlled
   shell: /bin/bash -lc "which ghq"
@@ -73,5 +44,5 @@
   failed_when: false
 
 - name: install ghq
-  shell: /bin/bash -lc "go get github.com/motemen/ghq"
+  shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
   when: status_ghq.rc != 0
