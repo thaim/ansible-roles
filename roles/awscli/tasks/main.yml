@@ -12,28 +12,33 @@
     dest: /tmp/
     remote_src: yes
 
+- name: check if awscli already installed
+  command: which aws
+  changed_when: false
+  failed_when: false
+  register: which_awscli
+
+- name: set awscli install option
+  set_fact:
+    AWSCLI_INSTALL_OPTION: '--update'
+  when: which_awscli.rc == 0
+
 - name: install awscli v2
   become: yes
-  shell: /tmp/aws/install
-
-- name: setup environment variable for pip local bin
-  lineinfile:
-    dest: "{{ ansible_user_dir }}/.profile"
-    regexp: '^export PATH=~/.local/bin:\$PATH'
-    line: "export PATH=~/.local/bin:$PATH"
-    insertafter: "EOF"
-
+  shell: /tmp/aws/install {{ AWSCLI_INSTALL_OPTION | default(omit) }}
 
 # option: eb_cli
 - name: awscli | install aws EB CLI
   pip:
     name: awsebcli
     extra_args: --upgrade --user
-  when: AWSCLI_OPTION_AWSEBCLI == 'yes'
+  when: AWSCLI_OPTION == 'all' or AWSCLI_OPTION_AWSEBCLI|default(false)
 
 
 # option: ecs_cli
-- include_tasks: install_aws_ecs_cli.yml
+- name: include task to install ecs cli
+  include_tasks: install_aws_ecs_cli.yml
+  when: AWSCLI_OPTION == 'all' or AWSCLI_OPTION_ECS_CLI|default(false)
 
 
 # option: git-secrets
@@ -43,7 +48,9 @@
   register: result
 
 - include_tasks: install_git_secrets.yml
-  when: not result.stat.exists
+  when:
+    - not result.stat.exists
+    - AWSCLI_OPTION == 'all' or AWSCLI_OPTION_GIT_SECRETS|default(false)
 
 
 # option: fargatecli

@@ -2,3 +2,4 @@
 
 dependencies:
   - pip-pip3
+  - unzip
