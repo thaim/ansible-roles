@@ -2,7 +2,7 @@
 
 - name: intellij | check if IntelliJ IDEA is installed
   stat:
-    path: {{ installdir }}
+    path: "{{ installdir }}"
   register: intellij_bin
   changed_when: false
 
@@ -13,5 +13,5 @@
   become: yes
   file:
     path: /usr/local/bin/intellij
-    src: {{ installdir }}/bin/idea.sh
+    src: "{{ installdir }}/bin/idea.sh"
     state: link
