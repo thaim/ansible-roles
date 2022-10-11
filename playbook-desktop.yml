@@ -1,0 +1,12 @@
+# for Desktop setup
+
+- hosts: all
+  roles:
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
+    - { role: fonts, tags: fonts }
+    - { role: golang, tags: golang }
+    - { role: ghq, tags: ghq }
+    - { role: nfs-client, tags: nfs-client }
+    # intellij
+    # RStudio

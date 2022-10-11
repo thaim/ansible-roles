@@ -9,7 +9,6 @@
     - { role: fonts, tags: fonts }
     - { role: nfs-client, tags: nfs-client }
     - { role: docker, tags: docker }
-    - { role: docker-compose, tags: docker-compose }
     - { role: github-cli, tags: github-cli }
 
 - hosts: webapp

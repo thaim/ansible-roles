@@ -1,21 +1,22 @@
 ---
 
-workdir: /tmp/ideaIC-{{ INTELLIJ_VERSION }}
+- set_fact:
+    workdir: /tmp/ideaIC-{{ INTELLIJ_VERSION }}
 
 - name: intellij | create working directory if not exists
   file:
-    path: {{ workdir }}
+    path: "{{ workdir }}"
     state: directory
 
 - name: intellij | download IntelliJ IDEA tarball
   get_url:
     url: https://download.jetbrains.com/idea/ideaIC-{{ INTELLIJ_VERSION }}.tar.gz
-    dest: {{ workdir }}/ideaIC-{{ INTELLIJ_VERSION }}.tar.gz
+    dest: "{{ workdir }}/ideaIC-{{ INTELLIJ_VERSION }}.tar.gz"
 
 - name: intellij | unarchive IntelliJ IDEA tarbarll
   unarchive:
-    src: {{ workdir }}/ideaIC-{{ INTELLIJ_VERSION }}.tar.gz
-    dest: {{ workdir }}
+    src: "{{ workdir }}/ideaIC-{{ INTELLIJ_VERSION }}.tar.gz"
+    dest: "{{ workdir }}"
     copy: no
 
 - name: intellij | get unarchived direcotory name
@@ -30,7 +31,7 @@ workdir: /tmp/ideaIC-{{ INTELLIJ_VERSION }}
 - name: intellij | change owner to user
   become: yes
   file:
-    path: {{ INTELLIJ_INSTALL_DIR }}
-    owner: {{ USER_NAME }}
-    group: {{ USER_NAME }}
+    path: "{{ INTELLIJ_INSTALL_DIR }}"
+    owner: "{{ USER_NAME }}"
+    group: "{{ USER_NAME }}"
     recurse: yes
