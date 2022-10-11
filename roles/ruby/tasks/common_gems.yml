@@ -1,5 +1,7 @@
+---
+
 - name: install bundler
-  gem:
+  community.general.gem:
     name: bundler
     state: latest
     executable: "{{ ansible_env.HOME }}/.rbenv/shims/gem"
