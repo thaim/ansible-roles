@@ -32,9 +32,10 @@
   changed_when: false
   failed_when: false
 
-- name: install golint
-  shell: /bin/bash -lc "go get golang.org/x/lint/golint"
-  when: status_golint.rc != 0
+- name: install staticcheck for go lint
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
+  shell: /bin/bash -lc "go install honnef.co/go/tools/cmd/staticcheck@latest"
+  when: status_staticcheck.rc != 0
 
 
 # manage remote repository clones
