@@ -19,4 +19,6 @@
 
 - name: golang | install golang
   become: yes
-  command: tar -C /usr/local -xzf /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
+  unarchive:
+    src: /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
+    dest: /usr/local
