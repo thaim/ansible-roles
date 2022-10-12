@@ -17,6 +17,7 @@
   register: tfsec_install
 
 - name: install tfsec
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "go install github.com/aquasecurity/tfsec/cmd/tfsec@latest"
   when: tfsec_install.rc != 0
 
@@ -35,6 +36,5 @@
 
 - name: install tflint
   become: yes
-  shell:
-    cmd: bash /tmp/install_tflint_linux.sh
+  command: bash /tmp/install_tflint_linux.sh
   when: tflint_install.rc != 0

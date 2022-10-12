@@ -2,47 +2,55 @@
 
 # REPL for golang
 - name: check gore insatlled
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "which gore"
   register: status_gore
   changed_when: false
   failed_when: false
 
 - name: golang | install gore
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "go install github.com/x-motemen/gore/cmd/gore@latest"
   when: status_gore.rc != 0
 
 
 # command reference library
 - name: check godoc insatlled
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "which godoc"
   register: status_godoc
   changed_when: false
   failed_when: false
 
 - name: install godoc
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "go install golang.org/x/tools/cmd/godoc@latest"
   when: status_godoc.rc != 0
 
 
-# official lint tool for go lang
-- name: check golint insatlled
-  shell: /bin/bash -lc "which golint"
-  register: status_golint
+# lint tool for go lang
+- name: check staticcheck insatlled
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
+  shell: /bin/bash -lc "which staticcheck"
+  register: status_staticcheck
   changed_when: false
   failed_when: false
 
-- name: install golint
-  shell: /bin/bash -lc "go get golang.org/x/lint/golint"
-  when: status_golint.rc != 0
+- name: install staticcheck for go lint
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
+  shell: /bin/bash -lc "go install honnef.co/go/tools/cmd/staticcheck@latest"
+  when: status_staticcheck.rc != 0
 
 
 # manage remote repository clones
 - name: check ghq insatlled
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "which ghq"
   register: status_ghq
   changed_when: false
   failed_when: false
 
 - name: install ghq
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
   when: status_ghq.rc != 0

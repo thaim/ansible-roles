@@ -6,8 +6,14 @@
   changed_when: false
   failed_when: false
 
-- name: rust | install rust
-  shell: curl -sSf https://sh.rustup.rs | sh -s -- -y
+- name: rust | get rust install script
+  get_url:
+    url: https://sh.rustup.rs
+    dest: /tmp/rustup.sh
+  when: cargo.stdout == ""
+
+- name: rust | install rust with script
+  command: sh /tmp/rustup.sh
   when: cargo.stdout == ""
 
 

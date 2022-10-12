@@ -1,6 +1,6 @@
 ---
 
 - name: git | be sure git is installed
-  shell: /usr/local/bin/brew install git
+  command: /usr/local/bin/brew install git
   register: brew_git
   changed_when: '"already installed" not in brew_git.stdout'

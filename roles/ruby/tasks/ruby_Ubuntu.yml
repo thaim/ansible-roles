@@ -6,12 +6,12 @@
   changed_when: false
 
 - name: ruby | be sure ruby is installed
-  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}"
+  command: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}"
   when: ( ruby_installed_version.stdout == 'system' ) or
         ( ruby_installed_version.stdout is version(RUBY_VERSION, '<') )
 
 - name: ruby | update rbenv
-  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv rehash"
+  command: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv rehash"
 
 - name: ruby | specify global configure
-  shell: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv global {{ RUBY_VERSION }}"
+  command: "{{ ansible_env.HOME }}/.rbenv/bin/rbenv global {{ RUBY_VERSION }}"
