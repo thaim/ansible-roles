@@ -25,7 +25,7 @@
 
 - name: install awscli v2
   become: yes
-  shell: /tmp/aws/install {{ AWSCLI_INSTALL_OPTION | default(omit) }}
+  command: /tmp/aws/install {{ AWSCLI_INSTALL_OPTION | default(omit) }}
 
 # option: eb_cli
 - name: awscli | install aws EB CLI

@@ -1,13 +1,13 @@
 ---
 
 - name: nodejs | check if nodejs is installed
-  shell: which node
+  command: which node
   register: node_stat
   changed_when: false
   failed_when: false
 
 - name: check nodejs installed version
-  shell: node --version
+  command: node --version
   register: node_version
   changed_when: false
   failed_when: false
