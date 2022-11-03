@@ -6,3 +6,4 @@ My ansible playbooks
 Run `ansible-galaxy collection install <module>` to install modules below:
 
 - community.general
+- ansible.posix
