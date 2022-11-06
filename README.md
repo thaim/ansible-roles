@@ -3,6 +3,4 @@ My ansible playbooks
 
 
 ## required modules
-Run `ansible-galaxy collection install <module>` to install modules below:
-
-- community.general
+Run `ansible-galaxy install -r requirements.yml` to install modules.

@@ -22,3 +22,4 @@
   unarchive:
     src: /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
     dest: /usr/local
+    remote_src: yes
