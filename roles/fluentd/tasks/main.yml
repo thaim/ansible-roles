@@ -1,0 +1,4 @@
+---
+
+- name: setup fluentd
+  include_tasks: install_{{ FLUENTD_PACKAGE }}_{{ ansible_distribution }}.yml
