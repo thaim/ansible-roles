@@ -5,15 +5,15 @@ on: pull_request
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    name: Lint Ansible Playbook
     steps:
       - uses: actions/checkout@v3
 
-      - name: Lint Ansible Playbook
       - uses: actions/setup-python@v2
         with:
           python-version: 3.6
-      - name: run ansible-lint
+
+      - name: run ansible-lint on reviewdog
         uses: reviewdog/action-ansiblelint@v1
         with:
           github_token: ${{ secrets.github_token }}
