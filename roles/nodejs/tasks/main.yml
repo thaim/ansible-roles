@@ -1,18 +1,12 @@
 ---
 
-- name: nodejs | check if nodejs is installed
-  command: which node
-  register: node_stat
+- name: check nodenv is installed
+  ansible.builtin.command: which nodenv
   changed_when: false
   failed_when: false
+  register: nodenv_stat
 
-- name: check nodejs installed version
-  command: node --version
-  register: node_version
-  changed_when: false
-  failed_when: false
-  when: node_stat.rc == 0
+- name: setup nodenv
+  include_tasks: install_{{ ansible_distribution }}.yml
+  when: nodenv_stat.rc != 0
 
-- include_tasks: install_{{ ansible_distribution }}.yml
-  when: node_stat.rc != 0 or
-        node_version.stdout | regex_replace('v(.*)', '\\1') is version(NODEJS_MAJOR_VERSION, '<')

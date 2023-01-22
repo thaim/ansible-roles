@@ -1,16 +1,30 @@
 ---
 
-- name: nodejs | download repo install script
-  get_url:
-    url: https://deb.nodesource.com/setup_{{ NODEJS_MAJOR_VERSION }}.x
-    dest: /tmp/setup.sh
-    mode: 0755
+- name: clone nodenv into ~/.nodenv
+  ansible.builtin.git:
+    repo: 'https://github.com/nodenv/nodenv'
+    dest: "{{ ansible_env.HOME }}/.nodenv"
 
-- name: nodejs | add nodejs repository
-  become: yes
-  command: /tmp/setup.sh
+- name: add nodenv bin to PATH
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.profile"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK for nodenv"
+    block: |
+      export PATH="$HOME/.nodenv/bin:$PATH"
+      eval "$(nodenv init -)"
 
-- name: nodejs | install nodejs
-  become: yes
-  apt:
-    name: nodejs
+- name: create nodenv plugin directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.nodenv/plugins"
+    state: directory
+
+- name: clone nodenv-build into ~/.nodenv/plugins/
+  ansible.builtin.git:
+    repo: 'https://github.com/nodenv/node-build'
+    dest: "{{ ansible_env.HOME }}/.nodenv/plugins/node-build"
+
+- name: install default node.js
+  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"
+
+- name: enable node.js for global
+  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"
