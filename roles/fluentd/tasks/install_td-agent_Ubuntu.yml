@@ -1,12 +1,12 @@
 ---
 
-- name: check td-agent already installed
+- name: Check td-agent already installed
   ansible.builtin.command: which td-agent
   changed_when: false
   failed_when: false
   register: which_tdagent
 
-- name: check td-agent version
+- name: Check td-agent version
   ansible.builtin.command: td-agent --version
   changed_when: false
   failed_when: false
@@ -14,14 +14,14 @@
   register: version_tdagent
 
 
-- name: download install script
+- name: Download install script
   ansible.builtin.get_url:
     url: https://toolbelt.treasuredata.com/sh/install-ubuntu-{{ ansible_distribution_release }}-td-agent4.sh
     dest: /tmp/install-td-agent4.sh
     mode: '0755'
   when: which_tdagent.rc != 0
 
-- name: install td-agent
+- name: Install td-agent
   become: yes
   ansible.builtin.shell: /tmp/install-td-agent4.sh
   when: which_tdagent.rc != 0
