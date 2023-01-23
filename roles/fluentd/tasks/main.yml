@@ -2,3 +2,30 @@
 
 - name: setup fluentd
   include_tasks: install_{{ FLUENTD_PACKAGE }}_{{ ansible_distribution }}.yml
+
+- name: setup fluentd.conf file
+  become: yes
+  ansible.builtin.copy:
+    src: td-agent.conf
+    dest: /etc/td-agent/td-agent.conf
+  register: fluentd_conf
+
+- name: create fluentd conf directory
+  become: yes
+  ansible.builtin.file:
+    path: /etc/td-agent/td-agent.conf.d
+    state: directory
+
+- name: configure persistent log
+  become: yes
+  ansible.builtin.template:
+    src: persistent.conf.j2
+    dest: /etc/td-agent/td-agent.conf.d/persistent.conf
+  register: fluentd_conf_persistent
+
+- name: reload fluentd
+  become: yes
+  ansible.builtin.systemd:
+    name: td-agent
+    state: reloaded
+  when: fluentd_conf.changed or fluentd_conf_persistent.changed
