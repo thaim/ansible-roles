@@ -19,8 +19,9 @@
     url: https://toolbelt.treasuredata.com/sh/install-ubuntu-{{ ansible_distribution_release }}-td-agent4.sh
     dest: /tmp/install-td-agent4.sh
     mode: '0755'
-
+  when: which_tdagent.rc != 0
 
 - name: install td-agent
   become: yes
   ansible.builtin.shell: /tmp/install-td-agent4.sh
+  when: which_tdagent.rc != 0
