@@ -1,0 +1,7 @@
+---
+
+- name: Reload fluentd.service
+  become: yes
+  ansible.builtin.systemd:
+    name: td-agent
+    state: reloaded

@@ -8,5 +8,6 @@
     - { role: golang, tags: golang }
     - { role: ghq, tags: ghq }
     - { role: nfs-client, tags: nfs-client }
+    - { role: fluentd, tags: fluentd }
     # intellij
     # RStudio

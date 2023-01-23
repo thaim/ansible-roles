@@ -1,0 +1,23 @@
+<source>
+  @type tail
+  path /var/log/syslog
+  tag  persistence.log
+
+  <parse>
+    @type syslog
+  </parse>
+</source>
+
+<match persistence.log>
+  @type loki
+
+  url "https://{{ FLUENTD_GRAFANA_ENDPOINT }}"
+  username "{{ FLUENTD_GRAFANA_USERNAME }}"
+  password "{{ FLUENTD_GRAFANA_PASSWORD }}"
+
+  flush_interval 10s
+  flush_at_shutdown true
+  buffer_chunk_limit 1m
+
+  extra_labels {"env":"dev"}
+</match>
