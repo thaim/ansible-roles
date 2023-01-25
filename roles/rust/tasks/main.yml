@@ -1,40 +1,40 @@
 ---
 
-- name: rust | check if rust already installed
+- name: Check if rust already installed
   command: bash -lc "which cargo"
   register: cargo
   changed_when: false
   failed_when: false
 
-- name: rust | get rust install script
+- name: Get rust install script
   get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rustup.sh
   when: cargo.rc != 0
 
-- name: rust | install rust with script
+- name: Install rust with script
   command: sh /tmp/rustup.sh -y
   when: cargo.rc != 0
 
 
 # LSP for rust
-- name: check rust-analyzer already installed
+- name: Check rust-analyzer already installed
   command: bash -lc "which rust-analyzer"
   changed_when: false
   failed_when: false
   register: rust_analyzer
 
-- name: download rust-analyzer
+- name: Download rust-analyzer
   ansible.builtin.get_url:
     url: https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz
     dest: /tmp/rust-analyzer.gz
   when: rust_analyzer.rc != 0
 
-- name: unarchive rust-analyzer
+- name: Unarchive rust-analyzer
   ansible.builtin.shell: gzip -d /tmp/rust-analyzer.gz -c > ~/.local/bin/rust-analyzer
   when: rust_analyzer.rc != 0
 
-- name: change rust-analyzer as executable
+- name: Change rust-analyzer as executable
   ansible.builtin.file:
     path: ~/.local/bin/rust-analyzer
     mode: '0775'
