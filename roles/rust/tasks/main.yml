@@ -20,7 +20,7 @@
 
 # LSP for rust
 - name: Check rust-analyzer already installed
-  command: bash -lc "which rust-analyzer"
+  ansible.builtin.command: bash -lc "which rust-analyzer"
   changed_when: false
   failed_when: false
   register: rust_analyzer
