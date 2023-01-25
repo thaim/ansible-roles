@@ -10,6 +10,7 @@
   ansible.builtin.get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rustup.sh
+    mode: '0644'
   when: cargo.rc != 0
 
 - name: Install rust with script
