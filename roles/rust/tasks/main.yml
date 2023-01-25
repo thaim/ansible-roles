@@ -1,38 +1,43 @@
 ---
 
-- name: rust | check if rust already installed
-  command: bash -lc "which cargo"
+- name: Check if rust already installed
+  ansible.builtin.command: bash -lc "which cargo"
   register: cargo
   changed_when: false
   failed_when: false
 
-- name: rust | get rust install script
-  get_url:
+- name: Get rust install script
+  ansible.builtin.get_url:
     url: https://sh.rustup.rs
     dest: /tmp/rustup.sh
-  when: cargo.stdout == ""
+    mode: '0644'
+  when: cargo.rc != 0
 
-- name: rust | install rust with script
-  command: sh /tmp/rustup.sh
-  when: cargo.stdout == ""
+- name: Install rust with script
+  ansible.builtin.command: sh /tmp/rustup.sh -y
+  when: cargo.rc != 0
 
 
-- name: rust | check nightly already installed
-  command: bash -lc "which nightly"
-  register: nightly
+# LSP for rust
+- name: Check rust-analyzer already installed
+  ansible.builtin.command: bash -lc "which rust-analyzer"
   changed_when: false
   failed_when: false
+  register: rust_analyzer
 
-- name: rust | install nightly
-  command: bash -lc "rustup install nightly"
-  when: nightly.stdout == ""
+- name: Download rust-analyzer
+  ansible.builtin.get_url:
+    url: https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz
+    dest: /tmp/rust-analyzer.gz
+    mode: '0644'
+  when: rust_analyzer.rc != 0
 
-- name: rust | check if racer already installed
-  command: bash -lc "which racer"
-  register: racer
-  changed_when: false
-  failed_when: false
+- name: Unarchive rust-analyzer
+  ansible.builtin.shell: gzip -d /tmp/rust-analyzer.gz -c > ~/.local/bin/rust-analyzer
+  when: rust_analyzer.rc != 0
 
-- name: rust | install racer (Rust Code Completion tool)
-  command: bash -lc "cargo install racer"
-  when: racer.stdout == ""
+- name: Change rust-analyzer as executable
+  ansible.builtin.file:
+    path: ~/.local/bin/rust-analyzer
+    mode: '0775'
+  when: rust_analyzer.rc != 0
