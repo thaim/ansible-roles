@@ -36,3 +36,18 @@
 - name: rust | install racer (Rust Code Completion tool)
   command: bash -lc "cargo install racer"
   when: racer.stdout == ""
+
+# LSP for rust
+- name: check rust-analyzer already installed
+  command: bash -lc "which rust-analyzer"
+  changed_when: false
+  failed_when: false
+  register: rust_analyzer
+
+- name: install rust-analyzer
+  ansible.builtin.unarchive:
+    src: https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz
+    dest: ~/.local/bin
+    remote_src: yes
+    mode: '0755'
+  when: rust_analyzer.rc != 0
