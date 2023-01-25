@@ -13,7 +13,7 @@
   when: cargo.stdout == ""
 
 - name: rust | install rust with script
-  command: sh /tmp/rustup.sh
+  command: sh /tmp/rustup.sh -y
   when: cargo.stdout == ""
 
 
