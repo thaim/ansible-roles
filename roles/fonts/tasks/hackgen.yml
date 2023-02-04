@@ -1,0 +1,13 @@
+---
+
+- name: download hackgen
+  ansible.builtin.get_url:
+    url: https://github.com/yuru7/HackGen/releases/download/{{ FONT_HACKGEN_VERSION }}/HackGen_{{ FONT_HACKGEN_VERSION }}.zip
+    dest: /tmp/hackgen.zip
+
+- name: unarchive font file
+  ansible.builtin.unarchive:
+    src: /tmp/hackgen.zip
+    dest: ~/.fonts/
+    remote_src: yes
+    extra_opts: "-j"
