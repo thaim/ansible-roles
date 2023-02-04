@@ -1,46 +1,51 @@
 ---
 
-- name: fonts | create work dir
-  tempfile:
+- name: Create work dir
+  ansible.builtin.tempfile:
     state: directory
   register: workdir
 
-- name: fonts | install required package
+- name: Install required package
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: fontforge
 
-- name: fonts | download ricty generator script
-  get_url:
+- name: Download ricty generator script
+  ansible.builtin.get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
+    mode: "0644"
   with_items:
     - { src: 'https://rictyfonts.github.io/files/ricty_generator.sh', dest: 'ricty_generator.sh' }
 
-- name: fonts | clone migu fonts into local
-  get_url:
+- name: Clone migu fonts into local
+  ansible.builtin.get_url:
     url: "https://ja.osdn.net/frs/redir.php?m=jaist&f=mix-mplus-ipa%2F63545%2Fmigu-1m-20150712.zip"
     dest: "{{ workdir.path }}/migu-1m.zip"
+    mode: "0644"
 
-- name: fonts | clone inconsolata fonts into local
-  get_url:
+- name: Clone inconsolata fonts into local
+  ansible.builtin.get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
+    mode: "0644"
   with_items:
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
 
-- name: fonts | unarchive migu fonts
-  unarchive:
+- name: Unarchive migu fonts
+  ansible.builtin.unarchive:
     src: "{{ workdir.path }}/migu-1m.zip"
     dest: "{{ workdir.path }}"
     copy: no
+    mode: "0644"
 
-- name: fonts | copy migu fonts
-  copy:
+- name: Copy migu fonts
+  ansible.builtin.copy:
     src: "{{ workdir.path }}/{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
     remote_src: true
+    mode: "0644"
   with_items:
     # yamllint disable rule:commas
     - { src: "migu-1m-20150712/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
@@ -49,17 +54,26 @@
 # generator require ttf in same directory:
 #   Inconsolata-Regular.ttf, Inconsolata-Bold.ttf,
 #   migu-1m-regular.ttf, migu-1m-bold.ttf
-- name: fonts | run ricty generate script
-  shell: "cd {{ workdir.path }} && sh ricty_generator.sh auto"
+- name: Run ricty generate script
+  ansible.builtin.shell: "cd {{ workdir.path }} && sh ricty_generator.sh auto"
+  register: ricty_generator_script
+  changed_when: ricty_generator_script.rc != 0
 
-- name: fonts | create font dir if not exist
-  file:
+- name: Create font dir if not exist
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.fonts"
     state: directory
+    mode: "0775"
 
-- name: fonts | mv ricty fonts into fonts directory
-  shell: cp {{ workdir.path }}/Ricty*.ttf {{ ansible_env.HOME }}/.fonts
+- name: Move ricty fonts into fonts directory
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.fonts"
+    remote_src: yes
+    mode: "0644"
+  with_fileglob: "{{ workdir.path }}/Ricty*.ttf"
 
-- name: fonts | update font cache
+- name: Update font cache
   become: yes
-  command: fc-cache -fv
+  ansible.builtin.command: fc-cache -fv
+  changed_when: true  # 更新の有無を判断する方法がないので常に変更されることを想定する
