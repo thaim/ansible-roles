@@ -1,28 +1,28 @@
 ---
 
-- name: fonts | create work dir
+- name: Create work dir
   tempfile:
     state: directory
   register: workdir
 
-- name: fonts | install required package
+- name: Install required package
   become: yes
   apt:
     name: fontforge
 
-- name: fonts | download ricty generator script
+- name: Download ricty generator script
   get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
   with_items:
     - { src: 'https://rictyfonts.github.io/files/ricty_generator.sh', dest: 'ricty_generator.sh' }
 
-- name: fonts | clone migu fonts into local
+- name: Clone migu fonts into local
   get_url:
     url: "https://ja.osdn.net/frs/redir.php?m=jaist&f=mix-mplus-ipa%2F63545%2Fmigu-1m-20150712.zip"
     dest: "{{ workdir.path }}/migu-1m.zip"
 
-- name: fonts | clone inconsolata fonts into local
+- name: Clone inconsolata fonts into local
   get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
@@ -30,13 +30,13 @@
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
 
-- name: fonts | unarchive migu fonts
+- name: Unarchive migu fonts
   unarchive:
     src: "{{ workdir.path }}/migu-1m.zip"
     dest: "{{ workdir.path }}"
     copy: no
 
-- name: fonts | copy migu fonts
+- name: Copy migu fonts
   copy:
     src: "{{ workdir.path }}/{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
@@ -49,17 +49,17 @@
 # generator require ttf in same directory:
 #   Inconsolata-Regular.ttf, Inconsolata-Bold.ttf,
 #   migu-1m-regular.ttf, migu-1m-bold.ttf
-- name: fonts | run ricty generate script
+- name: Run ricty generate script
   shell: "cd {{ workdir.path }} && sh ricty_generator.sh auto"
 
-- name: fonts | create font dir if not exist
+- name: Create font dir if not exist
   file:
     path: "{{ ansible_env.HOME }}/.fonts"
     state: directory
 
-- name: fonts | mv ricty fonts into fonts directory
+- name: Move ricty fonts into fonts directory
   shell: cp {{ workdir.path }}/Ricty*.ttf {{ ansible_env.HOME }}/.fonts
 
-- name: fonts | update font cache
+- name: Update font cache
   become: yes
   command: fc-cache -fv
