@@ -1,12 +1,13 @@
 ---
 
-- name: download symbola fonts
-  get_url:
+- name: Download symbola fonts
+  ansible.builtin.get_url:
     url: https://dn-works.com/wp-content/uploads/2020/UFAS-Fonts/Symbola.zip
     dest: /tmp/symbola.zip
+    mode: "0644"
 
-- name: unarchive zip file
-  unarchive:
+- name: Unarchive zip file
+  ansible.builtin.unarchive:
     src: /tmp/symbola.zip
     dest: ~/.fonts/
     remote_src: yes

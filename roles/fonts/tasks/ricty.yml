@@ -1,46 +1,51 @@
 ---
 
 - name: Create work dir
-  tempfile:
+  ansible.builtin.tempfile:
     state: directory
   register: workdir
 
 - name: Install required package
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: fontforge
 
 - name: Download ricty generator script
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
+    mode: "0644"
   with_items:
     - { src: 'https://rictyfonts.github.io/files/ricty_generator.sh', dest: 'ricty_generator.sh' }
 
 - name: Clone migu fonts into local
-  get_url:
+  ansible.builtin.get_url:
     url: "https://ja.osdn.net/frs/redir.php?m=jaist&f=mix-mplus-ipa%2F63545%2Fmigu-1m-20150712.zip"
     dest: "{{ workdir.path }}/migu-1m.zip"
+    mode: "0644"
 
 - name: Clone inconsolata fonts into local
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
+    mode: "0644"
   with_items:
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Regular.ttf", dest: 'Inconsolata-Regular.ttf' }
     - { src: "https://github.com/google/fonts/raw/main/ofl/inconsolata/static/Inconsolata-Bold.ttf", dest: 'Inconsolata-Bold.ttf' }
 
 - name: Unarchive migu fonts
-  unarchive:
+  ansible.builtin.unarchive:
     src: "{{ workdir.path }}/migu-1m.zip"
     dest: "{{ workdir.path }}"
     copy: no
+    mode: "0644"
 
 - name: Copy migu fonts
-  copy:
+  ansible.builtin.copy:
     src: "{{ workdir.path }}/{{ item.src }}"
     dest: "{{ workdir.path }}/{{ item.dest }}"
     remote_src: true
+    mode: "0644"
   with_items:
     # yamllint disable rule:commas
     - { src: "migu-1m-20150712/migu-1m-regular.ttf", dest: "migu-1m-regular.ttf" }
@@ -50,16 +55,24 @@
 #   Inconsolata-Regular.ttf, Inconsolata-Bold.ttf,
 #   migu-1m-regular.ttf, migu-1m-bold.ttf
 - name: Run ricty generate script
-  shell: "cd {{ workdir.path }} && sh ricty_generator.sh auto"
+  ansible.builtin.shell: "cd {{ workdir.path }} && sh ricty_generator.sh auto"
+  register: ricty_generator_script
+  changed_when: ricty_generator_script.rc != 0
 
 - name: Create font dir if not exist
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.fonts"
     state: directory
+    mode: "0775"
 
 - name: Move ricty fonts into fonts directory
-  shell: cp {{ workdir.path }}/Ricty*.ttf {{ ansible_env.HOME }}/.fonts
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.fonts"
+    remote_src: yes
+  with_fileglob: "{{ workdir.path }}/Ricty*.ttf"
 
 - name: Update font cache
   become: yes
-  command: fc-cache -fv
+  ansible.builtin.command: fc-cache -fv
+  register: update_font_cache
