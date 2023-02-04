@@ -70,9 +70,10 @@
     src: "{{ item }}"
     dest: "{{ ansible_env.HOME }}/.fonts"
     remote_src: yes
+    mode: "0644"
   with_fileglob: "{{ workdir.path }}/Ricty*.ttf"
 
 - name: Update font cache
   become: yes
   ansible.builtin.command: fc-cache -fv
-  register: update_font_cache
+  changed_when: true # 更新の有無を判断する方法がないので常に変更されることを想定する
