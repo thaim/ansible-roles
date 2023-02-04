@@ -1,0 +1,7 @@
+use_default_rules: true
+
+skip_list:
+  - git-latest
+
+# デフォルトパターンに加えて大文字のアンダースコア区切りも許容したい
+var_naming_pattern: "^[a-z_][a-z0-9_]*$|[A-Z][A-Z0-9_]*$"
