@@ -76,4 +76,4 @@
 - name: Update font cache
   become: yes
   ansible.builtin.command: fc-cache -fv
-  changed_when: true # 更新の有無を判断する方法がないので常に変更されることを想定する
+  changed_when: true  # 更新の有無を判断する方法がないので常に変更されることを想定する
