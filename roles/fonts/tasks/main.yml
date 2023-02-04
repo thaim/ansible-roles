@@ -1,30 +1,13 @@
 ---
 
-- name: fonts | check if ricty regular fonts are installed
-  stat:
-    path: "{{ ansible_env.HOME }}/.fonts/Ricty-Regular.ttf"
-  register: rr
 
-- name: fonts | check if ricty bold fonts are installed
-  stat:
-    path: "{{ ansible_env.HOME }}/.fonts/Ricty-Bold.ttf"
-  register: rb
+- name: Install Ricty
+  ansible.builtin.include_tasks: ricty.yml
+  when: FONT_INSTALL_RICTY|bool
 
-- name: fonts | check if ricty discord regular fonts are installed
-  stat:
-    path: "{{ ansible_env.HOME }}/.fonts/RictyDiscord-Regular.ttf"
-  register: rdr
+- name: Install Symbola
+  ansible.builtin.include_tasks: symbola.yml
+  when: FONT_INSTALL_RICTY|bool
 
-- name: fonts | check if ricty discord bold fonts are installed
-  stat:
-    path: "{{ ansible_env.HOME }}/.fonts/RictyDiscord-Bold.ttf"
-  register: rdb
-
-- include: ricty.yml
-  when: not rr.stat.exists or not rb.stat.exists or not rdr.stat.exists or not rdb.stat.exists
-
-- include: symbola.yml
-
-
-- name: install HackGen
-  include_tasks: hackgen.yml
+- name: Install HackGen
+  ansible.builtin.include_tasks: hackgen.yml
