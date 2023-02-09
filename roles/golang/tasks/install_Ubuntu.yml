@@ -1,25 +1,26 @@
 ---
 
-- name: golang | download tarballs
-  get_url:
+- name: Download tarballs
+  ansible.builtin.get_url:
     url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
     dest: "/tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+    mode: "0644"
 
-- name: golang | check if old go directory exist
-  stat:
+- name: Check if old go directory exist
+  ansible.builtin.stat:
     path: /usr/local/go
   register: go_dir
 
-- name: golang | delete old go if exist
+- name: Dlete old go if exist
   become: yes
-  file:
+  ansible.builtin.file:
     path: /usr/local/go
     state: absent
   when: go_dir.stat.exists
 
-- name: golang | install golang
+- name: Install golang
   become: yes
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz
     dest: /usr/local
     remote_src: yes

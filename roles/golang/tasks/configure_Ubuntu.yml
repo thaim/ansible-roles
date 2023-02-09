@@ -1,12 +1,13 @@
 ---
 
-- name: golang | setup environment variable 'GOPATH'
-  lineinfile:
+- name: Setup environment variable 'GOPATH'
+  ansible.builtin.lineinfile:
     dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
     regexp: "{{ item.regexp }}"
     insertafter: "{{ item.insertafter }}"
     line: "{{ item.line }}"
     create: yes
+    mode: "0644"
   with_items:
     # yamllint disable rule:commas
     - { regexp: '^export PATH="\$PATH:/usr/local/go/bin"', line: 'export PATH="$PATH:/usr/local/go/bin"', insertafter: EOF }
