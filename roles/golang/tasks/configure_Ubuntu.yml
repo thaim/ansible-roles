@@ -1,7 +1,7 @@
 ---
 
 - name: Setup environment variable 'GOPATH'
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
     regexp: "{{ item.regexp }}"
     insertafter: "{{ item.insertafter }}"

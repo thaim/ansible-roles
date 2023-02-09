@@ -2,25 +2,25 @@
 
 - name: Check if golang is installed
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc 'which go'
+  ansible.builtin.shell: /bin/bash -lc 'which go'
   changed_when: false
   failed_when: false
   register: install_golang
 
 - name: Check installed golang version
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc 'go version'
+  ansible.builtin.shell: /bin/bash -lc 'go version'
   changed_when: false
   failed_when: false
   register: install_golang_version
   when: install_golang.rc == 0
 
-- include_tasks: install_{{ ansible_distribution }}.yml
+- ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
   when: install_golang.rc != 0 or
         install_golang_version.stdout | regex_replace('go version go(.*) .*', '\\1')
                                       is version(GOLANG_VERSION, '<')
 
-- include_tasks: configure_{{ ansible_distribution }}.yml
+- ansible.builtin.include_tasks: configure_{{ ansible_distribution }}.yml
 
-- include_tasks: install_devtools.yml
+- ansible.builtin.include_tasks: install_devtools.yml
   when: GOLANG_INSTALL_DEVTOOLS

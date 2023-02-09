@@ -3,80 +3,80 @@
 # REPL for golang
 - name: Check gore insatlled
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "which gore"
+  ansible.builtin.shell: /bin/bash -lc "which gore"
   register: status_gore
   changed_when: false
   failed_when: false
 
 - name: Install gore
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "go install github.com/x-motemen/gore/cmd/gore@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install github.com/x-motemen/gore/cmd/gore@latest"
   when: status_gore.rc != 0
 
 
 # command reference library
 - name: Check godoc insatlled
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "which godoc"
+  ansible.builtin.shell: /bin/bash -lc "which godoc"
   register: status_godoc
   changed_when: false
   failed_when: false
 
 - name: Install godoc
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "go install golang.org/x/tools/cmd/godoc@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install golang.org/x/tools/cmd/godoc@latest"
   when: status_godoc.rc != 0
 
 
 # lint tool for go lang
 - name: Check staticcheck insatlled
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "which staticcheck"
+  ansible.builtin.shell: /bin/bash -lc "which staticcheck"
   register: status_staticcheck
   changed_when: false
   failed_when: false
 
 - name: Install staticcheck for go lint
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "go install honnef.co/go/tools/cmd/staticcheck@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install honnef.co/go/tools/cmd/staticcheck@latest"
   when: status_staticcheck.rc != 0
 
 
 # LSP for go
 - name: Check gopls installed
-  shell: /bin/bash -lc "which gopls"
+  ansible.builtin.shell: /bin/bash -lc "which gopls"
   register: status_gopls
   changed_when: false
   failed_when: false
 
 - name: Install gopls
-  shell: /bin/bash -lc "go install golang.org/x/tools/gopls@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install golang.org/x/tools/gopls@latest"
   when: status_gopls.rc != 0
 
 
 # 関数定義へのジャンプを実現する
 - name: Check godef installed
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "which godef"
+  ansible.builtin.shell: /bin/bash -lc "which godef"
   register: status_godef
   changed_when: false
   failed_when: false
 
 - name: Install godef
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "go install github.com/rogpeppe/godef@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install github.com/rogpeppe/godef@latest"
   when: status_godef.rc != 0
 
 
 # manage remote repository clones
 - name: Check ghq insatlled
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "which ghq"
+  ansible.builtin.shell: /bin/bash -lc "which ghq"
   register: status_ghq
   changed_when: false
   failed_when: false
 
 - name: Install ghq
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
+  ansible.builtin.shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
   when: status_ghq.rc != 0
