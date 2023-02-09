@@ -15,12 +15,15 @@
   register: install_golang_version
   when: install_golang.rc == 0
 
-- ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+- name: Install golang depends on distribution
+  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
   when: install_golang.rc != 0 or
         install_golang_version.stdout | regex_replace('go version go(.*) .*', '\\1')
                                       is version(GOLANG_VERSION, '<')
 
-- ansible.builtin.include_tasks: configure_{{ ansible_distribution }}.yml
+- name: Setup golang depends on distribution
+  ansible.builtin.include_tasks: configure_{{ ansible_distribution }}.yml
 
-- ansible.builtin.include_tasks: install_devtools.yml
+- name: Install developing tools for golang
+  ansible.builtin.include_tasks: install_devtools.yml
   when: GOLANG_INSTALL_DEVTOOLS
