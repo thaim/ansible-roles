@@ -1,6 +1,6 @@
 ---
 
-- name: golang | setup environment variable 'GOPATH'
+- name: Setup environment variable 'GOPATH'
   lineinfile:
     dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
     regexp: "{{ item.regexp }}"

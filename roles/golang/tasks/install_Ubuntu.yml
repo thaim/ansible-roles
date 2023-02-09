@@ -1,23 +1,23 @@
 ---
 
-- name: golang | download tarballs
+- name: Download tarballs
   get_url:
     url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
     dest: "/tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
 
-- name: golang | check if old go directory exist
+- name: Check if old go directory exist
   stat:
     path: /usr/local/go
   register: go_dir
 
-- name: golang | delete old go if exist
+- name: Dlete old go if exist
   become: yes
   file:
     path: /usr/local/go
     state: absent
   when: go_dir.stat.exists
 
-- name: golang | install golang
+- name: Install golang
   become: yes
   unarchive:
     src: /tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz

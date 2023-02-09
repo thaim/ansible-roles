@@ -1,13 +1,13 @@
 ---
 
-- name: golang | check if golang is installed
+- name: Check if golang is installed
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc 'which go'
   changed_when: false
   failed_when: false
   register: install_golang
 
-- name: golang | check installed golang version
+- name: Check installed golang version
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc 'go version'
   changed_when: false
