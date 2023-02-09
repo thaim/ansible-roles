@@ -4,6 +4,7 @@
   ansible.builtin.get_url:
     url: "https://dl.google.com/go/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
     dest: "/tmp/go{{ GOLANG_VERSION }}.linux-amd64.tar.gz"
+    mode: "0644"
 
 - name: Check if old go directory exist
   ansible.builtin.stat:
