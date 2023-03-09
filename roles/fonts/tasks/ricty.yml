@@ -59,12 +59,6 @@
   register: ricty_generator_script
   changed_when: ricty_generator_script.rc != 0
 
-- name: Create font dir if not exist
-  ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.fonts"
-    state: directory
-    mode: "0775"
-
 - name: Move ricty fonts into fonts directory
   ansible.builtin.copy:
     src: "{{ item }}"
