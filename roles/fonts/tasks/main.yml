@@ -1,5 +1,10 @@
 ---
 
+- name: Create font dir if not exist
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.fonts"
+    state: directory
+    mode: "0775"
 
 - name: Install Ricty
   ansible.builtin.include_tasks: ricty.yml
