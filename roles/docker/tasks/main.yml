@@ -12,11 +12,11 @@
 
 - name: Configure docker on {{ ansible_distribution }}
   ansible.builtin.include_tasks: configure_{{ ansible_distribution }}.yml
-  when: DOCKER_APPLY_CUSTOM|default(false) == true
+  when: DOCKER_APPLY_CUSTOM|default(false)
 
 - name: Install extra packages for docker
   ansible.builtin.include_tasks: add_library_{{ ansible_distribution }}.yml
-  when: DOCKER_APPLY_CUSTOM|default(false) == true
+  when: DOCKER_APPLY_CUSTOM|default(false)
 
 - name: Add docker user
   become: yes
