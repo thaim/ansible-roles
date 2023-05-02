@@ -2,14 +2,14 @@
 
 - name: Allow access docker connect from remote
   become: yes
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/systemd/system/multi-user.target.wants/docker.service
     regexp: '^ExecStart'
     line: 'ExecStart=/usr/bin/dockerd -H unix:// -H 0.0.0.0'
 
 - name: Copy docker daemon file
   become: yes
-  template:
+  ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
     trim_blocks: false
