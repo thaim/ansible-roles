@@ -2,11 +2,12 @@
 
 - name: Add docker gpg key
   become: yes
-  ansible.builtin.apt_key:
+  ansible.builtin.get_url:
     url: https://download.docker.com/linux/ubuntu/gpg
-    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
 
-- name: Add docker repo
+- name: Add docker apt repository
   become: yes
   ansible.builtin.template:
     src: docker.list.j2
