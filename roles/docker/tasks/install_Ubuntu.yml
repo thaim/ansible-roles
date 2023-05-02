@@ -1,24 +1,24 @@
 ---
 
-- name: docker | add gpg key
+- name: Add docker gpg key
   become: yes
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
 
-- name: docker | add docker repo
+- name: Add docker repo
   become: yes
   template:
     src: docker.list.j2
     dest: /etc/apt/sources.list.d/docker.list
 
-- name: docker | install docker-ce package
+- name: Install docker-ce package
   become: yes
   apt:
     name: docker-ce
     update_cache: yes
 
-- name: docker | start docker
+- name: Start docker service
   become: yes
   service:
     name: docker
@@ -27,7 +27,7 @@
 # check for require of docker-selinux
 
 
-- name: docker | install docker compose plugin
+- name: Install docker compose plugin
   become: yes
   apt:
     name: docker-compose-plugin

@@ -1,6 +1,6 @@
 ---
 
-- name: docker | install nfs-client to enable nfs mount
+- name: Install nfs-client to enable nfs mount
   become: yes
   apt:
     name: nfs-client

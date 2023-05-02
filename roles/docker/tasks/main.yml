@@ -1,21 +1,24 @@
 ---
 
-- name: docker | check if docker installed
+- name: Check if docker installed
   command: which docker
   failed_when: false
   changed_when: false
   register: docker_install
 
-- include_tasks: install_{{ ansible_distribution }}.yml
+- name: Install docker on {{ ansible_distribution }}
+  include_tasks: install_{{ ansible_distribution }}.yml
   when: docker_install.rc != 0
 
-- include_tasks: configure_{{ ansible_distribution }}.yml
+- name: Configure docker on {{ ansible_distribution }}
+  include_tasks: configure_{{ ansible_distribution }}.yml
   when: DOCKER_APPLY_CUSTOM|default(false) == true
 
-- include_tasks: add_library_{{ ansible_distribution }}.yml
+- name: Install extra packages for docker
+  include_tasks: add_library_{{ ansible_distribution }}.yml
   when: DOCKER_APPLY_CUSTOM|default(false) == true
 
-- name: docker | add user as docker user
+- name: Add docker user
   become: yes
   user: name={{ DOCKER_USER }}
         group=docker

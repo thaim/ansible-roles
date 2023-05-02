@@ -1,13 +1,13 @@
 ---
 
-- name: allow access docker connect from remote
+- name: Allow access docker connect from remote
   become: yes
   lineinfile:
     path: /etc/systemd/system/multi-user.target.wants/docker.service
     regexp: '^ExecStart'
     line: 'ExecStart=/usr/bin/dockerd -H unix:// -H 0.0.0.0'
 
-- name: copy docker daemon file
+- name: Copy docker daemon file
   become: yes
   template:
     src: daemon.json.j2
