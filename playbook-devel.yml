@@ -1,6 +1,7 @@
 # playbook to setup development environment
 
-- hosts: all
+- name: "Setup common roles for development"
+  hosts: all
   roles:
     - { role: apt, tags: apt, APT_DEVTOOL: true }
     - { role: build-essential, tags: build-essential }
@@ -11,7 +12,8 @@
     - { role: docker, tags: docker }
     - { role: github-cli, tags: github-cli }
 
-- hosts: webapp
+- name: "Setup application development environment"
+  hosts: webapp
   roles:
     - { role: golang, tags: golang }
     - { role: gibo, tags: gibo }
@@ -30,13 +32,15 @@
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
 
-- hosts: devos
+- name: "Setup OS development environment"
+  hosts: devos
   roles:
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
 
-- hosts: terraform
+- name: "Setup terraform development environment"
+  hosts: terraform
   roles:
     - { role: build-essential, tags: build-essential }
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
