@@ -17,3 +17,4 @@ jobs:
         uses: thaim/action-ansiblelint@devel
         with:
           github_token: ${{ secrets.github_token }}
+          ansiblelint_flags: "roles/"
