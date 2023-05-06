@@ -14,7 +14,6 @@ jobs:
           python-version: 3.9
 
       - name: run ansible-lint on reviewdog
-        uses: reviewdog/action-ansiblelint@v1
+        uses: thaim/action-ansiblelint@devel
         with:
           github_token: ${{ secrets.github_token }}
-          ansiblelint_version: 6.15.0
