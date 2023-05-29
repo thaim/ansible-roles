@@ -1,11 +1,11 @@
 ---
 
-- name: clone nodenv into ~/.nodenv
+- name: Clone nodenv into ~/.nodenv
   ansible.builtin.git:
     repo: 'https://github.com/nodenv/nodenv'
     dest: "{{ ansible_env.HOME }}/.nodenv"
 
-- name: add nodenv bin to PATH
+- name: Add nodenv bin to PATH
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.profile"
     marker: "# {mark} ANSIBLE MANAGED BLOCK for nodenv"
@@ -13,12 +13,12 @@
       export PATH="$HOME/.nodenv/bin:$PATH"
       eval "$(nodenv init -)"
 
-- name: create nodenv plugin directory
+- name: Create nodenv plugin directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.nodenv/plugins"
     state: directory
 
-- name: clone nodenv-build into ~/.nodenv/plugins/
+- name: Clone nodenv-build into ~/.nodenv/plugins/
   ansible.builtin.git:
     repo: 'https://github.com/nodenv/node-build'
     dest: "{{ ansible_env.HOME }}/.nodenv/plugins/node-build"
@@ -32,5 +32,5 @@
   ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"
   when: nodenv_version.stdout is not contains(NODEJS_VERSION)
 
-- name: enable node.js for global
+- name: Enable node.js for global
   ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"
