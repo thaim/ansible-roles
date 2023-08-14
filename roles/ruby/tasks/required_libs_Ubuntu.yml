@@ -12,4 +12,5 @@
       - libssl-dev
       - libffi-dev
       - libreadline-dev
+      - libyaml-dev
       - zlib1g-dev
