@@ -1,5 +1,8 @@
 ---
 
+- name: Install hashicorp official package
+  include_tasks: official_package.yml
+
 - name: check if tfenv installed
   command: which tfenv
   changed_when: false
