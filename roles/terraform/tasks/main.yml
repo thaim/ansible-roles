@@ -1,5 +1,8 @@
 ---
 
+- name: Install hashicorp official package
+  ansible.builtin.include_tasks: official_package.yml
+
 - name: check if tfenv installed
   command: which tfenv
   changed_when: false
@@ -9,6 +12,11 @@
 - include_tasks: install_tfenv.yml
   when: tfenv_install.rc != 0
 
+- name: Install terraform language server
+  become: yes
+  ansible.builtin.apt:
+    name: terraform-ls
+    update_cache: true
 
 - name: check if tfsec installed
   command: which tfsec
