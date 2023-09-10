@@ -13,6 +13,9 @@
 
 - name: Install terraform
   ansible.builtin.command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv install {{ TERRAFORM_VERSION }}"
+  register: install_terraform
+  changed_when: "'is already installed' not in install_terraform.stdout"
 
 - name: Use specified terraform version
   ansible.builtin.command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv use {{ TERRAFORM_VERSION }}"
+  changed_when: false
