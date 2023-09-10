@@ -1,18 +1,21 @@
 ---
 
-- name: clone tfenv
-  git:
+- name: Clone tfenv
+  ansible.builtin.git:
     repo: https://github.com/tfutils/tfenv
     dest: "{{ ansible_user_dir }}/.tfenv"
 
-- name: add path
-  lineinfile:
+- name: Add path
+  ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
     line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
 
-- name: install terraform
-  command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv install {{ TERRAFORM_VERSION }}"
+- name: Install terraform
+  ansible.builtin.command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv install {{ TERRAFORM_VERSION }}"
+  register: install_terraform
+  changed_when: "'is already installed' not in install_terraform.stdout"
 
-- name: use specified terraform version
-  command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv use {{ TERRAFORM_VERSION }}"
+- name: Use specified terraform version
+  ansible.builtin.command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv use {{ TERRAFORM_VERSION }}"
+  changed_when: false
