@@ -43,6 +43,7 @@
   ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh
     dest: /tmp/install_tflint_linux.sh
+    mode: '0644'
   when: tflint_install.rc != 0
 
 - name: Install tflint
