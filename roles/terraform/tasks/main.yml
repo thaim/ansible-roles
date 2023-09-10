@@ -3,13 +3,14 @@
 - name: Install hashicorp official package
   ansible.builtin.include_tasks: official_package.yml
 
-- name: check if tfenv installed
+- name: Check if tfenv installed
   command: which tfenv
   changed_when: false
   failed_when: false
   register: tfenv_install
 
-- include_tasks: install_tfenv.yml
+- name: Install tfenv
+  include_tasks: install_tfenv.yml
   when: tfenv_install.rc != 0
 
 - name: Install terraform language server
@@ -18,31 +19,31 @@
     name: terraform-ls
     update_cache: true
 
-- name: check if tfsec installed
+- name: Check if tfsec installed
   command: which tfsec
   changed_when: false
   failed_when: false
   register: tfsec_install
 
-- name: install tfsec
+- name: Install tfsec
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   shell: /bin/bash -lc "go install github.com/aquasecurity/tfsec/cmd/tfsec@latest"
   when: tfsec_install.rc != 0
 
 
-- name: check if tflint installed
+- name: Check if tflint installed
   command: which tflint
   changed_when: false
   failed_when: false
   register: tflint_install
 
-- name: fetch tflint install script
+- name: Fetch tflint install script
   get_url:
     url: https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh
     dest: /tmp/install_tflint_linux.sh
   when: tflint_install.rc != 0
 
-- name: install tflint
+- name: Install tflint
   become: yes
   command: bash /tmp/install_tflint_linux.sh
   when: tflint_install.rc != 0

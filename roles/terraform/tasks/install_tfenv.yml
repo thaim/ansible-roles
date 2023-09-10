@@ -1,18 +1,18 @@
 ---
 
-- name: clone tfenv
+- name: Clone tfenv
   git:
     repo: https://github.com/tfutils/tfenv
     dest: "{{ ansible_user_dir }}/.tfenv"
 
-- name: add path
+- name: Add path
   lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
     line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
 
-- name: install terraform
+- name: Install terraform
   command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv install {{ TERRAFORM_VERSION }}"
 
-- name: use specified terraform version
+- name: Use specified terraform version
   command: "{{ ansible_user_dir }}/.tfenv/bin/tfenv use {{ TERRAFORM_VERSION }}"
