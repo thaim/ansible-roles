@@ -18,5 +18,6 @@
       - jq
       - libmysqlclient-dev
       - sysstat
+      - libbz2-dev
 
 - include_tasks: kernel_param.yml

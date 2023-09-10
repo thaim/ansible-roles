@@ -1,20 +1,31 @@
 ---
 
-- name: install python3-venv
+- name: Install python3-venv
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: python3-venv
 
 # setup pyenv
 # see: https://github.com/pyenv/pyenv
 
-- name: install pyenv
-  pip:
+- name: Install pyenv
+  ansible.builtin.pip:
     name:
       - pipenv
 
-- name: setup shell environment for pyenv
-  blockinfile:
+- name: Install dependencies
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - libbz2-dev
+      - liblzma-dev
+      - python-tk
+      - tk-dev
+
+- name: Setup shell environment for pyenv
+  ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK Pyenv"
     block: |
