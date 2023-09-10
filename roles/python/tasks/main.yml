@@ -1,4 +1,4 @@
 ---
 
 - name: Setup python depends on OS
-  include: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
