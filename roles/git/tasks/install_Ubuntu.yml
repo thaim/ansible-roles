@@ -4,7 +4,6 @@
   become: yes
   ansible.builtin.apt:
     name: git
-    state: latest
   when: GIT_INSTALLER == 'package'
 
 - name: Add PPA for up-to-date version
@@ -17,6 +16,5 @@
   become: yes
   ansible.builtin.apt:
     name: git
-    state: latest
     update_cache: yes
   when: GIT_INSTALLER == 'extra'
