@@ -1,6 +1,6 @@
 ---
 
 - name: Be sure git is installed
-  command: /usr/local/bin/brew install git
+  ansible.builtin.command: /usr/local/bin/brew install git
   register: brew_git
   changed_when: '"already installed" not in brew_git.stdout'

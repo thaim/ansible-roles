@@ -2,20 +2,20 @@
 
 - name: Be sure git is installed (using default package repository)
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: git
     state: latest
   when: GIT_INSTALLER == 'package'
 
 - name: Add PPA for up-to-date version
   become: yes
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: ppa:git-core/ppa
   when: GIT_INSTALLER == 'extra'
 
 - name: Be sure git is installed (using ppa)
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: git
     state: latest
     update_cache: yes
