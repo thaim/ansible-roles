@@ -9,4 +9,3 @@
 - name: Setup nodenv
   ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
   when: nodenv_stat.rc != 0
-
