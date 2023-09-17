@@ -24,12 +24,12 @@
     dest: "{{ ansible_env.HOME }}/.nodenv/plugins/node-build"
 
 - name: Install default node.js
-  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"
+  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
   register: install_nodejs
   changed_when: "'Installed node-' in install_nodejs.stdout"
 
 - name: Enable node.js for global
-  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"
+  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
   changed_when: true
 
 
@@ -48,6 +48,6 @@
 
 - name: Install pnpm
   become: yes
-  ansible.builtin.shell: /tmp/install-pnpm.sh
+  ansible.builtin.command: /tmp/install-pnpm.sh
   when: which_pnpm.rc != 0
   changed_when: true
