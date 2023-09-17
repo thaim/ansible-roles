@@ -1,12 +1,12 @@
 ---
 
-- name: check nodenv is installed
+- name: Check nodenv is installed
   ansible.builtin.command: which nodenv
   changed_when: false
   failed_when: false
   register: nodenv_stat
 
-- name: setup nodenv
+- name: Setup nodenv
   include_tasks: install_{{ ansible_distribution }}.yml
   when: nodenv_stat.rc != 0
 
