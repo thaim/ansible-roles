@@ -25,9 +25,12 @@
 
 - name: Install default node.js
   ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"
+  register: install_nodejs
+  changed_when: "'Installed node-' in install_nodejs.stdout"
 
 - name: Enable node.js for global
   ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"
+  changed_when: true
 
 
 - name: Check if pnpm is installed
@@ -47,3 +50,4 @@
   become: yes
   ansible.builtin.shell: /tmp/install-pnpm.sh
   when: which_pnpm.rc != 0
+  changed_when: true
