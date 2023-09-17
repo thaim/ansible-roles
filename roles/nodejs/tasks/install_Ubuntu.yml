@@ -1,11 +1,11 @@
 ---
 
-- name: clone nodenv into ~/.nodenv
+- name: Clone nodenv into ~/.nodenv
   ansible.builtin.git:
     repo: 'https://github.com/nodenv/nodenv'
     dest: "{{ ansible_env.HOME }}/.nodenv"
 
-- name: add nodenv bin to PATH
+- name: Add nodenv bin to PATH
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.profile"
     marker: "# {mark} ANSIBLE MANAGED BLOCK for nodenv"
@@ -13,18 +13,42 @@
       export PATH="$HOME/.nodenv/bin:$PATH"
       eval "$(nodenv init -)"
 
-- name: create nodenv plugin directory
+- name: Create nodenv plugin directory
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.nodenv/plugins"
     state: directory
+    mode: '0755'
 
-- name: clone nodenv-build into ~/.nodenv/plugins/
+- name: Clone nodenv-build into ~/.nodenv/plugins/
   ansible.builtin.git:
     repo: 'https://github.com/nodenv/node-build'
     dest: "{{ ansible_env.HOME }}/.nodenv/plugins/node-build"
 
-- name: install default node.js
-  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"
+- name: Install default node.js
+  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
+  register: install_nodejs
+  changed_when: "'Installed node-' in install_nodejs.stdout"
 
-- name: enable node.js for global
-  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"
+- name: Enable node.js for global
+  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
+  changed_when: true
+
+
+- name: Check if pnpm is installed
+  ansible.builtin.command: which pnpm
+  changed_when: false
+  failed_when: false
+  register: which_pnpm
+
+- name: Download pnpm install script
+  ansible.builtin.get_url:
+    url: https://get.pnpm.io/install.sh
+    dest: /tmp/install-pnpm.sh
+    mode: '0755'
+  when: which_pnpm.rc != 0
+
+- name: Install pnpm
+  become: yes
+  ansible.builtin.command: /tmp/install-pnpm.sh
+  when: which_pnpm.rc != 0
+  changed_when: true
