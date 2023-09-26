@@ -20,10 +20,18 @@
     mode: 0644
     backup: yes
 
+- name: Create global git directory
+  ansible.builtin.file:
+    path: /home/{{ ansible_env.USER }}/.config/git/
+    state: directory
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0644
+
 - name: Setup global gitignore file
   ansible.builtin.copy:
     src: gitignore_global
-    dest: /home/{{ ansible_env.USER }}/.gitignore_global
+    dest: /home/{{ ansible_env.USER }}/.config/git/ignore
     owner: "{{ ansible_env.USER }}"
     mode: 0644
     backup: yes
