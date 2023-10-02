@@ -1,0 +1,7 @@
+---
+
+# Pyright is required for python LSP
+- name: Install Pyright
+  community.general.npm:
+    name: pyright
+    global: true
