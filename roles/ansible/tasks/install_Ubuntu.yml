@@ -1,13 +1,13 @@
 ---
 
-- name: ansible | add ansible ppa repository
+- name: Add ansible ppa repository
   become: yes
   apt_repository:
     repo: 'ppa:ansible/ansible'
   when: ansible_distribution_major_version < "20"
 
 
-- name: ansible | install latest ansible
+- name: Install latest ansible
   become: yes
   apt:
     name: ansible

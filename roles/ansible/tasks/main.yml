@@ -1,6 +1,7 @@
 ---
 
-- include: install_{{ ansible_distribution }}.yml
+- name: Install ansible
+  include: install_{{ ansible_distribution }}.yml
 
 - name: Setup devtools for ansible
   ansible.builtin.include_tasks: devtools_{{ ansible_distribution }}.yml
