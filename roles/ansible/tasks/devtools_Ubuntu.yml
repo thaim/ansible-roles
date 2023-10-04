@@ -1,0 +1,6 @@
+---
+
+- name: Install ansible language server
+  community.general.npm:
+    name: '@ansible/ansible-language-server'
+    global: true
