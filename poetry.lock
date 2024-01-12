@@ -25,21 +25,22 @@ test = ["coverage", "pip-tools", "pytest (>=7.2.0)", "pytest-mock", "pytest-plus
 
 [[package]]
 name = "ansible-core"
-version = "2.14.5"
+version = "2.15.8"
 description = "Radically simple IT automation"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "ansible-core-2.14.5.tar.gz", hash = "sha256:8c4eed76ce458b4a37334a0802df29488ecf9f8af38c3111069c96b17b205530"},
-    {file = "ansible_core-2.14.5-py3-none-any.whl", hash = "sha256:bc1755f43bdddac574607e959010f98256ff87068ca7e23be5a9d335f6ebf01e"},
+    {file = "ansible-core-2.15.8.tar.gz", hash = "sha256:8aa49cb1ddbf33d88c2bb4bf09ecd4b0dd8b788e174adca8b88dda6e6bdbf59b"},
+    {file = "ansible_core-2.15.8-py3-none-any.whl", hash = "sha256:55e6f4350fb98ac5441620ba981b1d9f7b90aa5f320885965af996e149bd3caa"},
 ]
 
 [package.dependencies]
 cryptography = "*"
+importlib-resources = {version = ">=5.0,<5.1", markers = "python_version < \"3.10\""}
 jinja2 = ">=3.0.0"
 packaging = "*"
 PyYAML = ">=5.1"
-resolvelib = ">=0.5.3,<0.9.0"
+resolvelib = ">=0.5.3,<1.1.0"
 
 [[package]]
 name = "ansible-lint"
@@ -418,6 +419,21 @@ files = [
     {file = "idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
     {file = "idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
 ]
+
+[[package]]
+name = "importlib-resources"
+version = "5.0.7"
+description = "Read resources from Python packages"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "importlib_resources-5.0.7-py3-none-any.whl", hash = "sha256:2238159eb743bd85304a16e0536048b3e991c531d1cd51c4a834d1ccf2829057"},
+    {file = "importlib_resources-5.0.7.tar.gz", hash = "sha256:4df460394562b4581bb4e4087ad9447bd433148fba44241754ec3152499f1d1b"},
+]
+
+[package.extras]
+docs = ["jaraco.packaging (>=8.2)", "rst.linker (>=1.9)", "sphinx"]
+testing = ["pytest (>=3.5,!=3.7.3)", "pytest-black (>=0.3.7)", "pytest-checkdocs (>=1.2.3)", "pytest-cov", "pytest-enabler", "pytest-flake8", "pytest-mypy"]
 
 [[package]]
 name = "jinja2"
@@ -926,4 +942,4 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "sphinx"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "6edfc9f86318b90145289cb5ca07d0998f0910b13edeefda6f08e5615b426656"
+content-hash = "c1bdf58cc6129d0f412df47eb51fdd42403989c84f28699927058945124b8238"
