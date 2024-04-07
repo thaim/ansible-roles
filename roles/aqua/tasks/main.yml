@@ -1,0 +1,12 @@
+---
+
+- name: Check if aqua already installed
+  ansible.builtin.command: which aqua
+  changed_when: false
+  failed_when: false
+  register: aqua_installed
+
+- name: Install aqua
+  include_tasks: install_{{ ansible_distribution }}.yml
+  when: aqua_installed.rc != 0
+
