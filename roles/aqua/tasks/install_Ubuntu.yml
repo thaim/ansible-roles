@@ -2,7 +2,7 @@
 
 - name: Download aqua
   ansible.builtin.get_url:
-    url: https://github.com/aquaproj/aqua/releases/download/{{ AQUA_VERSION }}/aqua_linux_amd64.tar.gz
+    url: https://github.com/aquaproj/aqua/releases/download/{{ aqua_version }}/aqua_linux_amd64.tar.gz
     dest: /tmp/aqua.tar.gz
     mode: 0644
 

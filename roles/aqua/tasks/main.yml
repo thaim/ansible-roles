@@ -9,3 +9,21 @@
 - name: Install aqua
   ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
   when: aqua_installed.rc != 0
+
+- name: Create aquaproj config directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/aquaproj-aqua"
+    state: directory
+    mode: 0755
+
+- name: Copy global aqua.yaml
+  ansible.builtin.copy:
+    src: aqua.yaml
+    dest: "{{ ansible_user_dir }}/.config/aquaproj-aqua/aqua.yaml"
+    backup: true
+    mode: 0644
+
+- name: Setup environment variable
+  ansible.builtin.lineinfile:
+    line: 'export AQUA_GLOBAL_CONFIG=$HOME/.config/aquaproj-aqua/aqua.yaml'
+    dest: '$HOME/.bashrc'
