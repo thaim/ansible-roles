@@ -1,0 +1,21 @@
+---
+
+- name: Download aqua
+  ansible.builtin.get_url:
+    url: https://github.com/aquaproj/aqua/releases/download/{{ AQUA_VERSION }}/aqua_linux_amd64.tar.gz
+    dest: /tmp/aqua.tar.gz
+    mode: 0644
+
+- name: Unarchive tarball
+  ansible.builtin.unarchive:
+    src: /tmp/aqua.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Install aqua cli
+  become: yes
+  ansible.builtin.copy:
+    src: /tmp/aqua
+    dest: /usr/local/bin/
+    remote_src: yes
+    mode: 0755
