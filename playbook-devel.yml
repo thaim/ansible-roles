@@ -10,25 +10,20 @@
     - { role: fonts, tags: fonts }
     - { role: nfs-client, tags: nfs-client }
     - { role: docker, tags: docker }
-    - { role: github-cli, tags: github-cli }
     - { role: aqua, tags: aqua }
 
 - name: "Setup application development environment"
   hosts: webapp
   roles:
     - { role: golang, tags: golang }
-    - { role: gibo, tags: gibo }
     - { role: python, tags: python }
     - { role: ruby, tags: ruby }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
     - { role: yarn, tags: yarn }
     - { role: rust, tags: rust }
     - { role: heroku, tags: heroku }
-    - { role: awscli, tags: awscli, AWSCLI_OPTION: 'all' }
     - { role: gcloud, tags: gcloud }
     - { role: azure-cli, tags: azure-cli }
-    - { role: kubectl, tags: kubectl }
-    - { role: hugo, tags: hugo }
     - { role: redis, tags: redis }
     - { role: terraform, tags: terraform }
     - { role: ansible, tags: ansible }
