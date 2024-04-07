@@ -7,6 +7,5 @@
   register: aqua_installed
 
 - name: Install aqua
-  include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
   when: aqua_installed.rc != 0
-
