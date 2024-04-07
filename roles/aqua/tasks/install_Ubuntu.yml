@@ -12,7 +12,7 @@
     dest: /tmp/
     remote_src: yes
 
-- name: install aqua cli
+- name: Install aqua cli
   become: yes
   ansible.builtin.copy:
     src: /tmp/aqua
