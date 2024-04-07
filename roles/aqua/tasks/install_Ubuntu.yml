@@ -4,6 +4,7 @@
   ansible.builtin.get_url:
     url: https://github.com/aquaproj/aqua/releases/download/{{ AQUA_VERSION }}/aqua_linux_amd64.tar.gz
     dest: /tmp/aqua.tar.gz
+    
 
 - name: Unarchive tarball
   ansible.builtin.unarchive:
