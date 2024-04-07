@@ -11,6 +11,7 @@
     - { role: nfs-client, tags: nfs-client }
     - { role: docker, tags: docker }
     - { role: github-cli, tags: github-cli }
+    - { role: aqua, tags: aqua }
 
 - name: "Setup application development environment"
   hosts: webapp

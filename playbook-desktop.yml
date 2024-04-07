@@ -7,6 +7,7 @@
     - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: ghq, tags: ghq }
+    - { role: aqua, tags: aqua }
     - { role: nfs-client, tags: nfs-client }
     - { role: fluentd, tags: fluentd }
     # intellij
