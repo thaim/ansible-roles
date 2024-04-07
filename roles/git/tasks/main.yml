@@ -26,7 +26,7 @@
     state: directory
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
-    mode: 0644
+    mode: 0755
 
 - name: Setup global gitignore file
   ansible.builtin.copy:
