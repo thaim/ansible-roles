@@ -22,4 +22,5 @@
   become: yes
   ansible.builtin.user:
     name: "{{ DOCKER_USER }}"
-    group: docker
+    groups: docker
+    append: true
