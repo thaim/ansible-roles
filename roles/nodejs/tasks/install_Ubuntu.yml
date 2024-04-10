@@ -48,7 +48,6 @@
   when: which_pnpm.rc != 0
 
 - name: Install pnpm
-  become: yes
   ansible.builtin.command: /tmp/install-pnpm.sh
   when: which_pnpm.rc != 0
   changed_when: true
