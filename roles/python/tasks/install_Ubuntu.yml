@@ -9,9 +9,9 @@
 # see: https://github.com/pyenv/pyenv
 
 - name: Install pyenv
-  ansible.builtin.pip:
-    name:
-      - pipenv
+  ansible.builtin.git:
+    repo: 'https://github.com/pyenv/pyenv'
+    dest: "{{ ansible_user_dir }}/.pyenv"
 
 - name: Install dependencies
   become: yes
