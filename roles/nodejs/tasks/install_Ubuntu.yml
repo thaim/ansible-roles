@@ -25,7 +25,7 @@
     dest: "{{ ansible_env.HOME }}/.nodenv/plugins/node-build"
 
 - name: Install default node.js
-  ansible.builtin.shell: bash -lc "nodenv install {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
+  ansible.builtin.shell: bash -lc "nodenv install -s {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
   register: install_nodejs
   changed_when: "'Installed node-' in install_nodejs.stdout"
 
