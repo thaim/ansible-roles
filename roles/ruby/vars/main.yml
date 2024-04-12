@@ -1,6 +1,6 @@
 ---
 
-RUBY_VERSION: 2.7.6
+RUBY_VERSION: 3.3.0
 
 
 # rbenvのPATHセットアップを行うシェル設定ファイル
