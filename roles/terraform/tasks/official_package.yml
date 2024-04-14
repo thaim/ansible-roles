@@ -1,4 +1,5 @@
 ---
+# tfenvのみ利用するのであれば不要
 
 - name: Add keyring
   become: yes

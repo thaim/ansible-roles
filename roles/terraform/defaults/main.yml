@@ -1,3 +1,5 @@
 ---
 
 TERRAFORM_VERSION: 1.2.5
+
+terraform_official_packages: false

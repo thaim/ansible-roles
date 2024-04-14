@@ -2,6 +2,7 @@
 
 - name: Install hashicorp official package
   ansible.builtin.include_tasks: official_package.yml
+  when: terraform_setup_official_packages
 
 - name: Check if tfenv installed
   ansible.builtin.command: which tfenv
