@@ -2,6 +2,7 @@
 
 - name: Install hashicorp official package
   ansible.builtin.include_tasks: official_package.yml
+  when: terraform_setup_official_packages
 
 - name: Check if tfenv installed
   ansible.builtin.command: which tfenv
@@ -18,19 +19,6 @@
   ansible.builtin.apt:
     name: terraform-ls
     update_cache: true
-
-- name: Check if tfsec installed
-  ansible.builtin.command: which tfsec
-  changed_when: false
-  failed_when: false
-  register: tfsec_install_check
-
-- name: Install tfsec
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "go install github.com/aquasecurity/tfsec/cmd/tfsec@latest"
-  when: tfsec_install_check.rc != 0
-  register: install_tfsec
-  changed_when: insatll_tfsec.stdout != ""
 
 
 - name: Check if tflint installed
