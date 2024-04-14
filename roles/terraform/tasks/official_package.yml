@@ -8,6 +8,7 @@
     mode: '0644'
 
 - name: Add HashiCorp Repo
+  become: yes
   ansible.builtin.template:
     src: hashicorp.list.j2
     dest: /etc/apt/sources.list.d/hashicorp.list
