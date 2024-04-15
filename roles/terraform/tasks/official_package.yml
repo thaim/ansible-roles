@@ -1,11 +1,11 @@
 ---
-# tfenvのみ利用するのであれば不要
+# terraform-lsをインストールするために利用する
 
 - name: Add keyring
   become: yes
   ansible.builtin.get_url:
     url: https://apt.releases.hashicorp.com/gpg
-    dest: /etc/apt/keyrings/hashicorp-archive-keyring.gpg
+    dest: /etc/apt/keyrings/hashicorp-archive-keyring.asc
     mode: '0644'
 
 - name: Add HashiCorp Repo

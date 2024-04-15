@@ -1,0 +1,7 @@
+---
+
+- name: Install terraform language server
+  become: yes
+  ansible.builtin.apt:
+    name: terraform-ls
+    update_cache: true
