@@ -14,12 +14,15 @@
   ansible.builtin.include_tasks: install_tfenv.yml
   when: tfenv_install.rc != 0
 
-- name: Install terraform language server
-  become: yes
-  ansible.builtin.apt:
-    name: terraform-ls
-    update_cache: true
+- name: Check if terraform-ls already installed
+  ansible.builtin.command: which terraform-ls
+  changed_when: false
+  failed_when: false
+  register: terraformls_install
 
+- name: Install terraform language server
+  ansible.builtin.include_tasks: install_tfenv.yml
+  when: terraformls_install.rc != 0
 
 - name: Check if tflint installed
   ansible.builtin.command: which tflint
