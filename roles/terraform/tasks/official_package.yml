@@ -1,5 +1,5 @@
 ---
-# tfenvのみ利用するのであれば不要
+# terraform-lsをインストールするために利用する
 
 - name: Add keyring
   become: yes
