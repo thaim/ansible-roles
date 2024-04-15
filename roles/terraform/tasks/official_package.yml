@@ -5,7 +5,7 @@
   become: yes
   ansible.builtin.get_url:
     url: https://apt.releases.hashicorp.com/gpg
-    dest: /etc/apt/keyrings/hashicorp-archive-keyring.gpg
+    dest: /etc/apt/keyrings/hashicorp-archive-keyring.asc
     mode: '0644'
 
 - name: Add HashiCorp Repo
