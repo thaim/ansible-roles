@@ -6,3 +6,15 @@
     regexp: "^source .*git-completion.bash$"
     line: "source {{ ansible_user_dir }}/.shell.d/git-completion.bash"
 
+- name: setup starship
+  lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: "^eval \"$(starship init bash)\""
+    line: "eval \"$(starship init bash)\""
+
+- name: create starship config file
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: "{{ ansible_user_dir }}/.config/starship.toml"
+    mode: '0644'
+
