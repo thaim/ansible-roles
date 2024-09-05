@@ -18,3 +18,8 @@
     dest: "{{ ansible_user_dir }}/.config/starship.toml"
     mode: '0644'
 
+- name: setup bash_aliases
+  ansible.builtin.copy:
+    src: bash_aliases
+    dest: "{{ ansible_user_dir }}/.bash_aliases"
+
