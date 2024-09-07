@@ -28,3 +28,4 @@
   become: yes
   ansible.builtin.command: /tmp/install_starship.sh --yes
   when: starship_installed.rc != 0
+  changed_when: true
