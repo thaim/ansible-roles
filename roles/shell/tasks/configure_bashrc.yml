@@ -22,4 +22,3 @@
   ansible.builtin.copy:
     src: bash_aliases
     dest: "{{ ansible_user_dir }}/.bash_aliases"
-
