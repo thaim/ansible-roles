@@ -3,7 +3,7 @@
 # shellのインストール
 
 # shell拡張のインストール
-- include: install_git_extension.yml
+- include_tasks: install_git_extension.yml
 
 # shell設定の適用
-- include: configure_bashrc.yml
+- include_tasks: configure_bashrc.yml
