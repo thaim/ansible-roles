@@ -1,17 +1,17 @@
 ---
 
 - name: shell | create directory to store extensions if not exist
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_user_dir }}/.shell.d"
     state: directory
 
 - name: shell | download and store git-completion.bash
-  get_url:
+  ansible.builtin.get_url:
     url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
     dest: "{{ ansible_user_dir }}/.shell.d/git-completion.bash"
 
 - name: check if starship already installed
-  command: which starship
+  ansible.builtin.command: which starship
   register: starship_installed
   changed_when: false
 
@@ -24,5 +24,5 @@
 
 - name: install starship
   become: yes
-  command: /tmp/install_starship.sh --yes
+  ansible.builtin.command: /tmp/install_starship.sh --yes
   when: starship_installed.rc != 0
