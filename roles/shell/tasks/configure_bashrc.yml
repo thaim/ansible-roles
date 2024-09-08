@@ -1,22 +1,25 @@
 ---
 
-- name: shell | setup git-prompt.sh
-  lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    regexp: "^source .*git-prompt.sh$"
-    line: "source {{ ansible_user_dir }}/.shell.d/git-prompt.sh"
-
-- name: shell | setup git-completion.bash
-  lineinfile:
+- name: Setup git-completion.bash
+  ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
     regexp: "^source .*git-completion.bash$"
     line: "source {{ ansible_user_dir }}/.shell.d/git-completion.bash"
 
-- name: shell | setup git prompt
-  blockinfile:
+- name: Setup starship
+  ansible.builtin.lineinfile:
     path: "{{ ansible_user_dir }}/.bashrc"
-    # yamllint disable rule:line-length
-    block: |
-      GIT_PS1_SHOWDIRTYSTATE=true
-      GIT_PS1_SHOWUPSTREAM=true
-      export PS1='\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[1;31m\]$(__git_ps1 " (%s)")\[\033[00m\]\n\$ '
+    regexp: "^eval \"$(starship init bash)\""
+    line: "eval \"$(starship init bash)\""
+
+- name: Create starship config file
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: "{{ ansible_user_dir }}/.config/starship.toml"
+    mode: '0644'
+
+- name: Setup bash_aliases
+  ansible.builtin.copy:
+    src: bash_aliases
+    dest: "{{ ansible_user_dir }}/.bash_aliases"
+    mode: '0644'

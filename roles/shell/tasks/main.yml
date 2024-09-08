@@ -3,7 +3,9 @@
 # shellのインストール
 
 # shell拡張のインストール
-- include: install_git_extension.yml
+- name: Install extensions
+  ansible.builtin.include_tasks: install_git_extension.yml
 
 # shell設定の適用
-- include: configure_bashrc.yml
+- name: Configure bashrc config
+  ansible.builtin.include_tasks: configure_bashrc.yml

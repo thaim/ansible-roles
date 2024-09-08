@@ -1,0 +1,54 @@
+format = """
+[$username[@](bold green)$hostname](bold green) \
+$directory\
+$python\
+$git_branch\
+$git_status\
+$kubernetes\
+$line_break\
+$character"""
+add_newline = false
+
+[username]
+style_user = "green bold"
+style_root = "red bold"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "[$hostname](bold green)"
+disabled = false
+
+[directory]
+style = "bold white"
+truncation_length = 8
+truncate_to_repo = false
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+# symbol = "🌱 "
+
+[git_status]
+format = '[\[$all_status$ahead_behind\]]($style) '
+style = "bold purple"
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?"
+stashed = '$'
+modified = "*"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+
+[kubernetes]
+format = '[$symbol$context( \($namespace\))]($style) '
+style = "cyan bold"
+symbol = "⎈ "
+disabled = false
