@@ -8,6 +8,7 @@
   ansible.builtin.command: which starship
   register: starship_installed
   changed_when: false
+  failed_when: false
 
 - name: Setup starship
   ansible.builtin.include_tasks: setup_starship.yml
