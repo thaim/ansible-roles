@@ -3,3 +3,6 @@
 
 # temp file
 *~
+
+# python
+__pycache__/
