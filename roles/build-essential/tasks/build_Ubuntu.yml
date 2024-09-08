@@ -4,7 +4,6 @@
   become: yes
   ansible.builtin.apt:
     name: build-essential
-    state: latest
 
 - name: Install make tools
   become: yes
@@ -22,4 +21,4 @@
       - libbz2-dev
 
 - name: Setup kernel parameters
-  include_tasks: kernel_param.yml
+  ansible.builtin.include_tasks: kernel_param.yml
