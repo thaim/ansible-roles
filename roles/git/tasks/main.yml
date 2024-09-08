@@ -15,14 +15,14 @@
 - name: Setup git config file
   ansible.builtin.template:
     src: gitconfig.j2
-    dest: /home/{{ ansible_env.USER }}/.gitconfig
+    dest: "{{ ansible_user_dir }}/.gitconfig"
     owner: "{{ ansible_env.USER }}"
     mode: 0644
     backup: yes
 
 - name: Create global git directory
   ansible.builtin.file:
-    path: /home/{{ ansible_env.USER }}/.config/git/
+    path: "{{ ansible_user_dir }}/.config/git/"
     state: directory
     owner: "{{ ansible_env.USER }}"
     group: "{{ ansible_env.USER }}"
@@ -31,7 +31,7 @@
 - name: Setup global gitignore file
   ansible.builtin.copy:
     src: gitignore_global
-    dest: /home/{{ ansible_env.USER }}/.config/git/ignore
+    dest: "{{ ansible_user_dir }}/.config/git/ignore"
     owner: "{{ ansible_env.USER }}"
     mode: 0644
     backup: yes

@@ -14,6 +14,9 @@
 [core]
 	editor = vim
 
+[pull]
+	ff = only
+
 [push]
 	default = simple
 	autoSetupRemote = true
@@ -25,7 +28,7 @@
 	required = true
 
 [ghq]
-	root = /home/{{ ansible_env.USER }}/src
+	root = {{ ansible_user_dir }}/src
 
 [fetch]
     prune = true
