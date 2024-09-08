@@ -12,7 +12,7 @@
   changed_when: true
 
 - name: Set shell info
-  set_fact:
+  ansible.builtin.set_fact:
     shell_info: "{{ ansible_user_shell | shell_config }}"
 
 - name: Setup starship
