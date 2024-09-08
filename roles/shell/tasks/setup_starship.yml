@@ -1,0 +1,24 @@
+---
+
+- name: Download starship install script
+  ansible.builtin.get_url:
+    url: "https://starship.rs/install.sh"
+    dest: "/tmp/install_starship.sh"
+    mode: '0755'
+
+- name: Install starship
+  become: yes
+  ansible.builtin.command: /tmp/install_starship.sh --yes
+  changed_when: true
+
+- name: Setup starship
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/.bashrc"
+    regexp: "^eval \"$(starship init bash)\""
+    line: "eval \"$(starship init bash)\""
+
+- name: Create starship config file
+  ansible.builtin.copy:
+    src: starship.toml
+    dest: "{{ ansible_user_dir }}/.config/starship.toml"
+    mode: '0644'
