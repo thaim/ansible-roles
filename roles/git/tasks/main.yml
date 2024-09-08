@@ -42,7 +42,7 @@
     state: directory
     mode: '0755'
 
-- name: locate pre-commit script
+- name: Locate pre-commit script
   ansible.builtin.copy:
     src: pre-commit
     dest: "{{ ansible_user_dir }}/.config/git/hooks/pre-commit"
