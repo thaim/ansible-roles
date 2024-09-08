@@ -5,12 +5,12 @@
     shell_info: "{{ ansible_user_shell | shell_config }}"
 
 - name: Setup bash_aliases
-  ansible.builtin.copy:
-    path: "{{ ansible_user_dir }}/{{ shell_config.rc_file }}"
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK shell"
     block: |
       alias be='bundle exec'
 
-      source <(kubectl completion {{ shell_config.name }})
+      source <(kubectl completion {{ shell_info.name }})
       alias k='kubectl'
       complete -o default -F __start_kubectl k
