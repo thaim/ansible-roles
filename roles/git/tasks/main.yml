@@ -35,3 +35,5 @@
     owner: "{{ ansible_env.USER }}"
     mode: 0644
     backup: yes
+
+- ansible.builtin.include_tasks: setup_git_completion.yml

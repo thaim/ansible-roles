@@ -1,14 +1,8 @@
 ---
 
-# shellのインストール
+- name: Setup alias
+  ansible.builtin.include_tasks: setup_alias.yml
 
-# shell拡張のインストール
-- name: Install extensions
-  ansible.builtin.include_tasks: install_git_extension.yml
-
-# shell設定の適用
-- name: Configure bashrc config
-  ansible.builtin.include_tasks: configure_bashrc.yml
 
 - name: Check if starship already installed
   ansible.builtin.command: which starship

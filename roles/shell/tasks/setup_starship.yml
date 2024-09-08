@@ -11,11 +11,15 @@
   ansible.builtin.command: /tmp/install_starship.sh --yes
   changed_when: true
 
+- name: Set shell info
+  set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
 - name: Setup starship
   ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/.bashrc"
-    regexp: "^eval \"$(starship init bash)\""
-    line: "eval \"$(starship init bash)\""
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: "^eval \"$(starship init {{ shell_info.name }})\""
+    line: "eval \"$(starship init {{ shell_info.name }})\""
 
 - name: Create starship config file
   ansible.builtin.copy:
