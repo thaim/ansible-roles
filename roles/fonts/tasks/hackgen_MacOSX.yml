@@ -1,0 +1,5 @@
+---
+
+- name: Install HackGen with homebrew
+  community.general.homebrew_cask:
+    name: font-hackgen-nerd
