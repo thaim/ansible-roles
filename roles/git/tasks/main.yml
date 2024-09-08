@@ -36,5 +36,17 @@
     mode: 0644
     backup: yes
 
+- name: Create global git hooks directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/git/hooks"
+    state: directory
+    mode: '0755'
+
+- name: locate pre-commit script
+  ansible.builtin.copy:
+    src: pre-commit
+    dest: "{{ ansible_user_dir }}/.config/git/hooks/pre-commit"
+    mode: '0755'
+
 - name: Setup git-completion
   ansible.builtin.include_tasks: setup_git_completion.yml
