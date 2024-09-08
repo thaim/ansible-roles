@@ -36,4 +36,5 @@
     mode: 0644
     backup: yes
 
-- ansible.builtin.include_tasks: setup_git_completion.yml
+- name: Setup git-completion
+  ansible.builtin.include_tasks: setup_git_completion.yml
