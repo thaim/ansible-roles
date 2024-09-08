@@ -1,0 +1,5 @@
+---
+
+- name: Install aqua
+  community.general.homebrew:
+    name: aquaprooj/aqua/aqua
