@@ -1,0 +1,24 @@
+---
+
+- name: Be sure build-essential is installed
+  become: yes
+  ansible.builtin.apt:
+    name: build-essential
+
+- name: Install make tools
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - automake
+      - make
+      - texinfo
+      - unzip
+      - jq
+      - libmysqlclient-dev
+      - sysstat
+      - libbz2-dev
+
+- name: Setup kernel parameters
+  ansible.builtin.include_tasks: kernel_param.yml

@@ -25,7 +25,6 @@
     path: "{{ ansible_user_dir }}/.config/git/"
     state: directory
     owner: "{{ ansible_env.USER }}"
-    group: "{{ ansible_env.USER }}"
     mode: 0755
 
 - name: Setup global gitignore file

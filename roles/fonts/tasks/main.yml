@@ -15,4 +15,4 @@
   when: FONT_INSTALL_RICTY|bool
 
 - name: Install HackGen
-  ansible.builtin.include_tasks: hackgen.yml
+  ansible.builtin.include_tasks: hackgen_{{ ansible_distribution }}.yml
