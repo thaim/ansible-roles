@@ -1,0 +1,10 @@
+---
+
+- name: Install build tools
+  community.general.homebrew:
+    name: gnu-tar
+
+
+- name: Install ops tools
+  community.general.homebrew:
+    name: watch
