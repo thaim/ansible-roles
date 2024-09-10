@@ -14,6 +14,7 @@
 
 - name: Install krew
   ansible.builtin.command: /tmp/krew-linux_amd64 install krew
+  changed_when: "'it is already installed' not in install_krew.stdout"
 
 - name: Set shell info
   ansible.builtin.set_fact:
