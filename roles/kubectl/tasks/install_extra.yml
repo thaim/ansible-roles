@@ -1,29 +1,4 @@
 ---
 
-- name: kubectl | install kubectx
-  become: yes
-  get_url:
-    url: "https://raw.githubusercontent.com/ahmetb/kubectx/{{ kubectl_kubectx_version }}/kubectx"
-    dest: /usr/local/bin
-    mode: 0755
-
-- name: kubectl | install kubens
-  become: yes
-  get_url:
-    url: "https://raw.githubusercontent.com/ahmetb/kubectx/{{ kubectl_kubectx_version }}/kubens"
-    dest: /usr/local/bin
-    mode: 0755
-
-- name: kubectl | install kubesec
-  become: yes
-  get_url:
-    url: "https://github.com/shyiko/kubesec/releases/download/{{ kubectl_kubesec_version }}/kubesec-{{ kubectl_kubesec_version }}-linux-amd64"
-    dest: /usr/local/bin/kubesec
-    mode: 0755
-
-- name: apply kubesec completion
-  lineinfile:
-    dest: "{{ ansible_user_dir }}/.profile"
-    regexp: "^source <\\(kubesec completion bash\\)"
-    line: "source <(kubesec completion bash)"
-    insertafter: "EOF"
+- name: Install and setup krew
+  ansible.builtin.include_tasks: install_krew_{{ ansible_distribution }}.yml

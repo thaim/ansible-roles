@@ -1,0 +1,26 @@
+---
+
+- name: Download krew
+  ansible.builtin.get_url:
+    url: https://github.com/kubernetes-sigs/krew/releases/latest/download/krew-linux_amd64.tar.gz
+    dest: /tmp/krew.tar.gz
+    mode: 0644
+
+- name: Unarchive tarball
+  ansible.builtin.unarchive:
+    src: /tmp/krew.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Install krew
+  ansible.builtin.command: /tmp/krew-linux_amd64 install krew
+
+- name: Set shell info
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Setup PATH environment variable
+  ansible.builtin.lineinfile:
+    dest: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: "export PATH=\"${KREW_ROOT"
+    line: "export PATH=\"${KREW_ROOT:-$HOME/.krew}/bin:$PATH\""
