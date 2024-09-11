@@ -1,5 +1,10 @@
 ---
 
+- name: Install Dropbox
+  become: yes
+  ansible.builtin.apt:
+    deb: https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_{{ DROPBOX_PACKAGE_VERSION }}_amd64.deb
+
 - name: dropbox | be sure dropbox is installed
   sudo: yes
   apt: name=nautilus-dropbox
