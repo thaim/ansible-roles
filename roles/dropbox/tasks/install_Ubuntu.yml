@@ -1,0 +1,32 @@
+---
+
+- name: Install Dropbox
+  become: yes
+  ansible.builtin.apt:
+    deb: https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_{{ DROPBOX_PACKAGE_VERSION }}_amd64.deb
+
+- name: Be sure dropbox Nautilus integration is installed
+  become: yes
+  ansible.builtin.apt:
+    name: nautilus-dropbox
+
+- name: Check if dropbox is running
+  ansible.builtin.command: dropbox running
+  register: running
+  changed_when: false
+  failed_when: false
+
+- name: Be sure dropbox is running
+  ansible.builtin.command: dropbox start
+  when: running.rc != '1'
+  changed_when: true
+
+- name: Check if dropbox autostart on login
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/autostart/dropbox.desktop"
+  register: autostart
+
+- name: Be sure dropbox autostart on login
+  ansible.builtin.command: dropbox autostart y
+  when: not autostart.stat.exists
+  changed_when: true

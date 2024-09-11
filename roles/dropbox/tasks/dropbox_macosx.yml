@@ -1,5 +1,0 @@
----
-
-- name: dropbox | be sure dropbox is installed
-  sudo: yes
-  shell: /usr/local/bin/brew cask install dropbox
