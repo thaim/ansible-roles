@@ -1,7 +1,4 @@
 ---
 
-- include: dropbox_ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
-
-- include: dropbox_macosx.yml
-  when: ansible_distribution == 'MacOSX'
+- name: Install dropbox
+  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
