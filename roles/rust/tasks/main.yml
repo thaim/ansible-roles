@@ -17,27 +17,25 @@
   ansible.builtin.command: sh /tmp/rustup.sh -y
   when: cargo.rc != 0
 
+- name: Set shell info
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Setup rustup path
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: ". \"$HOME/.cargo/env\""
+    line: ". \"$HOME/.cargo/env\""
 
 # LSP for rust
 - name: Check rust-analyzer already installed
-  ansible.builtin.command: bash -lc "which rust-analyzer"
+  ansible.builtin.command: bash -lc "rustup component list --installed"
   changed_when: false
   failed_when: false
-  register: rust_analyzer
+  register: rustup_component
 
-- name: Download rust-analyzer
-  ansible.builtin.get_url:
-    url: https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-unknown-linux-gnu.gz
-    dest: /tmp/rust-analyzer.gz
-    mode: '0644'
-  when: rust_analyzer.rc != 0
-
-- name: Unarchive rust-analyzer
-  ansible.builtin.shell: gzip -d /tmp/rust-analyzer.gz -c > ~/.local/bin/rust-analyzer
-  when: rust_analyzer.rc != 0
-
-- name: Change rust-analyzer as executable
-  ansible.builtin.file:
-    path: ~/.local/bin/rust-analyzer
-    mode: '0775'
-  when: rust_analyzer.rc != 0
+- name: Install rust-analyzer
+  ansible.builtin.command: sh -lc "rustup component add rust-analyzer"
+  when: rustup_component.stdout is not search('rust-analyzer')
+  register: result
+  changed_when: result.stdout is search('installing')
