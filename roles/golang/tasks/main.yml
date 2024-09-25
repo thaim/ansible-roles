@@ -21,8 +21,19 @@
         install_golang_version.stdout | regex_replace('go version go(.*) .*', '\\1')
                                       is version(GOLANG_VERSION, '<')
 
-- name: Setup golang depends on distribution
-  ansible.builtin.include_tasks: configure_{{ ansible_distribution }}.yml
+- name: Setup environment variable 'GOPATH'
+  ansible.builtin.lineinfile:
+    dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
+    regexp: "{{ item.regexp }}"
+    insertafter: "{{ item.insertafter }}"
+    line: "{{ item.line }}"
+    create: yes
+    mode: "0644"
+  with_items:
+    # yamllint disable rule:commas
+    - { regexp: '^export PATH="\$PATH:/usr/local/go/bin"', line: 'export PATH="$PATH:/usr/local/go/bin"', insertafter: EOF }
+    - { regexp: '^export GOPATH=',                         line: 'export GOPATH="{{ GOLANG_GOPATH }}"',   insertafter: EOF }
+    - { regexp: '^export PATH="\$PATH:\$GOPATH/bin"',      line: 'export PATH="$PATH:$GOPATH/bin"',       insertafter: EOF }
 
 - name: Install developing tools for golang
   ansible.builtin.include_tasks: install_devtools.yml
