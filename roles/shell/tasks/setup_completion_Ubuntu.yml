@@ -1,0 +1,7 @@
+---
+
+# bash-completion is installed by default
+- name: Install bash-completion
+  become: yes
+  ansible.builtin.apt:
+    name: bash-completion
