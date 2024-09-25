@@ -3,6 +3,8 @@
 - name: Setup alias
   ansible.builtin.include_tasks: setup_alias.yml
 
+- name: Setup completion
+  ansible.builtin.include_tasks: setup_completion_{{ ansible_distribution }}.yml
 
 - name: Check if starship already installed
   ansible.builtin.command: which starship

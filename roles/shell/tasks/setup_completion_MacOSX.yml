@@ -1,0 +1,5 @@
+---
+
+- name: Install zsh-completion
+  community.general.homebrew:
+    name: zsh-completions
