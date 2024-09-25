@@ -36,4 +36,6 @@
 
 - name: Install rust-analyzer
   ansible.builtin.command: sh -lc "rustup component add rust-analyzer"
-  when: rustup_component.stdout is not search ('rust-analyzer')
+  when: rustup_component.stdout is not search('rust-analyzer')
+  register: result
+  changed_when: result.stdout is search('installing')
