@@ -1,0 +1,29 @@
+---
+
+- name: Create Directories to mount
+  become: yes
+  ansible.builtin.file:
+    path: "/media/{{ item }}"
+    state: directory
+    mode: '0777'
+  with_items:
+    - { item: backup }
+    - { item: Multimedia }
+    - { item: Music }
+    - { item: iso }
+    - { item: Document }
+
+- name: Mount
+  become: yes
+  ansible.posix.mount:
+    path: "/media/{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: nfs
+    opts: default
+    state: present
+  wtih_items:
+    - { path: "backup",     src: "{{ NAS_HOST }}:/backup" }
+    - { path: "iso",        src: "{{ NAS_HOST }}:/iso" }
+    - { path: "Multimedia", src: "{{ NAS_HOST }}:/Multimedia" }
+    - { path: "Music",      src: "{{ NAS_HOST }}:/Multimedia/Music" }
+    - { path: "Document",   src: "{{ NAS_HOST }}:/Document" }

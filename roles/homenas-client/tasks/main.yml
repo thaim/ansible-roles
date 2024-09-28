@@ -1,0 +1,4 @@
+---
+
+- name: Setup fstab
+  ansible.builtin.include_tasks: configure_fstab_{{ ansible_distribution }}.yml
