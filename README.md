@@ -2,6 +2,8 @@
 My ansible playbooks
 
 ## setup python environment
+- install dependencies
+  - Ubuntu: `sudo apt install build-essential libssl-dev libffi-dev libbz2-dev libncurses-dev libsqlite3-dev python3-tk liblzma-dev`
 - [install poetry](https://python-poetry.org/docs/)
 - run `poetry install --sync` to ansible and related dev dependencies
 

@@ -1,0 +1,31 @@
+---
+
+- name: Create Directories to mount
+  become: yes
+  ansible.builtin.file:
+    path: "/media/{{ item }}"
+    state: directory
+    mode: '0777'
+  with_items:
+    - { item: backup }
+    - { item: Multimedia }
+    - { item: Music }
+    - { item: iso }
+    - { item: Document }
+
+- name: Mount
+  become: yes
+  ansible.posix.mount:
+    path: "/media/{{ item.path }}"
+    src: "{{ item.src }}"
+    fstype: nfs
+    opts: default
+    state: present
+  # yamllint disable rule:commas
+  wtih_items:
+    - { path: "backup",     src: "{{ homenas_client_host }}:/backup" }
+    - { path: "iso",        src: "{{ homenas_client_host }}:/iso" }
+    - { path: "Multimedia", src: "{{ homenas_client_host }}:/Multimedia" }
+    - { path: "Music",      src: "{{ homenas_client_host }}:/Multimedia/Music" }
+    - { path: "Document",   src: "{{ homenas_client_host }}:/Document" }
+  # yamllint enable rule:commas

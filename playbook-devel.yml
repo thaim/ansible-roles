@@ -8,7 +8,7 @@
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
     - { role: fonts, tags: fonts }
-    - { role: nfs-client, tags: nfs-client }
+    - { role: nfs_client, tags: nfs_client }
     - { role: docker, tags: docker }
     - { role: aqua, tags: aqua }
 

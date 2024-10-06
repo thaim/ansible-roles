@@ -3,5 +3,5 @@
 - hosts: all
   roles:
     - { role: apt, tags: apt }
-    - { role: nfs-client, tags: nfs-client }
+    - { role: nfs_client, tags: nfs_client }
     - { role: docker, tags: docker }
