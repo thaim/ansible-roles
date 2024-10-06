@@ -7,7 +7,8 @@
     - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: aqua, tags: aqua }
-    - { role: nfs-client, tags: nfs-client }
+    - { role: homenas-client, tags: homenas-client }
     - { role: fluentd, tags: fluentd }
+    - { role: dropbox, tags: dropbox }
     # intellij
     # RStudio
