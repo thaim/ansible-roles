@@ -1,4 +1,4 @@
 ---
 
 dependencies:
-  - nfs_client
+  - role: nfs_client
