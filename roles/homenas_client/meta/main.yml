@@ -1,4 +1,4 @@
 ---
 
 dependencies:
-  - nfs-client
+  - nfs_client
