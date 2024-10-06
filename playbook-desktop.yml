@@ -7,7 +7,7 @@
     - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: aqua, tags: aqua }
-    - { role: homenas-client, tags: homenas-client }
+    - { role: homenas_client, tags: homenas_client }
     - { role: fluentd, tags: fluentd }
     - { role: dropbox, tags: dropbox }
     # intellij
