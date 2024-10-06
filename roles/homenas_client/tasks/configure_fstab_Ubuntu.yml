@@ -21,9 +21,11 @@
     fstype: nfs
     opts: default
     state: present
-  wtih_items:  # noqa: yaml[commas]
+  # yamllint disable rule:commas
+  wtih_items:
     - { path: "backup",     src: "{{ homenas_client_host }}:/backup" }
     - { path: "iso",        src: "{{ homenas_client_host }}:/iso" }
     - { path: "Multimedia", src: "{{ homenas_client_host }}:/Multimedia" }
     - { path: "Music",      src: "{{ homenas_client_host }}:/Multimedia/Music" }
     - { path: "Document",   src: "{{ homenas_client_host }}:/Document" }
+  # yamllint enable rule:commas
