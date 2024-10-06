@@ -20,5 +20,14 @@
       - sysstat
       - libbz2-dev
 
+- name: Install
+  become: yes
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - man-db
+      - vim
+
 - name: Setup kernel parameters
   ansible.builtin.include_tasks: kernel_param.yml
