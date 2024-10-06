@@ -22,8 +22,8 @@
     opts: default
     state: present
   wtih_items:  # noqa: yaml[commas]
-    - { path: "backup",     src: "{{ NAS_HOST }}:/backup" }
-    - { path: "iso",        src: "{{ NAS_HOST }}:/iso" }
-    - { path: "Multimedia", src: "{{ NAS_HOST }}:/Multimedia" }
-    - { path: "Music",      src: "{{ NAS_HOST }}:/Multimedia/Music" }
-    - { path: "Document",   src: "{{ NAS_HOST }}:/Document" }
+    - { path: "backup",     src: "{{ HOMENAS_CLIENT_HOST }}:/backup" }
+    - { path: "iso",        src: "{{ HOMENAS_CLIENT_HOST }}:/iso" }
+    - { path: "Multimedia", src: "{{ HOMENAS_CLIENT_HOST }}:/Multimedia" }
+    - { path: "Music",      src: "{{ HOMENAS_CLIENT_HOST }}:/Multimedia/Music" }
+    - { path: "Document",   src: "{{ HOMENAS_CLIENT_HOST }}:/Document" }
