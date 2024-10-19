@@ -21,7 +21,7 @@
     packages:
       - libbz2-dev
       - liblzma-dev
-      - python-tk
+      - python3-tk
       - tk-dev
 
 - name: Setup shell environment for pyenv
