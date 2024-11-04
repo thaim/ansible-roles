@@ -1,0 +1,22 @@
+---
+
+- name: install direnv in Ubuntu
+  become: yes
+  apt:
+    name: direnv
+  when: ansible_distribution == "Ubuntu"
+
+- name: install direnv in MacOSX
+  community.general.homebrew:
+    name: direnv
+  when: ansible_distribution == "MacOSX"
+
+- name: Set shell info
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Setup direnv hook
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: "^eval \"$(direnv hook {{ shell_info.name }})\""
+    line: "eval \"$(direnv hook {{ shell_info.name }})\""
