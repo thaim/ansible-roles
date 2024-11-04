@@ -6,3 +6,7 @@
 
 # python
 __pycache__/
+
+# inventory files
+/inventories/*
+!/inventories/localhost
