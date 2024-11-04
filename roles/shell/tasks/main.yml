@@ -15,3 +15,13 @@
 - name: Setup starship
   ansible.builtin.include_tasks: setup_starship.yml
   when: starship_installed.rc != 0
+
+- name: Check if direnv already installed
+  ansible.builtin.command: which direnv
+  register: direnv_installed
+  changed_when: false
+  failed_when: false
+
+- name: Setup direnv
+  ansible.builtin.include_tasks: setup_direnv.yml
+  when: direnv_installed.rc != 0
