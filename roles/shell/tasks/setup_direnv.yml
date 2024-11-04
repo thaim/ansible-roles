@@ -1,12 +1,12 @@
 ---
 
-- name: install direnv in Ubuntu
+- name: Install direnv in Ubuntu
   become: yes
-  apt:
+  ansible.builtin.apt:
     name: direnv
   when: ansible_distribution == "Ubuntu"
 
-- name: install direnv in MacOSX
+- name: Install direnv in MacOSX
   community.general.homebrew:
     name: direnv
   when: ansible_distribution == "MacOSX"
