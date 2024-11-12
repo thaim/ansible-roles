@@ -7,7 +7,7 @@ license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.9 <3.12"
-ansible-core = "^2.15.9"
+ansible-core = "^2.15.13"
 jmespath = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
