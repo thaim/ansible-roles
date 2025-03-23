@@ -49,3 +49,10 @@
 
 - name: Setup git-completion
   ansible.builtin.include_tasks: setup_git_completion.yml
+
+
+- name: Install custom commands script
+  ansible.builtin.copy:
+    src: git-switch-default
+    dest: /usr/local/bin/git-switch-default
+    mode: '0755'

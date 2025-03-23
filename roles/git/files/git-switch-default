@@ -1,0 +1,13 @@
+#!/bin/bash
+# git-switch-default - Switch to the remote default branch
+
+# Get default branch name (from local cache without remote access)
+default_branch=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@')
+
+# Exit if symbolic reference is not found
+if [ -z "$default_branch" ]; then
+  echo "Error: refs/remotes/origin/HEAD does not exist."
+  exit 1
+fi
+
+git switch "$default_branch"
