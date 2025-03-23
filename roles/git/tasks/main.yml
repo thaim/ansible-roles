@@ -51,7 +51,7 @@
   ansible.builtin.include_tasks: setup_git_completion.yml
 
 
-- name: install custom commands script
+- name: Install custom commands script
   ansible.builtin.copy:
     src: git-switch-default
     dest: /usr/local/bin/git-switch-default
