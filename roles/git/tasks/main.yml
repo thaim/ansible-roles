@@ -56,3 +56,22 @@
     src: git-switch-default
     dest: /usr/local/bin/git-switch-default
     mode: '0755'
+
+- name: Set shell info
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Override default command
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK git command"
+    block: |
+      git() {
+        if [ "$1" = "switch" ] && [ $# -eq 1 ]; then
+          # git switchが引数なしで呼ばれた場合
+          command git switch-default
+        else
+          # 引数がある場合や他のgitサブコマンドはそのまま実行
+          command git "$@"
+        fi
+      }
