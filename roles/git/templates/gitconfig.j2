@@ -6,6 +6,7 @@
     graph    = log --graph --branches --remotes --tags --format=format:'%Cgreen%h %Creset• %<(75,trunc)%s (%cN, %ar) %Cred%d' --date-order --all
     s        = status
     merged   = log --merges --first-parent --oneline
+    branch-clean = !~/.config/git/scripts/branch-clean.sh
 
 [user]
 	email = thaim24@gmail.com
