@@ -47,6 +47,18 @@
     dest: "{{ ansible_user_dir }}/.config/git/hooks/pre-commit"
     mode: '0755'
 
+- name: Create git scripts directory
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config/git/scripts"
+    state: directory
+    mode: '0755'
+
+- name: Install branch-clean script
+  ansible.builtin.copy:
+    src: branch-clean.sh
+    dest: "{{ ansible_user_dir }}/.config/git/scripts/branch-clean.sh"
+    mode: '0755'
+
 - name: Setup git-completion
   ansible.builtin.include_tasks: setup_git_completion.yml
 
