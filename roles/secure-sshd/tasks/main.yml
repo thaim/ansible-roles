@@ -1,5 +1,0 @@
----
-
-- name: secure-sshd | copy authorized_key
-  authorized_key: user="{{ USER_NAME }}"
-                  key="{{ lookup('file', '' }}"

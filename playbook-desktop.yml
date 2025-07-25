@@ -4,6 +4,7 @@
   roles:
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
+    - { role: ssh, tags: ssh }
     - { role: fonts, tags: fonts }
     - { role: golang, tags: golang }
     - { role: aqua, tags: aqua }
