@@ -6,4 +6,3 @@
     name: keychain
     state: present
     update_cache: yes
-
