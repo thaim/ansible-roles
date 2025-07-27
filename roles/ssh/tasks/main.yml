@@ -15,6 +15,8 @@
   ansible.builtin.shell: |
     set -o pipefail
     ssh -V 2>&1 | head -n1 | sed 's/.*_\([0-9]\+\.[0-9]\+\).*/\1/'
+  args:
+    executable: /bin/bash
   register: ssh_version_output
   changed_when: false
 
@@ -33,13 +35,13 @@
     path: "{{ ansible_env.HOME }}/.ssh/config"
     block: |
       Host *
-          {% if ssh_version < 10.0 %}
+      {% if ssh_version | float < 10.0 %}
           ObscureKeystrokeTiming no
-          {% endif %}
+      {% endif %}
           AddKeysToAgent yes
-          {% if ansible_os_family == 'Darwin' %}
+      {% if ansible_os_family == 'Darwin' %}
           UseKeychain yes
-          {% endif %}
+      {% endif %}
     marker: "# {mark} ANSIBLE MANAGED BLOCK - SSH Client Config"
     create: yes
     mode: '0600'
