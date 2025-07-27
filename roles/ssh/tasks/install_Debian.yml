@@ -1,0 +1,8 @@
+---
+
+- name: Install keychain (Ubuntu/Debian)
+  become: yes
+  ansible.builtin.apt:
+    name: keychain
+    state: present
+    update_cache: yes

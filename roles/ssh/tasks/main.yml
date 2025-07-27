@@ -1,11 +1,22 @@
 ---
 
+# keychain setup
+
+- name: Install keychain (Linux only)
+  ansible.builtin.include_tasks: "install_{{ ansible_os_family }}.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Configure shell for keychain
+  ansible.builtin.include_tasks: configure_shell.yml
+
 # ssh config
 
 - name: Get SSH client version
   ansible.builtin.shell: |
     set -o pipefail
     ssh -V 2>&1 | head -n1 | sed 's/.*_\([0-9]\+\.[0-9]\+\).*/\1/'
+  args:
+    executable: /bin/bash
   register: ssh_version_output
   changed_when: false
 
@@ -19,16 +30,21 @@
     state: directory
     mode: '0700'
 
-- name: Configure ObscureKeystrokeTiming for SSH versions < 10.0
+- name: Configure SSH client settings
   ansible.builtin.blockinfile:
     path: "{{ ansible_env.HOME }}/.ssh/config"
     block: |
       Host *
+      {% if ssh_version | float < 10.0 %}
           ObscureKeystrokeTiming no
-    marker: "# {mark} ANSIBLE MANAGED BLOCK - ObscureKeystrokeTiming"
+      {% endif %}
+          AddKeysToAgent yes
+      {% if ansible_os_family == 'Darwin' %}
+          UseKeychain yes
+      {% endif %}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - SSH Client Config"
     create: yes
     mode: '0600'
-  when: ssh_version < 10.0
 
 # sshd config
 
