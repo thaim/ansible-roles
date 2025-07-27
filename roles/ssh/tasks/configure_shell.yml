@@ -1,0 +1,23 @@
+---
+
+- name: Get shell configuration
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Setup keychain for SSH keys (Linux)
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: "^eval `keychain --eval --agents ssh"
+    line: "eval `keychain --eval --agents ssh --inherit any id_rsa id_ed25519`"
+    create: yes
+    mode: '0644'
+  when: ansible_os_family == 'Debian'
+
+- name: Setup SSH agent for keychain (macOS)
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    regexp: "^ssh-add --apple-use-keychain"
+    line: "ssh-add --apple-use-keychain ~/.ssh/id_rsa ~/.ssh/id_ed25519 2>/dev/null || true"
+    create: yes
+    mode: '0644'
+  when: ansible_os_family == 'Darwin'
