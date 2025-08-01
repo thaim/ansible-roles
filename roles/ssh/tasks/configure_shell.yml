@@ -12,7 +12,7 @@
       if [[ -f ~/.keychain/$(hostname)-sh ]]; then
         . ~/.keychain/$(hostname)-sh
       fi
-      eval `keychain --eval --agents ssh --inherit any id_rsa id_ed25519`
+      eval $(keychain --eval --agents ssh --inherit any id_rsa id_ed25519)
     create: yes
     mode: '0644'
   when: ansible_os_family == 'Debian'
