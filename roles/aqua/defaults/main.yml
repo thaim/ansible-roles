@@ -1,3 +1,14 @@
 ---
 
-aqua_version: v2.31.0
+aqua_version: v2.53.9
+
+# Tools to configure with their config files
+# Format: tool_name:
+#   src_file: source file name in files/ directory
+#   dest_file: destination file name
+#   dest_dir: destination directory (default: home directory)
+aqua_tools_config:
+  yamlfmt:
+    src_file: dot.yamlfmt
+    dest_file: .yamlfmt
+    dest_dir: "{{ ansible_user_dir }}/.config/yamlfmt"

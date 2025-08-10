@@ -39,3 +39,6 @@
   ansible.builtin.command: aqua --config ~/.config/aquaproj-aqua/aqua.yaml i
   register: aqua_install_package
   changed_when: aqua_install_package.stdout != ''
+
+- name: Setup global config for each tools
+  ansible.builtin.include_tasks: configure.yml
