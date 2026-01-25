@@ -82,3 +82,30 @@
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   ansible.builtin.shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
   when: status_ghq.rc != 0
+
+
+# git worktree management tool
+- name: Check git-wt installed
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
+  ansible.builtin.shell: /bin/bash -lc "which git-wt"
+  register: status_git_wt
+  changed_when: false
+  failed_when: false
+
+- name: Install git-wt
+  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
+  ansible.builtin.shell: /bin/bash -lc "go install github.com/k1LoW/git-wt@latest"
+  when: status_git_wt.rc != 0
+
+- name: Set shell info for git-wt
+  ansible.builtin.set_fact:
+    shell_info: "{{ ansible_user_shell | shell_config }}"
+
+- name: Setup git-wt hook function
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK git-wt"
+    block: |
+      # git-wt が生成する git() 関数を __git_wt_hook() として取り込む
+      eval "$(git-wt --init {{ shell_info.name }} | sed 's/^git()/__git_wt_hook()/' | sed '/^    else$/,/^        command git/d')"
+      eval "$(git-wt --init {{ shell_info.name }} --nocd)"

@@ -73,7 +73,31 @@
   ansible.builtin.set_fact:
     shell_info: "{{ ansible_user_shell | shell_config }}"
 
-- name: Override default command
+- name: Override default command (with git-wt)
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK git command"
+    block: |
+      git() {
+        case "$1" in
+          switch)
+            if [ "$1" = "switch" ] && [ $# -eq 1 ]; then
+              command git switch-default
+            else
+              command git "$@"
+            fi
+            ;;
+          wt)
+            __git_wt_hook "$@"
+            ;;
+          *)
+            command git "$@"
+            ;;
+        esac
+      }
+  when: GIT_WT_ENABLED
+
+- name: Override default command (without git-wt)
   ansible.builtin.blockinfile:
     path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK git command"
@@ -87,3 +111,4 @@
           command git "$@"
         fi
       }
+  when: not GIT_WT_ENABLED

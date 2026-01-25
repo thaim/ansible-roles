@@ -2,3 +2,6 @@
 
 # 'package' or 'extra'
 GIT_INSTALLER: 'package'
+
+# git-wt integration (requires golang role)
+GIT_WT_ENABLED: true
