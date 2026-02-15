@@ -20,10 +20,32 @@ fi
 # 除外パターン（設定可能）
 EXCLUDE_BRANCHES=$(git config --get branch.clean.exclude || echo "main|master|develop|development|staging|production|prod|release")
 
-# 削除実行
-if [ "$DRY_RUN" = true ]; then
-  echo "[dry-run]"
-  git branch --merged $DEFAULT_BRANCH | grep -vE "^[* ] ($EXCLUDE_BRANCHES)$" 
-else
-  git branch --merged $DEFAULT_BRANCH | grep -vE "^[* ] ($EXCLUDE_BRANCHES)$" | xargs -n 1 git branch -d 2>/dev/null || true
+# worktreeで使用中のブランチを取得
+WORKTREE_BRANCHES=""
+if git worktree list --porcelain >/dev/null 2>&1; then
+    WORKTREE_BRANCHES=$(git worktree list --porcelain | grep '^branch refs/heads/' | sed 's@^branch refs/heads/@@')
 fi
+
+is_worktree_branch() {
+    local branch="$1"
+    echo "$WORKTREE_BRANCHES" | grep -Fqx "$branch"
+}
+
+# マージ済みブランチ一覧を取得（除外パターンでフィルタ）
+MERGED_BRANCHES=$(git branch --merged "$DEFAULT_BRANCH" | grep -vE "^[* +] ($EXCLUDE_BRANCHES)$" | sed 's/^[* +] //')
+
+# マージ済みブランチからworktree使用中のブランチを除外して削除
+if [ "$DRY_RUN" = true ]; then
+    echo "[dry-run]"
+fi
+while read -r branch; do
+    [ -z "$branch" ] && continue
+    if [ -n "$WORKTREE_BRANCHES" ] && is_worktree_branch "$branch"; then
+        continue
+    fi
+    if [ "$DRY_RUN" = true ]; then
+        echo "  $branch"
+    else
+        git branch -d "$branch"
+    fi
+done <<< "$MERGED_BRANCHES"
