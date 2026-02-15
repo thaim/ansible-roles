@@ -1,7 +1,7 @@
 ---
 
 # major/minor version for golang
-GOLANG_VERSION: 1.21.0
+GOLANG_VERSION: 1.26.0
 
 # GOやその他開発用ファイル/リポジトリ置き場
 GOLANG_GOPATH: "$HOME"
