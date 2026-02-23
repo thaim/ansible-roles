@@ -98,10 +98,10 @@ When `shell` is required instead of `command` (e.g., for PATH-aware login shell 
 ```
 
 ## Lint Configuration
-- `.ansible-lint`: skips `git-latest` rule, excludes `roles/*/files/*`
+- `.ansible-lint`: skips multiple legacy rules (see file), excludes `roles/*/files/*`
 - `.yamllint`: line length max 160, truthy values `["true", "false", "yes", "no"]`
 
 ## Python Environment
 - Poetry for dependency management
-- Python 3.9+ (< 3.12), ansible-core ^2.15.13
-- Required collections: `community.general` 7.4.0, `ansible.posix` 1.5.2
+- Python 3.11+ (< 3.14), ansible-core ~2.18.0
+- Required collections: `community.general` 10.0.0, `ansible.posix` 2.0.0

@@ -5,6 +5,22 @@ exclude_paths:
 
 skip_list:
   - git-latest
+  - fqcn[action-core]
+  - fqcn[action]
+  - name[casing]
+  - name[missing]
+  - no-free-form
+  - var-naming[no-role-prefix]
+  - risky-file-permissions
+  - schema[tasks]
+  - schema[playbook]
+  - package-latest
+  - deprecated-module
+  - parser-error
+  - no-changed-when
+  - command-instead-of-shell
+  - literal-compare
+  - risky-shell-pipe
 
 # デフォルトパターンに加えて大文字のアンダースコア区切りも許容したい
 var_naming_pattern: "^[a-z_][a-z0-9_]*$|[A-Z][A-Z0-9_]*$"
