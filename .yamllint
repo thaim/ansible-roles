@@ -4,12 +4,16 @@ rules:
   braces:
     min-spaces-inside: 0
     max-spaces-inside: 1
+  comments:
+    min-spaces-from-content: 1
   comments-indentation: false
   document-start: disable
   empty-lines:
     max: 2
     max-start: 0
     max-end: 0
+  # TODO: octal-values ルールを有効化し、implicit octal (0755等) を修正する
+  octal-values: disable
   line-length:
     max: 160
   truthy:
