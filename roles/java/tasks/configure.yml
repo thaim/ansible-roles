@@ -1,10 +1,12 @@
 ---
 
 - name: Configure JAVA_HOME
-  lineinfile: dest="/home/{{ ansible_env.USER }}/.profile"
-              regexp="^JAVA_HOME="
-              line="JAVA_HOME=$(readlink -f /usr/bin/javac | sed \"s:bin/javac::\")"
+  lineinfile:
+    dest: "/home/{{ ansible_env.USER }}/.profile"
+    regexp: "^JAVA_HOME="
+    line: "JAVA_HOME=$(readlink -f /usr/bin/javac | sed \"s:bin/javac::\")"
 
 - name: Add java bin into execute path
-  lineinfile: dest="/home/{{ ansible_env.USER }}/.profile"
-              line="PATH=$JAVA_HOME/bin:$PATH"
+  lineinfile:
+    dest: "/home/{{ ansible_env.USER }}/.profile"
+    line: "PATH=$JAVA_HOME/bin:$PATH"
