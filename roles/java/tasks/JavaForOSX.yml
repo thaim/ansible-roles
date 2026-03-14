@@ -1,5 +1,5 @@
 ---
 
 - name: Be sure Java for MacOSX is installed
-  sudo: yes
-  shell: brew cask install java
+  become: yes
+  ansible.builtin.shell: brew cask install java
