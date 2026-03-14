@@ -1,0 +1,6 @@
+---
+
+- name: Install OpenJDK 17
+  become: yes
+  ansible.builtin.apt:
+    name: openjdk-17-jdk
