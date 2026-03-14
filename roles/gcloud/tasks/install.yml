@@ -14,5 +14,7 @@
 - name: gcloud | install Google Cloud SDK
   become: yes
   apt:
-    name: google-cloud-sdk
+    pkg:
+      - google-cloud-sdk
+      - google-cloud-cli-gke-gcloud-auth-plugin
     update_cache: yes
