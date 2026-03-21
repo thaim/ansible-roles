@@ -1,3 +1,6 @@
 *~
 .env
 .envrc
+
+**/.claude/settings.local.json
+docs/steering/
