@@ -18,7 +18,7 @@ packages:
 - name: stern/stern@v1.30.0
 - name: helm/helm@v3.15.4
 - name: kubernetes-sigs/kustomize@kustomize/v5.4.3
-- name: argoproj/argo-cd@v2.12.3
+- name: argoproj/argo-cd@v2.14.21
 - name: open-policy-agent/conftest@v0.56.0
 - name: open-policy-agent/opa@v1.0.0
 - name: google/yamlfmt@v0.17.2
