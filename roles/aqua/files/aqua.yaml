@@ -13,7 +13,7 @@ packages:
 - name: ahmetb/kubectx/kubens@v0.9.5
 - name: shyiko/kubesec@0.9.2
 - name: hashicorp/terraform-ls@v0.34.3
-- name: aquasecurity/trivy@v0.55.0
+- name: aquasecurity/trivy@v0.69.3
 - name: terraform-linters/tflint@v0.53.0
 - name: stern/stern@v1.30.0
 - name: helm/helm@v3.15.4
