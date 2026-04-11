@@ -2,5 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>aquaproj/aqua-renovate-config:file#2.11.0(roles/aqua/files/aqua\\.ya?ml)"
+  ],
+  "packageRules": [
+    {
+      "matchFileNames": ["roles/aqua/files/aqua.yaml"],
+      "groupName": "aqua packages"
+    }
   ]
 }
