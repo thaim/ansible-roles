@@ -11,4 +11,4 @@ permissions:
 
 jobs:
   security:
-    uses: thaim/actions/.github/workflows/reusable-gha-security.yml@54c91c4c6d52acaeef77176a79d736ab8029c3af # v1.2.0
+    uses: thaim/actions/.github/workflows/reusable-gha-security.yml@4a149f95d26f73b47424ff7b4652bf70b548cac6 # v1.4.0
