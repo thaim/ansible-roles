@@ -11,7 +11,8 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK for nodenv"
     block: |
       export PATH="$HOME/.nodenv/bin:$PATH"
-      eval "$(nodenv init -)"
+      eval "$(nodenv init - --no-rehash bash)"
+      export PATH="$(nodenv exec npm config get prefix)/bin:$PATH"
 
 - name: Create nodenv plugin directory
   ansible.builtin.file:
