@@ -3,18 +3,18 @@
   shell: dpkg -l oracle-java8-installer >/dev/null 2>&1; echo $?
   register: installed
   changed_when: false
-  always_run: yes
+  check_mode: false
 
 - name: java | add oracle java8 repository
-  sudo: yes
+  become: yes
   apt_repository: repo='ppa:webupd8team/java'
 
 - name: java | automatically accept the Oracle License
-  sudo: yes
+  become: yes
   shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
   when: installed.stdout != '0'
 
 - name: java | install Oracle JDK8
-  sudo: yes
+  become: yes
 #  apt: pkg=oracle-java8-installer update-cache=yes state=latest force=yes
   apt: pkg=oracle-java8-installer state=latest

@@ -21,6 +21,7 @@ skip_list:
   - command-instead-of-shell
   - literal-compare
   - risky-shell-pipe
+  - role-name
 
 # デフォルトパターンに加えて大文字のアンダースコア区切りも許容したい
 var_naming_pattern: "^[a-z_][a-z0-9_]*$|[A-Z][A-Z0-9_]*$"

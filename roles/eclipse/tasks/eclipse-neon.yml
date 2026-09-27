@@ -18,7 +18,7 @@
   become: yes
   command: mv {{ work_dir }}/eclipse/ /usr/local/bin/eclipse-neon/
   when:
-    - eclipse_neon_new_create|success
+    - eclipse_neon_new_create is success
 
 - name: eclipse | change owner to user
   become: yes

@@ -6,7 +6,7 @@
   register: intellij_bin
   changed_when: false
 
-- include: IntelliJ.yml
+- ansible.builtin.include_tasks: IntelliJ.yml
   when: not intellij_bin.stat.exists
 
 - name: intellij | create symlink to intellij idea

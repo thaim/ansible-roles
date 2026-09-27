@@ -5,5 +5,5 @@
            dest=/tmp/
 
 - name: chrome | be sure google chrome is installed
-  sudo: yes
+  become: yes
   apt: deb=/tmp/google-chrome-stable_current_amd64.deb

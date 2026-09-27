@@ -1,6 +1,6 @@
 ---
 
-- include: install_dependency_Ubuntu.yml
+- ansible.builtin.include_tasks: install_dependency_Ubuntu.yml
 
 - name: opencv | download opencv
   git: repo=git://github.com/opencv/opencv
@@ -12,7 +12,7 @@
        dest=/tmp
         version=3.1.0
 
-- include: install_python_Ubuntu.yml
+- ansible.builtin.include_tasks: install_python_Ubuntu.yml
 
 - name: opencv | create build directory
   file: path=/tmp/opencv/build
@@ -29,8 +29,10 @@
     chdir: /tmp/opencv/build
 
 - name: opencv | make
-  make: chdir=/tmp/opencv/build
-        NUM_THREADS=2
+  make:
+    chdir: /tmp/opencv/build
+    params:
+      NUM_THREADS: 2
 
 - name: opencv | install opencv
   become: yes
