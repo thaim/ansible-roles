@@ -25,4 +25,3 @@
     dest: /etc/td-agent/td-agent.conf.d/persistent.conf
     mode: '0644'
   notify: Reload fluentd.service
-
