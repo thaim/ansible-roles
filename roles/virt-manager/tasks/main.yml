@@ -1,16 +1,16 @@
 ---
 
 - name: virt-manager | be sure virt-manager is installed
-  sudo: yes
+  become: yes
   apt: name=virt-manager,libvirt-bin,qemu-kvm
        state=latest
 
 - name: virt-manager | install spice connection
-  sudo: yes
+  become: yes
   apt: name=qemu-kvm-spice,spice-client-gtk
 
 - name: virt-manager | install spice-client
-  sudo: yes
+  become: yes
   apt: name=python-spice-client-gtk
 
 - name: virt-manager | install ask-password

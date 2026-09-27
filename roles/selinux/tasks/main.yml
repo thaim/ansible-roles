@@ -1,4 +1,4 @@
 ---
 
-- include: CentOS7.yml
+- ansible.builtin.include_tasks: CentOS7.yml
   when: ansible_distribution == 'CentOS'

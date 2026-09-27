@@ -10,12 +10,12 @@
            dest=/tmp/scala-{{ scala_version }}.tgz
 
 - name: scala | create scala directory
-  sudo: yes
+  become: yes
   file: path=/usr/local/bin/scala
         state=directory
 
 - name: scala | unarchive scala module
-  sudo: yes
+  become: yes
   unarchive: src=/tmp/scala-{{ scala_version }}.tgz
              dest=/usr/local/bin/scala
              copy=no

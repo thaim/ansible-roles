@@ -17,7 +17,7 @@
     - { regexp: '^XDG_VIDEOS_DIR',    line: 'XDG_VIDEOS_DIR=\"$HOME/Videos\"',       insertafter: EOF }
 
 - name: english_path | change directory name of japanese in home directory into english
-  sudo: yes
+  become: yes
   shell: |
     if [ -d {{ ansible_env.HOME }}/{{ item.before }} ]; then mv {{ ansible_env.HOME }}/{{ item.before }} {{ ansible_env.HOME }}/{{ item.after }}; fi
   with_items:

@@ -4,11 +4,11 @@
   stat: path=/usr/local/bin/eclipse-neon
   register: eclipse_neon_dir
 
-- include: eclipse-neon.yml
+- ansible.builtin.include_tasks: eclipse-neon.yml
   when: not eclipse_neon_dir.stat.exists
 
 - name: eclipse | create symlink to eclipse-neon
-  sudo: yes
+  become: yes
   file: path=/usr/local/bin/eclipse
         src=/usr/local/bin/eclipse-neon/eclipse
         state=link

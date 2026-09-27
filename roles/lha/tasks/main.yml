@@ -1,6 +1,6 @@
 ---
 
 - name: lha | install lha package
-  sudo: yes
+  become: yes
   apt: name=lha-sjis
        state=latest

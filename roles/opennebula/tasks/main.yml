@@ -11,8 +11,8 @@
     src: opennebula.list
     dest: /etc/apt/sources.list.d/opennebula.list
 
-- include: install_front.yml
+- ansible.builtin.include_tasks: install_front.yml
   when: OPENNEBULA_ROLE == 'front'
 
-- include: install_host.yml
+- ansible.builtin.include_tasks: install_host.yml
   when: OPENNEBULA_ROLE == 'host'

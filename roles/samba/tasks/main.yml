@@ -1,12 +1,12 @@
 ---
 
 - name: samba | be sure samba service is installed
-  sudo: yes
+  become: yes
   apt: name=samba
        state=latest
 
 - name: samba | samba configuration for charset
-  sudo: yes
+  become: yes
   lineinfile: dest=/etc/samba/smb.conf
               regexp={{ item.regexp }}
               insertafter={{ item.insertafter }}
@@ -17,6 +17,6 @@
     - { regexp: '^hosts allow', }
 
 - name: samba | be sure samba service is running
-  sudo: yes
+  become: yes
   service: state=started
            enabled=yes
