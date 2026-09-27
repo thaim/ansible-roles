@@ -12,6 +12,12 @@
       "description": "ansible-core 2.18 のコントローラが Python 3.14 に対応していないため 3.13 までに留める",
       "matchDepNames": ["python"],
       "allowedVersions": "<3.14"
+    },
+    {
+      "description": "poetry が python を更新対象のパッケージとして受け付けず lock ファイル更新が失敗するため、pyproject.toml の python 制約は Renovate で更新しない",
+      "matchManagers": ["poetry"],
+      "matchDepNames": ["python"],
+      "enabled": false
     }
   ]
 }
