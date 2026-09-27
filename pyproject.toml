@@ -11,7 +11,7 @@ ansible-core = "~2.18.0"
 jmespath = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
-ansible-lint = { version = "^25.1.0", markers = "platform_system != 'Windows'" }
+ansible-lint = { version = "^26.0.0", markers = "platform_system != 'Windows'" }
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
