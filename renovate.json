@@ -7,6 +7,11 @@
     {
       "matchFileNames": ["roles/aqua/files/aqua.yaml"],
       "groupName": "aqua packages"
+    },
+    {
+      "description": "ansible-core 2.18 のコントローラが Python 3.14 に対応していないため 3.13 までに留める",
+      "matchDepNames": ["python"],
+      "allowedVersions": "<3.14"
     }
   ]
 }
