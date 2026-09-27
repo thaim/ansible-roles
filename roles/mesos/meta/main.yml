@@ -1,5 +1,0 @@
----
-
-dependencies:
-    - { role: build-essential }
-    - { role: java }

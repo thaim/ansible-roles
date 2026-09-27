@@ -1,5 +1,0 @@
----
-
-- name: mercurial | install mercurial
-  sudo: yes
-  apt: name=mercurial

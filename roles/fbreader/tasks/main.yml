@@ -1,6 +1,0 @@
----
-
-- name: fbreader | be sure fbreader is installed
-  sudo: yes
-  apt: name=fbreader
-       state=latest
