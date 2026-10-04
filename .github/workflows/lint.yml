@@ -24,14 +24,15 @@ jobs:
           cache: poetry
 
       # poetry.lock の ansible-core / ansible-lint で lint する。action に任せると action が ansible-core を固定せず最新版を入れ、ansible-lint と非互換になるため
-      # 仮想環境を作らず setup-python の Python に入れ、action 内の pip3 / ansible-lint が同じ環境を参照するようにする
+      # setup-python の cache: poetry が作る仮想環境を PATH に追加し、action 内の pip3 / ansible-lint がこの環境を参照するようにする
       - name: install dependencies from poetry.lock
         id: deps
-        env:
-          POETRY_VIRTUALENVS_CREATE: "false"
         run: |
-          poetry install --no-root
-          echo "ansiblelint_version=$(python -c 'from importlib.metadata import version; print(version("ansible-lint"))')" >> "$GITHUB_OUTPUT"
+          poetry sync --no-root
+          echo "$(poetry env info --path)/bin" >> "$GITHUB_PATH"
+          # echo "...$(cmd)" の形では cmd の失敗で step を落とせないため、変数に代入してから出力する
+          version=$(poetry run python -c 'from importlib.metadata import version; print(version("ansible-lint"))')
+          echo "ansiblelint_version=${version}" >> "$GITHUB_OUTPUT"
 
       # action 内の pip install が何もしないよう、インストール済みと同じバージョンを渡す
       - name: run ansible-lint on reviewdog
