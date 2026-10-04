@@ -15,12 +15,28 @@ jobs:
         with:
           persist-credentials: false
 
+      # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
+      - run: pipx install poetry==2.4.1
+
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
         with:
           python-version-file: ".python-version"
+          cache: poetry
 
+      # poetry.lock の ansible-core / ansible-lint で lint する。action に任せると action が ansible-core を固定せず最新版を入れ、ansible-lint と非互換になるため
+      # 仮想環境を作らず setup-python の Python に入れ、action 内の pip3 / ansible-lint が同じ環境を参照するようにする
+      - name: install dependencies from poetry.lock
+        id: deps
+        env:
+          POETRY_VIRTUALENVS_CREATE: "false"
+        run: |
+          poetry install --no-root
+          echo "ansiblelint_version=$(python -c 'from importlib.metadata import version; print(version("ansible-lint"))')" >> "$GITHUB_OUTPUT"
+
+      # action 内の pip install が何もしないよう、インストール済みと同じバージョンを渡す
       - name: run ansible-lint on reviewdog
         uses: thaim/action-ansiblelint@f8cc5d6054a91cbd374ca3c91bf6064f777381a0 # devel
         with:
           github_token: ${{ secrets.github_token }}
+          ansiblelint_version: ${{ steps.deps.outputs.ansiblelint_version }}
           ansiblelint_flags: "roles/"
