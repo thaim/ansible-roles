@@ -40,4 +40,9 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           ansiblelint_version: ${{ steps.deps.outputs.ansiblelint_version }}
-          ansiblelint_flags: "roles/"
+          # 引数なしでリポジトリ全体 (playbook 含む) を対象とし、除外は .ansible-lint の exclude_paths に任せる
+          ansiblelint_flags: ""
+          # デフォルトの none では違反があっても step が成功するため、違反で失敗させる
+          fail_level: error
+          # デフォルトの added では PR で変更していない行の違反を検出できないため、全件を対象にする
+          filter_mode: nofilter
