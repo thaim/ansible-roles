@@ -4,7 +4,7 @@
   ansible.builtin.get_url:
     url: https://github.com/kubernetes-sigs/krew/releases/latest/download/krew-linux_amd64.tar.gz
     dest: /tmp/krew.tar.gz
-    mode: 0644
+    mode: "0644"
 
 - name: Unarchive tarball
   ansible.builtin.unarchive:

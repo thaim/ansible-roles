@@ -12,8 +12,9 @@ rules:
     max: 2
     max-start: 0
     max-end: 0
-  # TODO: octal-values ルールを有効化し、implicit octal (0755等) を修正する
-  octal-values: disable
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
   line-length:
     max: 160
   truthy:

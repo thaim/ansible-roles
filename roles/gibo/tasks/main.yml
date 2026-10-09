@@ -4,7 +4,7 @@
   get_url:
     url: https://raw.github.com/simonwhitaker/gibo/master/gibo
     dest: "{{ ansible_user_dir }}/bin/gibo"
-    mode: 0755
+    mode: "0755"
 
 - name: gibo | initialize gibo and creaqte local gitignore files
   command: "{{ ansible_user_dir }}/bin/gibo update"

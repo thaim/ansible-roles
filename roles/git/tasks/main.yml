@@ -17,7 +17,7 @@
     src: gitconfig.j2
     dest: "{{ ansible_user_dir }}/.gitconfig"
     owner: "{{ ansible_env.USER }}"
-    mode: 0644
+    mode: "0644"
     backup: yes
 
 - name: Create global git directory
@@ -25,14 +25,14 @@
     path: "{{ ansible_user_dir }}/.config/git/"
     state: directory
     owner: "{{ ansible_env.USER }}"
-    mode: 0755
+    mode: "0755"
 
 - name: Setup global gitignore file
   ansible.builtin.copy:
     src: gitignore_global
     dest: "{{ ansible_user_dir }}/.config/git/ignore"
     owner: "{{ ansible_env.USER }}"
-    mode: 0644
+    mode: "0644"
     backup: yes
 
 - name: Create global git hooks directory

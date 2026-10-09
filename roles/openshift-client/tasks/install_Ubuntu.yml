@@ -22,6 +22,6 @@
     src: "/tmp/openshift-origin-client-tools-v{{ OPENSHIFT_VERSION }}-{{ OPENSHIFT_CLI_HASH[item] }}-linux-64bit/oc"  # yamllint disable-line rule:line-length
     dest: /usr/local/bin/
     remote_src: yes
-    mode: 0755
+    mode: "0755"
   with_items:
     - "{{ OPENSHIFT_VERSION }}"

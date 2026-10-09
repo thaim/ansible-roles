@@ -1,6 +1,7 @@
 ---
 
-- hosts: all
+- name: Setup docker service host
+  hosts: all
   roles:
     - { role: apt, tags: apt }
     - { role: nfs_client, tags: nfs_client }
