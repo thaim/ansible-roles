@@ -42,4 +42,4 @@
         echo -ne "\033]0;${USER}@${HOSTNAME}: ${current_path}\007"
       }
       starship_precmd_user_func="set_win_title"
-  when: ansible_user_shel == '/bin/bash'
+  when: ansible_user_shell == '/bin/bash'
