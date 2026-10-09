@@ -16,9 +16,9 @@ packages:
 - name: aquasecurity/trivy@v0.75.0
 - name: terraform-linters/tflint@v0.64.0
 - name: stern/stern@v1.34.0
-- name: helm/helm@v3.22.0
+- name: helm/helm@v4.3.0
 - name: kubernetes-sigs/kustomize@kustomize/v5.8.3
-- name: argoproj/argo-cd@v2.14.21
+- name: argoproj/argo-cd@v3.5.4
 - name: open-policy-agent/conftest@v0.71.1
 - name: open-policy-agent/opa@v1.21.1
 - name: google/yamlfmt@v0.21.0
