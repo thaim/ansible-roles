@@ -21,7 +21,7 @@ Ansible roles collection for automating development environment setup across Ubu
 - **IMPORTANT**: Always run `poetry run ansible-lint` on modified roles before committing
 - Lint specific role: `poetry run ansible-lint roles/ROLE_NAME/tasks/main.yml`
 - Syntax check: `ansible-playbook --syntax-check playbook-desktop.yml`
-- CI runs ansible-lint on `roles/` via GitHub Actions on every PR
+- CI runs ansible-lint on the whole repository (playbooks and roles) via GitHub Actions on every PR and fails on any violation
 
 ## Architecture
 

@@ -40,4 +40,5 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           ansiblelint_version: ${{ steps.deps.outputs.ansiblelint_version }}
-          ansiblelint_flags: "roles/"
+          fail_level: error
+          filter_mode: nofilter
