@@ -1,5 +1,9 @@
 ---
 # playbook-desktop.yml を Ubuntu コンテナ上で実行する E2E テスト
+
+# collection は事前に ansible-galaxy でインストールする (CI ではキャッシュする)
+prerun: false
+
 driver:
   name: docker
 
@@ -24,7 +28,6 @@ provisioner:
 
 scenario:
   # changed_when: true のタスクがあり冪等にならないため、idempotence は実行しない
-  # collection は molecule の prerun で requirements.yml からインストールされる
   test_sequence:
     - destroy
     - syntax
