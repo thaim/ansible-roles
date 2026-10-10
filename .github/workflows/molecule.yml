@@ -1,0 +1,39 @@
+name: Molecule
+
+on:
+  pull_request:
+    paths:
+      - "playbook-desktop.yml"
+      - "roles/**"
+      - "filter_plugins/**"
+      - "molecule/desktop/**"
+      - "requirements.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/molecule.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  desktop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    name: Molecule desktop
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
+      - run: pipx install poetry==2.4.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version-file: ".python-version"
+          cache: poetry
+
+      - run: poetry sync --no-root
+
+      - run: poetry run molecule test -s desktop

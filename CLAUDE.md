@@ -23,6 +23,11 @@ Ansible roles collection for automating development environment setup across Ubu
 - Syntax check: `ansible-playbook --syntax-check playbook-desktop.yml`
 - CI runs ansible-lint on the whole repository (playbooks and roles) via GitHub Actions on every PR and fails on any violation
 
+### E2E Testing (Molecule)
+- `poetry run molecule test -s desktop` — run `playbook-desktop.yml` in an Ubuntu 24.04 container (requires Docker)
+- Roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`) are skipped via `skip-tags` in `molecule/desktop/molecule.yml`
+- CI runs the desktop scenario on PRs that change the playbook, roles, or dependencies
+
 ## Architecture
 
 ### Playbooks
