@@ -109,5 +109,5 @@ When `shell` is required instead of `command` (e.g., for PATH-aware login shell 
 
 ## Python Environment
 - Poetry for dependency management
-- Python 3.11+ (< 3.14), ansible-core ~2.18.0
+- Python 3.11+ (< 3.14), ansible-core ~2.19.0
 - Required collections: `community.general` 10.0.0, `ansible.posix` 2.0.0
