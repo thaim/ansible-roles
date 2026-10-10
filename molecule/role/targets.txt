@@ -1,0 +1,8 @@
+# コンテナ上での動作を確認済みで、role 単体テストの対象とする role
+aqua
+build-essential
+fonts
+git
+golang
+shell
+ssh

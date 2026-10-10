@@ -1,26 +1,33 @@
-name: Molecule
+name: Molecule E2E
 
 on:
-  pull_request:
+  push:
+    branches: [main]
     paths:
-      - "playbook-desktop.yml"
+      - "playbook-*.yml"
       - "roles/**"
       - "filter_plugins/**"
-      - "molecule/desktop/**"
+      - "molecule/**"
+      - ".config/molecule/**"
       - "requirements.yml"
       - "pyproject.toml"
       - "poetry.lock"
-      - ".github/workflows/molecule.yml"
+      - ".github/workflows/molecule-e2e.yml"
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  desktop:
+  e2e:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    name: Molecule desktop
+    name: Molecule E2E (${{ matrix.scenario }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # playbook ごとの scenario
+        scenario: [desktop]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -43,4 +50,6 @@ jobs:
 
       - run: poetry run ansible-galaxy collection install -r requirements.yml
 
-      - run: poetry run molecule test -s desktop
+      - run: poetry run molecule test -s "$SCENARIO"
+        env:
+          SCENARIO: ${{ matrix.scenario }}
