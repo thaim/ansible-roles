@@ -1,0 +1,17 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Install packages assumed to exist on a desktop environment
+      ansible.builtin.raw: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y python3 sudo ca-certificates openssh-server gnupg unzip curl wget
+      changed_when: true
+
+    - name: Create a non-root user with passwordless sudo
+      ansible.builtin.raw: |
+        id tester || useradd -m -s /bin/bash tester
+        echo 'tester ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/tester
+        chmod 0440 /etc/sudoers.d/tester
+      changed_when: true

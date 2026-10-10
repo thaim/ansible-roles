@@ -1,0 +1,39 @@
+---
+# 全 scenario 共通の molecule 設定 (各 scenario の molecule.yml とマージされる)
+
+# collection は事前に ansible-galaxy でインストールする (CI ではキャッシュする)
+prerun: false
+
+driver:
+  name: docker
+
+platforms:
+  - name: ubuntu2404
+    image: ubuntu:24.04
+    command: sleep infinity
+    pre_build_image: true
+    # docker exec では USER が設定されないため、デスクトップ環境と同様に設定する
+    env:
+      USER: tester
+
+provisioner:
+  name: ansible
+  playbooks:
+    prepare: ${MOLECULE_PROJECT_DIRECTORY}/molecule/resources/prepare.yml
+  inventory:
+    host_vars:
+      ubuntu2404:
+        ansible_user: tester
+  env:
+    ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/roles
+    ANSIBLE_FILTER_PLUGINS: ${MOLECULE_PROJECT_DIRECTORY}/filter_plugins
+
+scenario:
+  # changed_when: true のタスクがあり冪等にならないため、idempotence は実行しない
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - destroy

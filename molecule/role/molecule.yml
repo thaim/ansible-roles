@@ -1,0 +1,5 @@
+---
+# 環境変数 MOLECULE_TARGET_ROLE で指定した role を単体で実行する
+# 例: MOLECULE_TARGET_ROLE=git molecule test -s role
+provisioner:
+  name: ansible

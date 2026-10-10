@@ -70,6 +70,7 @@
 
 
 - name: Install custom commands script
+  become: yes
   ansible.builtin.copy:
     src: git-switch-default
     dest: /usr/local/bin/git-switch-default

@@ -21,6 +21,12 @@
     regexp: "^eval \"$(starship init {{ shell_info.name }})\""
     line: "eval \"$(starship init {{ shell_info.name }})\""
 
+- name: Create config directory for starship
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.config"
+    state: directory
+    mode: '0755'
+
 - name: Create starship config file
   ansible.builtin.copy:
     src: starship.toml

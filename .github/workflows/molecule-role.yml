@@ -1,0 +1,92 @@
+name: Molecule role
+
+on:
+  pull_request:
+    paths:
+      - "roles/**"
+      - "filter_plugins/**"
+      - "molecule/role/**"
+      - "molecule/resources/**"
+      - ".config/molecule/**"
+      - ".github/workflows/molecule-role.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  detect:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    name: Detect changed roles
+    outputs:
+      roles: ${{ steps.detect.outputs.roles }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      # molecule/role/targets.txt に載っている role のうち、変更された role を対象にする
+      # molecule の共通設定などが変更された場合や手動実行時は全対象 role を実行する
+      - name: detect target roles
+        id: detect
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          targets=$(grep -v -E '^\s*(#|$)' molecule/role/targets.txt)
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            changed=$(git diff --name-only "$BASE_SHA" HEAD)
+          else
+            changed=""
+          fi
+          common='^(filter_plugins/|molecule/role/|molecule/resources/|\.config/molecule/|\.github/workflows/molecule-role\.yml$)'
+          if [ "$EVENT_NAME" != "pull_request" ] || echo "$changed" | grep -q -E "$common"; then
+            selected="$targets"
+          else
+            changed_roles=$(echo "$changed" | sed -n -E 's|^roles/([^/]+)/.*|\1|p' | sort -u)
+            selected=$(comm -12 <(echo "$targets" | sort -u) <(echo "$changed_roles"))
+          fi
+          roles=$(echo "$selected" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "roles=${roles}" >> "$GITHUB_OUTPUT"
+          echo "target roles: ${roles}"
+
+  test:
+    needs: detect
+    if: needs.detect.outputs.roles != '[]'
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    name: Molecule role (${{ matrix.role }})
+    strategy:
+      fail-fast: false
+      matrix:
+        role: ${{ fromJSON(needs.detect.outputs.roles) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
+      - run: pipx install poetry==2.4.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version-file: ".python-version"
+          cache: poetry
+
+      - run: poetry sync --no-root
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.ansible/collections
+          key: ansible-collections-${{ hashFiles('requirements.yml') }}
+
+      - run: poetry run ansible-galaxy collection install -r requirements.yml
+
+      - run: poetry run molecule test -s role
+        env:
+          MOLECULE_TARGET_ROLE: ${{ matrix.role }}

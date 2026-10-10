@@ -1,0 +1,55 @@
+name: Molecule E2E
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "playbook-*.yml"
+      - "roles/**"
+      - "filter_plugins/**"
+      - "molecule/**"
+      - ".config/molecule/**"
+      - "requirements.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/molecule-e2e.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    name: Molecule E2E (${{ matrix.scenario }})
+    strategy:
+      fail-fast: false
+      matrix:
+        # playbook ごとの scenario
+        scenario: [desktop]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
+      - run: pipx install poetry==2.4.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version-file: ".python-version"
+          cache: poetry
+
+      - run: poetry sync --no-root
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.ansible/collections
+          key: ansible-collections-${{ hashFiles('requirements.yml') }}
+
+      - run: poetry run ansible-galaxy collection install -r requirements.yml
+
+      - run: poetry run molecule test -s "$SCENARIO"
+        env:
+          SCENARIO: ${{ matrix.scenario }}
