@@ -5,8 +5,8 @@
   vars:
     ansible_user: root
   tasks:
-    - name: Install packages required to run ansible
-      ansible.builtin.raw: apt-get update && apt-get install -y python3 sudo ca-certificates openssh-server
+    - name: Install packages assumed to exist on a desktop environment
+      ansible.builtin.raw: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y python3 sudo ca-certificates openssh-server gnupg unzip curl wget
       changed_when: true
 
     - name: Create a non-root user with passwordless sudo

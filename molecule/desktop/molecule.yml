@@ -1,10 +1,5 @@
 ---
 # playbook-desktop.yml を Ubuntu コンテナ上で実行する E2E テスト
-dependency:
-  name: galaxy
-  options:
-    requirements-file: ${MOLECULE_PROJECT_DIRECTORY}/requirements.yml
-
 driver:
   name: docker
 
@@ -29,8 +24,8 @@ provisioner:
 
 scenario:
   # changed_when: true のタスクがあり冪等にならないため、idempotence は実行しない
+  # collection は molecule の prerun で requirements.yml からインストールされる
   test_sequence:
-    - dependency
     - destroy
     - syntax
     - create
