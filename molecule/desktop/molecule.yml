@@ -1,0 +1,6 @@
+---
+# playbook-desktop.yml を Ubuntu コンテナ上で実行する E2E テスト
+provisioner:
+  options:
+    # コンテナでは動かせない role (NFS マウント / systemd / GUI アプリ) を除外する
+    skip-tags: homenas_client,fluentd,dropbox

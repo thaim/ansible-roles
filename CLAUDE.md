@@ -23,6 +23,12 @@ Ansible roles collection for automating development environment setup across Ubu
 - Syntax check: `ansible-playbook --syntax-check playbook-desktop.yml`
 - CI runs ansible-lint on the whole repository (playbooks and roles) via GitHub Actions on every PR and fails on any violation
 
+### Testing (Molecule)
+Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Shared settings live in `.config/molecule/config.yml`; install collections first with `ansible-galaxy collection install -r requirements.yml`.
+- Role test: `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — CI runs it on PRs for changed roles listed in `molecule/role/targets.txt`
+- Playbook E2E: `poetry run molecule test -s desktop` — CI runs it on pushes to main (and manually via workflow_dispatch)
+- `molecule/desktop` skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
+
 ## Architecture
 
 ### Playbooks
