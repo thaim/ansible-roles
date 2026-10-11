@@ -32,7 +32,7 @@
 
 - name: Download tflint release archive
   vars:
-    tflint_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+    tflint_arch: "{{ 'arm64' if ansible_facts.architecture == 'aarch64' else 'amd64' }}"
   ansible.builtin.get_url:
     url: https://github.com/terraform-linters/tflint/releases/latest/download/tflint_linux_{{ tflint_arch }}.zip
     checksum: sha256:https://github.com/terraform-linters/tflint/releases/latest/download/checksums.txt
