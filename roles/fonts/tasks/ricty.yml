@@ -62,7 +62,7 @@
 - name: Move ricty fonts into fonts directory
   ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.fonts"
+    dest: "{{ ansible_facts.env.HOME }}/.fonts"
     remote_src: yes
     mode: "0644"
   with_fileglob: "{{ workdir.path }}/Ricty*.ttf"

@@ -4,5 +4,5 @@
   community.general.gem:
     name: bundler
     state: latest
-    executable: "{{ ansible_env.HOME }}/.rbenv/shims/gem"
+    executable: "{{ ansible_facts.env.HOME }}/.rbenv/shims/gem"
     user_install: false

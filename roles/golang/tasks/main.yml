@@ -16,14 +16,14 @@
   when: install_golang.rc == 0
 
 - name: Install golang depends on distribution
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
   when: install_golang.rc != 0 or
         install_golang_version.stdout | regex_replace('go version go(.*) .*', '\\1')
                                       is version(GOLANG_VERSION, '<')
 
 - name: Setup environment variable 'GOPATH'
   ansible.builtin.lineinfile:
-    dest: "{{ ansible_user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
+    dest: "{{ ansible_facts.user_dir }}/{{ GOLANG_SHELL_INIT_FILE }}"
     regexp: "{{ item.regexp }}"
     insertafter: "{{ item.insertafter }}"
     line: "{{ item.line }}"

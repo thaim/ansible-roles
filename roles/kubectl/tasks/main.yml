@@ -1,7 +1,7 @@
 ---
 
 - name: Setup kubectl completion
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
 
 - name: Setup kubectl plugin
   ansible.builtin.include_tasks: install_extra.yml

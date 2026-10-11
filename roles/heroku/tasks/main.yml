@@ -6,5 +6,5 @@
   failed_when: false
   register: heroku
 
-- include_tasks: install_{{ ansible_distribution }}.yml
+- include_tasks: install_{{ ansible_facts.distribution }}.yml
   when: heroku.rc != 0

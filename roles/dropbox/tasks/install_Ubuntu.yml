@@ -23,7 +23,7 @@
 
 - name: Check if dropbox autostart on login
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.config/autostart/dropbox.desktop"
+    path: "{{ ansible_facts.env.HOME }}/.config/autostart/dropbox.desktop"
   register: autostart
 
 - name: Be sure dropbox autostart on login

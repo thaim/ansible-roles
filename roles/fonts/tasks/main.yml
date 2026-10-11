@@ -2,7 +2,7 @@
 
 - name: Create font dir if not exist
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.fonts"
+    path: "{{ ansible_facts.env.HOME }}/.fonts"
     state: directory
     mode: "0775"
 
@@ -15,4 +15,4 @@
   when: FONT_INSTALL_RICTY|bool
 
 - name: Install HackGen
-  ansible.builtin.include_tasks: hackgen_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: hackgen_{{ ansible_facts.distribution }}.yml

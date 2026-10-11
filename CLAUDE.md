@@ -44,7 +44,7 @@ Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
 `filter_plugins/shell_config.py` provides the `shell_config` filter. Usage:
 ```yaml
 - ansible.builtin.set_fact:
-    shell_info: "{{ ansible_user_shell | shell_config }}"
+    shell_info: "{{ ansible_facts.user_shell | shell_config }}"
 # Returns: { name: 'bash', rc_file: '.bashrc', profile_path: '.bash_profile' }
 # Or for zsh: { name: 'zsh', rc_file: '.zshrc', profile_path: '.zprofile' }
 ```
@@ -61,7 +61,7 @@ Always use fully qualified collection names (FQCN): `ansible.builtin.command`, `
 ### OS-Specific Task Dispatch
 Roles split OS-specific logic into separate files dispatched from `tasks/main.yml`:
 ```yaml
-- ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+- ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
 ```
 File naming: `install_Ubuntu.yml`, `install_MacOSX.yml` (or `install_MacOS.yml`), `install_Debian.yml`
 
@@ -75,7 +75,7 @@ Check if a tool is installed before running install tasks:
   failed_when: false
 
 - name: Install TOOL
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
   when: status_tool.rc != 0
 ```
 
@@ -90,7 +90,7 @@ For roles that manage tool versions (golang, nodejs, terraform, etc.):
   when: status_tool.rc == 0
 
 - name: Install TOOL
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
   when: status_tool.rc != 0 or
         version_check.stdout is version(TOOL_VERSION, '<')
 ```
@@ -110,5 +110,5 @@ When `shell` is required instead of `command` (e.g., for PATH-aware login shell 
 
 ## Python Environment
 - Poetry for dependency management
-- Python 3.11+ (< 3.14), ansible-core ~2.19.0
+- Python 3.12+ (< 3.14), ansible-core ~2.20.0
 - Required collections: `community.general` 10.0.0, `ansible.posix` 2.0.0

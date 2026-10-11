@@ -2,11 +2,11 @@
 
 - name: Get shell configuration
   ansible.builtin.set_fact:
-    shell_info: "{{ ansible_user_shell | shell_config }}"
+    shell_info: "{{ ansible_facts.user_shell | shell_config }}"
 
 - name: Setup keychain SSH agent loading (Linux)
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - SSH keychain"
     block: |
       if [[ -f ~/.keychain/$(hostname)-sh ]]; then
@@ -15,13 +15,13 @@
       eval $(keychain --eval --agents ssh --inherit any id_rsa id_ed25519)
     create: yes
     mode: '0644'
-  when: ansible_os_family == 'Debian'
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Setup SSH agent for keychain (macOS)
   ansible.builtin.lineinfile:
-    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
     regexp: "^ssh-add --apple-use-keychain"
     line: "ssh-add --apple-use-keychain ~/.ssh/id_rsa ~/.ssh/id_ed25519 2>/dev/null || true"
     create: yes
     mode: '0644'
-  when: ansible_os_family == 'Darwin'
+  when: ansible_facts.os_family == 'Darwin'

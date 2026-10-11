@@ -6,8 +6,8 @@ authors = ["thaim <thaim24@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.11 <3.14"
-ansible-core = "~2.19.0"
+python = ">=3.12,<3.14"
+ansible-core = "~2.20.0"
 jmespath = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]

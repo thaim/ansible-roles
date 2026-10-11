@@ -3,16 +3,16 @@
 - name: ruby | clone rbenv repository
   git:
     repo: https://github.com/sstephenson/rbenv.git
-    dest: "{{ ansible_env.HOME }}/.rbenv"
+    dest: "{{ ansible_facts.env.HOME }}/.rbenv"
 
 - name: ruby | clone ruby-build repository
   git:
     repo: https://github.com/sstephenson/ruby-build.git
-    dest: "{{ ansible_env.HOME }}/.rbenv/plugins/ruby-build"
+    dest: "{{ ansible_facts.env.HOME }}/.rbenv/plugins/ruby-build"
 
 - name: ruby | add rbenv path into environment path
   lineinfile:
-    dest: "{{ ansible_env.HOME }}/{{ RUBY_SHELL_INIT_FILE }}"
+    dest: "{{ ansible_facts.env.HOME }}/{{ RUBY_SHELL_INIT_FILE }}"
     line: "{{ item.line }}"
     regexp: "{{ item.regexp }}"
     insertafter: "{{ item.insertafter }}"

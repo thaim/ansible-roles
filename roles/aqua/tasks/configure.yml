@@ -2,7 +2,7 @@
 
 - name: Create destination directories for tool configs
   ansible.builtin.file:
-    path: "{{ item.value.dest_dir | default(ansible_user_dir) }}"
+    path: "{{ item.value.dest_dir | default(ansible_facts.user_dir) }}"
     state: directory
     mode: "0755"
   loop: "{{ aqua_tools_config | dict2items }}"
@@ -11,7 +11,7 @@
 - name: Copy tool configuration files
   ansible.builtin.copy:
     src: "{{ item.value.src_file }}"
-    dest: "{{ item.value.dest_dir | default(ansible_user_dir) }}/{{ item.value.dest_file }}"
+    dest: "{{ item.value.dest_dir | default(ansible_facts.user_dir) }}/{{ item.value.dest_file }}"
     backup: true
     mode: "0644"
   loop: "{{ aqua_tools_config | dict2items }}"

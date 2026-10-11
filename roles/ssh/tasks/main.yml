@@ -3,8 +3,8 @@
 # keychain setup
 
 - name: Install keychain (Linux only)
-  ansible.builtin.include_tasks: "install_{{ ansible_os_family }}.yml"
-  when: ansible_os_family == 'Debian'
+  ansible.builtin.include_tasks: "install_{{ ansible_facts.os_family }}.yml"
+  when: ansible_facts.os_family == 'Debian'
 
 - name: Configure shell for keychain
   ansible.builtin.include_tasks: configure_shell.yml
@@ -26,20 +26,20 @@
 
 - name: Ensure .ssh directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.ssh"
+    path: "{{ ansible_facts.env.HOME }}/.ssh"
     state: directory
     mode: '0700'
 
 - name: Configure SSH client settings
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.ssh/config"
+    path: "{{ ansible_facts.env.HOME }}/.ssh/config"
     block: |
       Host *
       {% if ssh_version | float < 10.0 %}
           ObscureKeystrokeTiming no
       {% endif %}
           AddKeysToAgent yes
-      {% if ansible_os_family == 'Darwin' %}
+      {% if ansible_facts.os_family == 'Darwin' %}
           UseKeychain yes
       {% endif %}
     marker: "# {mark} ANSIBLE MANAGED BLOCK - SSH Client Config"

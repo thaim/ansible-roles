@@ -5,4 +5,4 @@
   community.general.npm:
     name: pyright
     global: true
-    executable: "{{ ansible_user_dir }}/.nodenv/shims/npm"
+    executable: "{{ ansible_facts.user_dir }}/.nodenv/shims/npm"
