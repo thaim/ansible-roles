@@ -1,14 +1,6 @@
 ---
 
-# npm は nodenv 経由でインストールされ、login shell でのみ PATH が通るため明示的に解決する
-- name: Find npm executable
-  ansible.builtin.shell: bash -lc 'command -v npm'  # noqa: command-instead-of-shell
-  changed_when: false
-  failed_when: false
-  register: ansible_npm_path
-
 - name: Install ansible language server
   community.general.npm:
     name: '@ansible/ansible-language-server'
     global: true
-    executable: "{{ ansible_npm_path.stdout if ansible_npm_path.rc == 0 else omit }}"
