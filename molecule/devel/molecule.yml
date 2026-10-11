@@ -8,6 +8,12 @@ platforms:
     env:
       USER: tester
       SHELL: /bin/bash
+    # 用途ごとの play をすべて実行するため、全 group に所属させる
+    groups:
+      - devel
+      - webapp
+      - devos
+      - terraform
 provisioner:
   options:
     # コンテナでは動かせない role (Docker in Docker が必要) を除外する

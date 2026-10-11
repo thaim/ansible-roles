@@ -1,7 +1,9 @@
 # playbook to setup development environment
+# 用途は inventory の group で表す (inventories/devel.example 参照)
+# 同じ role を複数の play に書かず、複数の group で使う role はホストパターンの和集合に対して実行する
 
-- name: "Setup development environment"
-  hosts: all
+- name: "Setup common roles for development"
+  hosts: devel
   roles:
     - { role: apt, tags: apt, APT_DEVTOOL: true }
     - { role: build-essential, tags: build-essential }
@@ -12,12 +14,24 @@
     - { role: nfs_client, tags: nfs_client }
     - { role: docker, tags: docker }
     - { role: aqua, tags: aqua }
+
+- name: "Setup roles shared by application and terraform development"
+  hosts: webapp:terraform
+  roles:
     - { role: golang, tags: golang }
+    - { role: terraform, tags: terraform }
+
+- name: "Setup application development environment"
+  hosts: webapp
+  roles:
     - { role: python, tags: python }
     - { role: ruby, tags: ruby }
     - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
     - { role: yarn, tags: yarn }
     - { role: rust, tags: rust }
     - { role: gcloud, tags: gcloud }
-    - { role: terraform, tags: terraform }
+
+- name: "Setup terraform development environment"
+  hosts: terraform
+  roles:
     - { role: ansible, tags: ansible }

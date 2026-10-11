@@ -28,13 +28,13 @@ Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Sh
 - Role test: `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — CI runs it on PRs for changed roles listed in `molecule/role/targets.txt`
 - Playbook E2E: `poetry run molecule test -s desktop` (or `-s devel`) — CI runs it on pushes to main and manually via workflow_dispatch. Comment `/e2e` on a PR (OWNER/MEMBER/COLLABORATOR only, branches of this repository only) to dispatch it on the PR branch; the comment gets a :+1: reaction and the result is posted as a PR comment
 - `molecule/desktop` skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
-- `molecule/devel` skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
+- `molecule/devel` puts the container in all host groups (`devel`, `webapp`, `devos`, `terraform`) and skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
 
 ## Architecture
 
 ### Playbooks
 - `playbook-desktop.yml` — Desktop environment (GUI apps, personal tools)
-- `playbook-devel.yml` — Development environment (single play on `all`; select roles with `--tags`)
+- `playbook-devel.yml` — Development servers. Purpose is expressed by inventory groups (`webapp`, `devos`, `terraform`, parent `devel`); each role appears in exactly one play, and roles shared by several groups target a union pattern (e.g. `webapp:terraform`). Real inventories are git-ignored; copy `inventories/devel.example` to `inventories/devel`
 - `playbook-docker-service.yml` — Docker-based services
 - `playbook-gitlab.yml` — GitLab server configuration
 

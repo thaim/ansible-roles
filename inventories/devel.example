@@ -1,0 +1,21 @@
+# playbook-devel.yml 用 inventory の雛形
+# ホスト名を公開リポジトリに含めないため、inventories/devel にコピーして編集する (inventories/devel は git 管理外)
+#   cp inventories/devel.example inventories/devel
+#   poetry run ansible-playbook -i inventories/devel playbook-devel.yml [--limit webapp]
+
+# アプリケーション開発用
+[webapp]
+webapp-host.example
+
+# OS 開発用
+[devos]
+devos-host.example
+
+# terraform 開発用
+[terraform]
+terraform-host.example
+
+[devel:children]
+webapp
+devos
+terraform
