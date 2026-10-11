@@ -28,7 +28,7 @@ Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Sh
 - Role test: `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — CI runs it on PRs for changed roles listed in `molecule/role/targets.txt`
 - Playbook E2E: `poetry run molecule test -s desktop` (or `-s devel`) — CI runs it on pushes to main and manually via workflow_dispatch. Comment `/e2e` on a PR (OWNER/MEMBER/COLLABORATOR only, branches of this repository only) to dispatch it on the PR branch; the comment gets a :+1: reaction and the result is posted as a PR comment
 - `molecule/desktop` skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
-- `molecule/devel` puts the container in all host groups (`webapp`, `devos`, `terraform`) and skips `docker` (needs Docker in Docker)
+- `molecule/devel` puts the container in all host groups (`webapp`, `devos`, `terraform`) and skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
 
 ## Architecture
 
