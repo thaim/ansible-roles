@@ -13,13 +13,48 @@ on:
       - "pyproject.toml"
       - "poetry.lock"
       - ".github/workflows/molecule-e2e.yml"
+  # PR に "/e2e" とコメントすると、PR の head に対して E2E を実行し結果をコメントする
+  issue_comment:
+    types: [created]
   workflow_dispatch:
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
+  # 実行対象のコミットを決める。コメント起動の場合は PR へのコメントかつ権限のあるユーザーのみ受け付ける
+  prepare:
+    if: >-
+      github.event_name != 'issue_comment' || (
+        github.event.issue.pull_request &&
+        startsWith(github.event.comment.body, '/e2e') &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      )
+    permissions:
+      pull-requests: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      sha: ${{ steps.target.outputs.sha }}
+    steps:
+      - name: determine target commit
+        id: target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          if [ "$EVENT_NAME" = "issue_comment" ]; then
+            sha=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq .head.sha)
+          else
+            sha="$GITHUB_SHA"
+          fi
+          echo "sha=${sha}" >> "$GITHUB_OUTPUT"
+          echo "target commit: ${sha}"
+
   e2e:
+    needs: prepare
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     timeout-minutes: 30
     name: Molecule E2E (${{ matrix.scenario }})
@@ -31,6 +66,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
+          ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
       # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
@@ -53,3 +89,27 @@ jobs:
       - run: poetry run molecule test -s "$SCENARIO"
         env:
           SCENARIO: ${{ matrix.scenario }}
+
+  # コメント起動の場合のみ、結果を PR にコメントする
+  report:
+    needs: [prepare, e2e]
+    if: always() && github.event_name == 'issue_comment' && needs.prepare.result == 'success'
+    permissions:
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: comment result
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+          RESULT: ${{ needs.e2e.result }}
+          SHA: ${{ needs.prepare.outputs.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          case "$RESULT" in
+            success) mark=":white_check_mark:" ;;
+            *) mark=":x:" ;;
+          esac
+          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "${mark} Molecule E2E: **${RESULT}** (\`${SHA:0:7}\`) ${RUN_URL}"
