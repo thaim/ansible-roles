@@ -30,12 +30,23 @@ jobs:
         contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
       )
     permissions:
-      pull-requests: read
+      pull-requests: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
     outputs:
       sha: ${{ steps.target.outputs.sha }}
     steps:
+      # コメントを受け付けたことが分かるよう、起動したコメントにリアクションを付ける
+      - name: react to the comment
+        if: github.event_name == 'issue_comment'
+        # リアクションに失敗しても E2E は実行する
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions" -f content='+1' --silent
+
       - name: determine target commit
         id: target
         env:
