@@ -1,10 +1,10 @@
 ---
 
 # - include: uim_skk.yml
-#   when: ansible_distribution == 'Ubuntu'
+#   when: ansible_facts.distribution == 'Ubuntu'
 
 - ansible.builtin.include_tasks: ibus_skk.yml
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts.distribution == 'Ubuntu'
 
 - ansible.builtin.include_tasks: AquaSKK.yml
-  when: ansible_distribution == 'MacOSX'
+  when: ansible_facts.distribution == 'MacOSX'

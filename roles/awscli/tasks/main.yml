@@ -44,7 +44,7 @@
 # option: git-secrets
 - name: awscli | check if git-secrets directory exist
   stat:
-    path: "{{ ansible_user_dir }}/.git-templates/git-secrets"
+    path: "{{ ansible_facts.user_dir }}/.git-templates/git-secrets"
   register: result
 
 - include_tasks: install_git_secrets.yml

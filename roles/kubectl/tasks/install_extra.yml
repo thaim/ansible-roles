@@ -1,4 +1,4 @@
 ---
 
 - name: Install and setup krew
-  ansible.builtin.include_tasks: install_krew_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_krew_{{ ansible_facts.distribution }}.yml

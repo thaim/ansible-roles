@@ -21,14 +21,14 @@ subprocess-tee = ">=0.4.1"
 
 [[package]]
 name = "ansible-core"
-version = "2.19.14"
+version = "2.20.10"
 description = "Radically simple IT automation"
 optional = false
-python-versions = ">=3.11"
+python-versions = ">=3.12"
 groups = ["main", "dev"]
 files = [
-    {file = "ansible_core-2.19.14-py3-none-any.whl", hash = "sha256:d518d0e96fa75bedfe9b0a96d5b158aa712d092961824c115140c8677b88ff06"},
-    {file = "ansible_core-2.19.14.tar.gz", hash = "sha256:1e7612788eaa6b3c87a3670ce86c64b830eba0ae2b3fcb25a772f276704163b4"},
+    {file = "ansible_core-2.20.10-py3-none-any.whl", hash = "sha256:2c7a88ff9bf36a9cfb3bc3838fa6222ea54feedf7f7d94ef9a2ae7591345bfdc"},
+    {file = "ansible_core-2.20.10.tar.gz", hash = "sha256:577b8d3c18e4228310a4e5180c3e133bb3955b378367077bfc643f3c21ebee5c"},
 ]
 
 [package.dependencies]
@@ -36,7 +36,7 @@ cryptography = "*"
 jinja2 = ">=3.1.0"
 packaging = "*"
 PyYAML = ">=5.1"
-resolvelib = ">=0.5.3,<2.0.0"
+resolvelib = ">=0.8.0,<2.0.0"
 
 [[package]]
 name = "ansible-lint"
@@ -66,10 +66,7 @@ pyyaml = {version = ">=6.0.1", markers = "python_version < \"3.14\""}
 referencing = ">=0.36.2"
 ruamel-yaml = ">=0.18.11"
 subprocess-tee = ">=0.4.1"
-wcmatch = [
-    {version = ">=8.1.2", markers = "python_version < \"3.12\""},
-    {version = ">=8.5.0", markers = "python_version >= \"3.12\""},
-]
+wcmatch = {version = ">=8.5.0", markers = "python_version >= \"3.12\""}
 yamllint = ">=1.38.0"
 
 [[package]]
@@ -537,7 +534,7 @@ description = "Distro - an OS platform information API"
 optional = false
 python-versions = ">=3.6"
 groups = ["dev"]
-markers = "sys_platform == \"linux2\" or sys_platform == \"linux\" or platform_system != \"Windows\""
+markers = "platform_system != \"Windows\" or sys_platform == \"linux2\" or sys_platform == \"linux\""
 files = [
     {file = "distro-1.9.0-py3-none-any.whl", hash = "sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2"},
     {file = "distro-1.9.0.tar.gz", hash = "sha256:2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed"},
@@ -1395,7 +1392,7 @@ description = "Backported and Experimental Type Hints for Python 3.9+"
 optional = false
 python-versions = ">=3.9"
 groups = ["dev"]
-markers = "python_version < \"3.13\""
+markers = "python_version == \"3.12\""
 files = [
     {file = "typing_extensions-4.15.0-py3-none-any.whl", hash = "sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548"},
     {file = "typing_extensions-4.15.0.tar.gz", hash = "sha256:0cea48d173cc12fa28ecabc3b837ea3cf6f38c6d1136f85cbaaf598984861466"},
@@ -1456,5 +1453,5 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "ruff", "sph
 
 [metadata]
 lock-version = "2.1"
-python-versions = "^3.11 <3.14"
-content-hash = "876e25ffe24877e2a684fd51004503a2f9e4eaed71414a4c6815e8016552893e"
+python-versions = ">=3.12,<3.14"
+content-hash = "bfb81e6726848aff557eb2ef707864957fcde7fb0c3212dc0341168bd8fe1b15"

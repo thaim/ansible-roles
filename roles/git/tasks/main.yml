@@ -7,7 +7,7 @@
   failed_when: false
 
 - name: Install git
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
   when: status_git.rc != 0
 
 # needs to configure global .gitconfig and .gitignore files
@@ -15,54 +15,54 @@
 - name: Setup git config file
   ansible.builtin.template:
     src: gitconfig.j2
-    dest: "{{ ansible_user_dir }}/.gitconfig"
-    owner: "{{ ansible_env.USER }}"
+    dest: "{{ ansible_facts.user_dir }}/.gitconfig"
+    owner: "{{ ansible_facts.env.USER }}"
     mode: "0644"
     backup: yes
 
 - name: Create global git directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/git/"
+    path: "{{ ansible_facts.user_dir }}/.config/git/"
     state: directory
-    owner: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_facts.env.USER }}"
     mode: "0755"
 
 - name: Setup global gitignore file
   ansible.builtin.copy:
     src: gitignore_global
-    dest: "{{ ansible_user_dir }}/.config/git/ignore"
-    owner: "{{ ansible_env.USER }}"
+    dest: "{{ ansible_facts.user_dir }}/.config/git/ignore"
+    owner: "{{ ansible_facts.env.USER }}"
     mode: "0644"
     backup: yes
 
 - name: Create global git hooks directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/git/hooks"
+    path: "{{ ansible_facts.user_dir }}/.config/git/hooks"
     state: directory
     mode: '0755'
 
 - name: Locate pre-commit script
   ansible.builtin.copy:
     src: pre-commit
-    dest: "{{ ansible_user_dir }}/.config/git/hooks/pre-commit"
+    dest: "{{ ansible_facts.user_dir }}/.config/git/hooks/pre-commit"
     mode: '0755'
 
 - name: Create git scripts directory
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.config/git/scripts"
+    path: "{{ ansible_facts.user_dir }}/.config/git/scripts"
     state: directory
     mode: '0755'
 
 - name: Install branch-clean script
   ansible.builtin.copy:
     src: branch-clean.sh
-    dest: "{{ ansible_user_dir }}/.config/git/scripts/branch-clean.sh"
+    dest: "{{ ansible_facts.user_dir }}/.config/git/scripts/branch-clean.sh"
     mode: '0755'
 
 - name: Install wt-clean script
   ansible.builtin.copy:
     src: wt-clean.sh
-    dest: "{{ ansible_user_dir }}/.config/git/scripts/wt-clean.sh"
+    dest: "{{ ansible_facts.user_dir }}/.config/git/scripts/wt-clean.sh"
     mode: '0755'
 
 - name: Setup git-completion
@@ -78,11 +78,11 @@
 
 - name: Set shell info
   ansible.builtin.set_fact:
-    shell_info: "{{ ansible_user_shell | shell_config }}"
+    shell_info: "{{ ansible_facts.user_shell | shell_config }}"
 
 - name: Override default command (with git-wt)
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK git command"
     block: |
       git() {
@@ -106,7 +106,7 @@
 
 - name: Override default command (without git-wt)
   ansible.builtin.blockinfile:
-    path: "{{ ansible_user_dir }}/{{ shell_info.rc_file }}"
+    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK git command"
     block: |
       git() {

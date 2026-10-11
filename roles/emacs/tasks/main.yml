@@ -6,10 +6,10 @@
        state=latest
 
 - name: emacs | check if dot.emacs.d exist
-  stat: path={{ ansible_env.HOME }}/.emacs.d/.git
+  stat: path={{ ansible_facts.env.HOME }}/.emacs.d/.git
   register: result
 
 - name: emacs | be sure my dot emacs is copied from github
   git: repo=https://github.com/thaim/dot.emacs.d
-       dest={{ ansible_env.HOME }}/.emacs.d
+       dest={{ ansible_facts.env.HOME }}/.emacs.d
   when: not result.stat.exists

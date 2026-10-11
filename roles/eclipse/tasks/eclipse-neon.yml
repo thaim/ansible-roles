@@ -23,6 +23,6 @@
 - name: eclipse | change owner to user
   become: yes
   file: path=/usr/local/bin/eclipse-neon
-        owner={{ ansible_env.USER }}
-        group={{ ansible_env.USER }}
+        owner={{ ansible_facts.env.USER }}
+        group={{ ansible_facts.env.USER }}
         recurse=yes

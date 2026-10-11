@@ -1,4 +1,4 @@
 ---
 
 - name: Install dropbox
-  ansible.builtin.include_tasks: install_{{ ansible_distribution }}.yml
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml

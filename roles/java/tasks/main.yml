@@ -1,9 +1,9 @@
 ---
 
 - ansible.builtin.include_tasks: openjdk_lts.yml
-  when: ansible_distribution == 'Ubuntu'
+  when: ansible_facts.distribution == 'Ubuntu'
 
 - ansible.builtin.include_tasks: JavaForOSX.yml
-  when: ansible_distribution == 'MacOSX'
+  when: ansible_facts.distribution == 'MacOSX'
 
 - ansible.builtin.import_tasks: configure.yml
