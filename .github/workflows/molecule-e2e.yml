@@ -18,6 +18,14 @@ on:
     types: [created]
   workflow_dispatch:
 
+# /e2e 以外のコメントでも run は作られるため、それらは run ごとの group にして実行中の E2E を止めないようにする
+concurrency:
+  group: >-
+    ${{ github.workflow }}-${{ github.event.issue.number || github.ref }}${{
+    (github.event_name == 'issue_comment' && !startsWith(github.event.comment.body, '/e2e'))
+    && format('-{0}', github.run_id) || '' }}
+  cancel-in-progress: true
+
 permissions: {}
 
 jobs:
