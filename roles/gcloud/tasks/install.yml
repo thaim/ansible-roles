@@ -15,6 +15,6 @@
   become: yes
   apt:
     pkg:
-      - google-cloud-sdk
+      - google-cloud-cli
       - google-cloud-cli-gke-gcloud-auth-plugin
     update_cache: yes
