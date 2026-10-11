@@ -1,24 +1,37 @@
-# playbook to setup development environment
-# 用途は inventory の group で表す (inventories/devel.example 参照)
-# 同じ role を複数の play に書かず、複数の group で使う role はホストパターンの和集合に対して実行する
+# playbook to setup workstations (desktop and development servers)
+# 用途は inventory の group で表す (docs/inventory.md, inventories/workstation.example 参照)
+# group の制御は play の hosts だけで行い、各 role は 1 つの play にだけ書く
 
-- name: "Setup common roles for development"
+- name: "Setup development server base"
   hosts: devel
   roles:
     - { role: apt, tags: apt, APT_DEVTOOL: true }
     - { role: build-essential, tags: build-essential }
+    - { role: nfs_client, tags: nfs_client }
+    - { role: docker, tags: docker }
+
+- name: "Setup common roles for workstations"
+  hosts: desktop:devel
+  roles:
     - { role: git, tags: git, GIT_INSTALLER: 'extra' }
     - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
     - { role: ssh, tags: ssh }
     - { role: fonts, tags: fonts }
-    - { role: nfs_client, tags: nfs_client }
-    - { role: docker, tags: docker }
     - { role: aqua, tags: aqua }
+    - { role: golang, tags: golang }
+
+- name: "Setup desktop environment"
+  hosts: desktop
+  roles:
+    - { role: homenas_client, tags: homenas_client }
+    - { role: fluentd, tags: fluentd }
+    - { role: dropbox, tags: dropbox }
+    # intellij
+    # RStudio
 
 - name: "Setup roles shared by application and terraform development"
   hosts: webapp:terraform
   roles:
-    - { role: golang, tags: golang }
     - { role: terraform, tags: terraform }
 
 - name: "Setup application development environment"

@@ -1,5 +1,5 @@
 ---
-# playbook-devel.yml を Ubuntu コンテナ上で実行する E2E テスト
+# playbook-workstation.yml を開発サーバー (devel 配下の全 group) として Ubuntu コンテナ上で実行する E2E テスト
 platforms:
   - name: ubuntu2404
     image: ubuntu:24.04
@@ -8,7 +8,7 @@ platforms:
     env:
       USER: tester
       SHELL: /bin/bash
-    # 用途ごとの play をすべて実行するため、全 group に所属させる
+    # 開発用途の play をすべて実行するため、devel 配下の全 group に所属させる
     groups:
       - devel
       - webapp

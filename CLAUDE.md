@@ -13,32 +13,39 @@ Ansible roles collection for automating development environment setup across Ubu
 - `poetry shell` — enter virtual environment
 
 ### Running Playbooks
-- `poetry run ansible-playbook -i inventories/localhost playbook-desktop.yml`
+- `poetry run ansible-playbook -i inventories/workstation playbook-workstation.yml` (copy `inventories/workstation.example` to `inventories/workstation` first; real inventories are git-ignored)
 - Run specific roles: `--tags git,shell`
 - Dry run: `--check`
 
 ### Linting
 - **IMPORTANT**: Always run `poetry run ansible-lint` on modified roles before committing
 - Lint specific role: `poetry run ansible-lint roles/ROLE_NAME/tasks/main.yml`
-- Syntax check: `ansible-playbook --syntax-check playbook-desktop.yml`
+- Syntax check: `ansible-playbook --syntax-check playbook-workstation.yml`
 - CI runs ansible-lint on the whole repository (playbooks and roles) via GitHub Actions on every PR and fails on any violation
 
 ### Testing (Molecule)
 Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Shared settings live in `.config/molecule/config.yml`; install collections first with `ansible-galaxy collection install -r requirements.yml`.
 - Role test: `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — CI runs it on PRs for changed roles listed in `molecule/role/targets.txt`
 - Playbook E2E: `poetry run molecule test -s desktop` (or `-s devel`) — CI runs it on pushes to main and manually via workflow_dispatch. Comment `/e2e` on a PR (OWNER/MEMBER/COLLABORATOR only, branches of this repository only) to dispatch it on the PR branch; the comment gets a :+1: reaction and the result is posted as a PR comment
-- `molecule/desktop` skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
-- `molecule/devel` puts the container in all host groups (`devel`, `webapp`, `devos`, `terraform`) and skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
+- Scenarios are split by host group combination, not by playbook; both `desktop` and `devel` run `playbook-workstation.yml`
+- `molecule/desktop` puts the container in `desktop` and skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
+- `molecule/devel` puts the container in `devel`, `webapp`, `devos`, `terraform` and skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
 
 ## Architecture
 
 ### Playbooks
-- `playbook-desktop.yml` — Desktop environment (GUI apps, personal tools)
-- `playbook-devel.yml` — Development servers. Purpose is expressed by inventory groups (`webapp`, `devos`, `terraform`, parent `devel`); each role appears in exactly one play, and roles shared by several groups target a union pattern (e.g. `webapp:terraform`). Real inventories are git-ignored; copy `inventories/devel.example` to `inventories/devel`
+- `playbook-workstation.yml` — Workstations: desktops and development servers. Purpose is expressed by inventory groups (`desktop`, `devel` with children `webapp` / `devos` / `terraform`)
 - `playbook-docker-service.yml` — Docker-based services
 - `playbook-gitlab.yml` — GitLab server configuration
 
 Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
+
+### Playbooks vs. host groups
+Design is documented in `docs/inventory.md`. Key rules:
+- Playbook = kind of environment; host group = purpose within a playbook; OS differences are handled inside roles, not by groups
+- Split into a new playbook only when a host could not belong to both (conflicting role parameters, different baseline, cross-host ordering such as a future k8s playbook)
+- Control groups only via play `hosts:`; never put `group_names` checks in `when`
+- Each role appears in exactly one play of a playbook; roles shared by several groups go in a play targeting a union pattern (e.g. `desktop:devel`, `webapp:terraform`)
 
 ### Custom Filter Plugin
 `filter_plugins/shell_config.py` provides the `shell_config` filter. Usage:
