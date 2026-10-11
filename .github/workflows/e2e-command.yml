@@ -1,0 +1,52 @@
+name: E2E command
+
+# PR に "/e2e" とコメントすると、PR ブランチを指定して Molecule E2E (molecule-e2e.yml) を起動する。
+# この workflow は default branch の文脈で動くため PR のコードは checkout・実行しない。
+# E2E 本体は PR ブランチの文脈 (通常の PR の CI と同じ権限・キャッシュ範囲) で実行される
+on:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.comment.id }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  dispatch:
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/e2e') &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+    permissions:
+      actions: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      # コメントを受け付けたことが分かるよう、起動したコメントにリアクションを付ける
+      - name: react to the comment
+        # リアクションに失敗しても E2E は起動する
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ github.event.comment.id }}
+        run: |
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions" -f content='+1' --silent
+
+      # fork の PR はリポジトリ内のブランチとして指定できないため対象外とする
+      - name: dispatch E2E on the PR branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          pr=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}")
+          head_repo=$(echo "$pr" | jq -r .head.repo.full_name)
+          head_ref=$(echo "$pr" | jq -r .head.ref)
+          if [ "$head_repo" != "$GITHUB_REPOSITORY" ]; then
+            echo "::error::PR #${PR_NUMBER} is from a fork (${head_repo}); /e2e supports branches of this repository only"
+            exit 1
+          fi
+          gh workflow run molecule-e2e.yml --repo "$GITHUB_REPOSITORY" --ref "$head_ref" -f pr_number="$PR_NUMBER"
+          echo "dispatched molecule-e2e.yml on ${head_ref} for PR #${PR_NUMBER}"

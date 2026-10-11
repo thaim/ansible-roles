@@ -13,57 +13,22 @@ on:
       - "pyproject.toml"
       - "poetry.lock"
       - ".github/workflows/molecule-e2e.yml"
-  # PR に "/e2e" とコメントすると、PR の head に対して E2E を実行し結果をコメントする
-  issue_comment:
-    types: [created]
+  # PR ブランチを指定して実行する。PR の "/e2e" コメント (e2e-command.yml) からも起動される
   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "結果をコメントする PR の番号 (省略時はコメントしない)"
+        required: false
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions: {}
 
 jobs:
-  # 実行対象のコミットを決める。コメント起動の場合は PR へのコメントかつ権限のあるユーザーのみ受け付ける
-  prepare:
-    if: >-
-      github.event_name != 'issue_comment' || (
-        github.event.issue.pull_request &&
-        startsWith(github.event.comment.body, '/e2e') &&
-        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
-      )
-    permissions:
-      pull-requests: write
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    outputs:
-      sha: ${{ steps.target.outputs.sha }}
-    steps:
-      # コメントを受け付けたことが分かるよう、起動したコメントにリアクションを付ける
-      - name: react to the comment
-        if: github.event_name == 'issue_comment'
-        # リアクションに失敗しても E2E は実行する
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-          COMMENT_ID: ${{ github.event.comment.id }}
-        run: |
-          gh api --method POST "repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions" -f content='+1' --silent
-
-      - name: determine target commit
-        id: target
-        env:
-          GH_TOKEN: ${{ github.token }}
-          EVENT_NAME: ${{ github.event_name }}
-          PR_NUMBER: ${{ github.event.issue.number }}
-        run: |
-          if [ "$EVENT_NAME" = "issue_comment" ]; then
-            sha=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}" --jq .head.sha)
-          else
-            sha="$GITHUB_SHA"
-          fi
-          echo "sha=${sha}" >> "$GITHUB_OUTPUT"
-          echo "target commit: ${sha}"
-
   e2e:
-    needs: prepare
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -77,7 +42,6 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          ref: ${{ needs.prepare.outputs.sha }}
           persist-credentials: false
 
       # setup-python の cache: poetry が poetry コマンドを参照するため、先にインストールする
@@ -101,10 +65,10 @@ jobs:
         env:
           SCENARIO: ${{ matrix.scenario }}
 
-  # コメント起動の場合のみ、結果を PR にコメントする
+  # PR 番号が指定された場合のみ、結果を PR にコメントする
   report:
-    needs: [prepare, e2e]
-    if: always() && github.event_name == 'issue_comment' && needs.prepare.result == 'success'
+    needs: e2e
+    if: always() && github.event_name == 'workflow_dispatch' && inputs.pr_number != ''
     permissions:
       pull-requests: write
     runs-on: ubuntu-latest
@@ -113,9 +77,8 @@ jobs:
       - name: comment result
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.issue.number }}
+          PR_NUMBER: ${{ inputs.pr_number }}
           RESULT: ${{ needs.e2e.result }}
-          SHA: ${{ needs.prepare.outputs.sha }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           case "$RESULT" in
@@ -123,4 +86,4 @@ jobs:
             *) mark=":x:" ;;
           esac
           gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "${mark} Molecule E2E: **${RESULT}** (\`${SHA:0:7}\`) ${RUN_URL}"
+            --body "${mark} Molecule E2E: **${RESULT}** (\`${GITHUB_SHA:0:7}\`) ${RUN_URL}"

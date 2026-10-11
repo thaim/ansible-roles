@@ -1,0 +1,7 @@
+# jactionlint の設定 (https://github.com/jdx/jactionlint/blob/main/docs/config.md)
+ignores:
+  - rule: dangerous-triggers
+    file: .github/workflows/e2e-command.yml
+    reason: >-
+      /e2e コメントの受付専用。OWNER/MEMBER/COLLABORATOR のコメントのみ受け付け、PR のコードは checkout・実行せず、
+      PR ブランチを指定した workflow_dispatch で E2E を起動するだけ
