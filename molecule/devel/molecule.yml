@@ -1,0 +1,20 @@
+---
+# playbook-devel.yml を Ubuntu コンテナ上で実行する E2E テスト
+platforms:
+  - name: ubuntu2404
+    image: ubuntu:24.04
+    command: sleep infinity
+    pre_build_image: true
+    env:
+      USER: tester
+      SHELL: /bin/bash
+    # host group ごとの play をすべて実行するため、全 group に所属させる
+    groups:
+      - webapp
+      - devos
+      - terraform
+provisioner:
+  options:
+    # コンテナでは動かせない role (Docker in Docker が必要) を除外する
+    # ansible role は ansible-language-server が nodenv の node (18 系) では動かないため除外する
+    skip-tags: docker,ansible
