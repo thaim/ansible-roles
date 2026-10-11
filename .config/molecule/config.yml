@@ -12,9 +12,10 @@ platforms:
     image: ubuntu:24.04
     command: sleep infinity
     pre_build_image: true
-    # docker exec では USER が設定されないため、デスクトップ環境と同様に設定する
+    # docker exec では USER / SHELL が設定されないため、デスクトップ環境と同様に設定する
     env:
       USER: tester
+      SHELL: /bin/bash
 
 provisioner:
   name: ansible
