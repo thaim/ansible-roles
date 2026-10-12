@@ -19,3 +19,5 @@ rules:
     max: 160
   truthy:
     allowed-values: ["true", "false", "yes", "no"]
+    # GitHub Actions の workflow のトップレベルキー on: が truthy として検出されるため、キーは対象外にする
+    check-keys: false
