@@ -813,19 +813,19 @@ files = [
 
 [[package]]
 name = "molecule"
-version = "26.9.0"
+version = "26.10.0"
 description = "Molecule aids in the development and testing of Ansible roles"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "molecule-26.9.0-py3-none-any.whl", hash = "sha256:ad8f468c01f35a27cd12858e24c86ad27344dc1076845f03d78fdb563fb69f82"},
-    {file = "molecule-26.9.0.tar.gz", hash = "sha256:1c44254eb173d0a3a48217b874d19bfa436614fb0c6faa75d9b192a843360188"},
+    {file = "molecule-26.10.0-py3-none-any.whl", hash = "sha256:deb351b11f1b329ae3b3c856d5b1c1d9a9d8f8d40ba717c77e54b1778b4557d2"},
+    {file = "molecule-26.10.0.tar.gz", hash = "sha256:32533aaba78c29eed80bcaab5d03ff63fe48b8f43071cf77953f391e0732d439"},
 ]
 
 [package.dependencies]
 ansible-compat = ">=25.1.4"
-ansible-core = ">=2.15.0,<2.17.dev0 || >=2.18.dev0"
+ansible-core = ">=2.16.19,<2.17.dev0 || >=2.18.dev0"
 click = ">=8.0,<9"
 enrich = ">=1.2.7"
 jinja2 = ">=2.11.3"
