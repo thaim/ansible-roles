@@ -35,8 +35,6 @@ Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Sh
 
 ### Playbooks
 - `playbook-workstation.yml` — Workstations: desktops and development servers. Purpose is expressed by inventory groups (`desktop`, `devel` with children `webapp` / `devos` / `terraform`)
-- `playbook-docker-service.yml` — Docker-based services
-- `playbook-gitlab.yml` — GitLab server configuration
 
 Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
 
