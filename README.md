@@ -11,3 +11,12 @@ Then, run `poetry shell` for interactive environment or run `poetry run ansible-
 
 ## required modules
 Run `ansible-galaxy install -r requirements.yml` to install modules.
+
+## run playbook
+Copy `inventories/workstation.example` to `inventories/workstation` and assign hosts to groups, then run:
+
+```sh
+poetry run ansible-playbook -i inventories/workstation playbook-workstation.yml
+```
+
+See [docs/inventory.md](docs/inventory.md) for how playbooks and host groups are organized.

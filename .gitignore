@@ -10,3 +10,4 @@ __pycache__/
 # inventory files
 /inventories/*
 !/inventories/localhost
+!/inventories/*.example

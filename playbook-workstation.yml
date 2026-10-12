@@ -1,0 +1,50 @@
+# playbook to setup workstations (desktop and development servers)
+# 用途は inventory の group で表す (docs/inventory.md, inventories/workstation.example 参照)
+# group の制御は play の hosts だけで行い、各 role は 1 つの play にだけ書く
+
+- name: "Setup development server base"
+  hosts: devel
+  roles:
+    - { role: apt, tags: apt, APT_DEVTOOL: true }
+    - { role: build-essential, tags: build-essential }
+    - { role: nfs_client, tags: nfs_client }
+    - { role: docker, tags: docker }
+
+- name: "Setup common roles for workstations"
+  hosts: desktop:devel
+  roles:
+    - { role: git, tags: git, GIT_INSTALLER: 'extra' }
+    - { role: shell, tags: shell, SHELL_TYPE: 'bash' }
+    - { role: ssh, tags: ssh }
+    - { role: fonts, tags: fonts }
+    - { role: aqua, tags: aqua }
+    - { role: golang, tags: golang }
+
+- name: "Setup desktop environment"
+  hosts: desktop
+  roles:
+    - { role: homenas_client, tags: homenas_client }
+    - { role: fluentd, tags: fluentd }
+    - { role: dropbox, tags: dropbox }
+    # intellij
+    # RStudio
+
+- name: "Setup roles shared by application and terraform development"
+  hosts: webapp:terraform
+  roles:
+    - { role: terraform, tags: terraform }
+
+- name: "Setup application development environment"
+  hosts: webapp
+  roles:
+    - { role: python, tags: python }
+    - { role: ruby, tags: ruby }
+    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
+    - { role: yarn, tags: yarn }
+    - { role: rust, tags: rust }
+    - { role: gcloud, tags: gcloud }
+
+- name: "Setup terraform development environment"
+  hosts: terraform
+  roles:
+    - { role: ansible, tags: ansible }
