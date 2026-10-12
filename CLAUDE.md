@@ -2,50 +2,31 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+This file describes only stable conventions. Facts that change with routine work (role/playbook lists, versions, CI/Molecule details, lint rule lists) are intentionally left out — read the referenced files instead. Do not update this file as part of ordinary role, playbook, CI, or dependency changes.
+
 ## Project Overview
-Ansible roles collection for automating development environment setup across Ubuntu, macOS, and Debian. Contains ~78 roles for installing/configuring dev tools, languages, and applications.
+Ansible roles collection for automating development environment setup on Ubuntu, macOS, and Debian. Roles live in `roles/`, and playbooks (`playbook-*.yml`) at the repository root assign them to hosts.
 
 ## Common Commands
+- Setup: `poetry install --sync` and `ansible-galaxy install -r requirements.yml`
+- Run a playbook: `poetry run ansible-playbook -i inventories/localhost playbook-NAME.yml` (`--tags ROLE`, `--check` for dry run)
+- Lint: `poetry run ansible-lint` — **always run on modified files before committing**; CI fails on any violation
+- Molecule role test (requires Docker): `MOLECULE_TARGET_ROLE=ROLE_NAME poetry run molecule test -s role`
 
-### Setup
-- `poetry install --sync` — install Python dependencies
-- `ansible-galaxy install -r requirements.yml` — install Ansible collections
-- `poetry shell` — enter virtual environment
-
-### Running Playbooks
-- `poetry run ansible-playbook -i inventories/localhost playbook-desktop.yml`
-- Run specific roles: `--tags git,shell`
-- Dry run: `--check`
-
-### Linting
-- **IMPORTANT**: Always run `poetry run ansible-lint` on modified roles before committing
-- Lint specific role: `poetry run ansible-lint roles/ROLE_NAME/tasks/main.yml`
-- Syntax check: `ansible-playbook --syntax-check playbook-desktop.yml`
-- CI runs ansible-lint on the whole repository (playbooks and roles) via GitHub Actions on every PR and fails on any violation
-
-### Testing (Molecule)
-Molecule runs roles/playbooks in an Ubuntu 24.04 container (requires Docker). Shared settings live in `.config/molecule/config.yml`; install collections first with `ansible-galaxy collection install -r requirements.yml`.
-- Role test: `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — CI runs it on PRs for changed roles listed in `molecule/role/targets.txt`
-- Playbook E2E: `poetry run molecule test -s desktop` (or `-s devel`) — CI runs it on pushes to main and manually via workflow_dispatch. Comment `/e2e` on a PR (OWNER/MEMBER/COLLABORATOR only, branches of this repository only) to dispatch it on the PR branch; the comment gets a :+1: reaction and the result is posted as a PR comment
-- `molecule/desktop` skips roles that cannot run in a container (`homenas_client`, `fluentd`, `dropbox`)
-- `molecule/devel` puts the container in all host groups (`webapp`, `devos`, `terraform`) and skips `docker` (needs Docker in Docker) and `ansible` (ansible-language-server needs a newer node than nodenv provides)
+Sources of truth:
+- Dependencies/versions: `pyproject.toml`, `requirements.yml`
+- Lint settings: `.ansible-lint`, `.yamllint`
+- Molecule scenarios and skipped roles: `molecule/*/`, `.config/molecule/config.yml`, `molecule/role/targets.txt`
+- CI behavior: `.github/workflows/`
 
 ## Architecture
-
-### Playbooks
-- `playbook-desktop.yml` — Desktop environment (GUI apps, personal tools)
-- `playbook-devel.yml` — Development environment (multi-play, uses host groups: `all`, `webapp`, `devos`, `terraform`)
-
-Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
-
-### Custom Filter Plugin
-`filter_plugins/shell_config.py` provides the `shell_config` filter. Usage:
-```yaml
-- ansible.builtin.set_fact:
-    shell_info: "{{ ansible_facts.user_shell | shell_config }}"
-# Returns: { name: 'bash', rc_file: '.bashrc', profile_path: '.bash_profile' }
-# Or for zsh: { name: 'zsh', rc_file: '.zshrc', profile_path: '.zprofile' }
-```
+- Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
+- `filter_plugins/shell_config.py` provides the `shell_config` filter, which maps the user's shell to its rc/profile file names:
+  ```yaml
+  - ansible.builtin.set_fact:
+      shell_info: "{{ ansible_facts.user_shell | shell_config }}"
+  # => { name: 'bash', rc_file: '.bashrc', profile_path: '.bash_profile' }
+  ```
 
 ## Coding Conventions
 
@@ -53,15 +34,14 @@ Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
 Always use fully qualified collection names (FQCN): `ansible.builtin.command`, `ansible.builtin.apt`, etc.
 
 ### Variable Naming
-- `UPPER_SNAKE_CASE` with role name as prefix: `GOLANG_VERSION`, `DOCKER_USER`, `GIT_INSTALLER`
-- Lint enforces: `^[a-z_][a-z0-9_]*$|[A-Z][A-Z0-9_]*$`
+`UPPER_SNAKE_CASE` with the role name as prefix: `GOLANG_VERSION`, `DOCKER_USER`, `GIT_INSTALLER`
 
 ### OS-Specific Task Dispatch
-Roles split OS-specific logic into separate files dispatched from `tasks/main.yml`:
+Split OS-specific logic into separate files dispatched from `tasks/main.yml`:
 ```yaml
 - ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
 ```
-File naming: `install_Ubuntu.yml`, `install_MacOSX.yml` (or `install_MacOS.yml`), `install_Debian.yml`
+File naming: `install_Ubuntu.yml`, `install_MacOSX.yml`, `install_Debian.yml`
 
 ### Install-Check Pattern
 Check if a tool is installed before running install tasks:
@@ -78,7 +58,7 @@ Check if a tool is installed before running install tasks:
 ```
 
 ### Version Comparison Pattern
-For roles that manage tool versions (golang, nodejs, terraform, etc.):
+For roles that manage tool versions:
 ```yaml
 - name: Check installed version
   ansible.builtin.shell: /bin/bash -lc 'TOOL --version'
@@ -95,18 +75,3 @@ For roles that manage tool versions (golang, nodejs, terraform, etc.):
 
 ### Privileged Tasks
 Use `become: yes` on tasks requiring root (package installs, system config). Do not set `become` at play level.
-
-### Lint Exceptions
-When `shell` is required instead of `command` (e.g., for PATH-aware login shell execution), use inline noqa:
-```yaml
-# noqa: command-instead-of-shell
-```
-
-## Lint Configuration
-- `.ansible-lint`: skips multiple legacy rules (see file), excludes `roles/*/files/*`
-- `.yamllint`: line length max 160, truthy values `["true", "false", "yes", "no"]`
-
-## Python Environment
-- Poetry for dependency management
-- Python 3.12+ (< 3.14), ansible-core ~2.20.0
-- Required collections: `community.general` 10.0.0, `ansible.posix` 2.0.0
