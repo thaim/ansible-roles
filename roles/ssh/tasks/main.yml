@@ -48,6 +48,11 @@
 
 # sshd config
 
+- name: Check if sshd_config exists
+  ansible.builtin.stat:
+    path: /etc/ssh/sshd_config
+  register: sshd_config
+
 - name: Deny root login
   become: yes
   ansible.builtin.lineinfile:
@@ -55,3 +60,4 @@
     regexp: "PermitRootLogin"
     line: "PermitRootLogin no"
     insertafter: "# Authentication:"
+  when: sshd_config.stat.exists
