@@ -2,21 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-This file describes only stable conventions. Facts that change with routine work (role/playbook lists, versions, CI/Molecule details, lint rule lists) are intentionally left out — read the referenced files instead. Do not update this file as part of ordinary role, playbook, CI, or dependency changes.
+This file describes only stable conventions. Facts that change with routine work (role/playbook lists, versions, CI/Molecule details, lint rule lists) and anything derivable from the files themselves are intentionally left out — read the referenced files instead. Do not update this file as part of ordinary role, playbook, CI, or dependency changes.
 
 ## Project Overview
 Ansible roles collection for automating development environment setup on Ubuntu, macOS, and Debian. Roles live in `roles/`, and playbooks (`playbook-*.yml`) at the repository root assign them to hosts.
 
-## Common Commands
-- Setup: `poetry install --sync` and `ansible-galaxy install -r requirements.yml`
-- Run a playbook: `poetry run ansible-playbook -i inventories/localhost playbook-NAME.yml` (`--tags ROLE`, `--check` for dry run)
-- Lint: `poetry run ansible-lint` — **always run on modified files before committing**; CI fails on any violation
-- Molecule role test (requires Docker): `MOLECULE_TARGET_ROLE=ROLE_NAME poetry run molecule test -s role`
+## Work Rules
+- **Always run `poetry run ansible-lint` on modified files before committing**; CI fails on any violation
+- Commands (setup, playbook runs, lint, Molecule tests): see `README.md`
 
 Sources of truth:
 - Dependencies/versions: `pyproject.toml`, `requirements.yml`
 - Lint settings: `.ansible-lint`, `.yamllint`
-- Molecule scenarios and skipped roles: `molecule/*/`, `.config/molecule/config.yml`, `molecule/role/targets.txt`
+- Molecule scenarios and skipped roles (with reasons): `molecule/*/molecule.yml`, `.config/molecule/config.yml`
 - CI behavior: `.github/workflows/`
 
 ## Architecture
