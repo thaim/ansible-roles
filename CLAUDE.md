@@ -19,6 +19,11 @@ Sources of truth:
 
 ## Architecture
 - Roles are assigned in playbooks with: `{ role: NAME, tags: TAG, VAR: VALUE }`
+- Playbooks vs. host groups: design is in `docs/inventory.md`. Key rules:
+  - Playbook = kind of environment; host group = purpose within a playbook; OS differences are handled inside roles, not by groups
+  - Split into a new playbook only when a host could not belong to both (conflicting role parameters, different baseline, cross-host ordering)
+  - Control groups only via play `hosts:`; never put `group_names` checks in `when`
+  - Each role appears in exactly one play of a playbook; roles shared by several groups go in a play targeting a union pattern (e.g. `hosts: webapp:terraform`)
 - `filter_plugins/shell_config.py` provides the `shell_config` filter, which maps the user's shell to its rc/profile file names:
   ```yaml
   - ansible.builtin.set_fact:

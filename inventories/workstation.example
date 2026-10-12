@@ -1,0 +1,30 @@
+# playbook-workstation.yml 用 inventory の雛形 (運用設計は docs/inventory.md)
+# ホスト名を公開リポジトリに含めないため、inventories/workstation にコピーして編集する (inventories/* は git 管理外)
+#   cp inventories/workstation.example inventories/workstation
+#   poetry run ansible-playbook -i inventories/workstation playbook-workstation.yml [--limit webapp] [--tags git]
+#
+# ホスト上で clone して自身をセットアップする場合は、該当する group に localhost を書く
+#   例 (macOS で開発もする): [desktop] と [webapp] に localhost ansible_connection=local
+#   例 (Ubuntu Desktop):     [desktop] に localhost ansible_connection=local
+
+# GUI を使う作業用マシン
+[desktop]
+desktop-host.example
+
+# アプリケーション開発用
+[webapp]
+webapp-host.example
+
+# OS 開発用
+[devos]
+devos-host.example
+
+# terraform 開発用
+[terraform]
+terraform-host.example
+
+# 開発サーバー (開発用途の group をまとめる)
+[devel:children]
+webapp
+devos
+terraform

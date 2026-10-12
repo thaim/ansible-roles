@@ -1,5 +1,15 @@
 ---
-# playbook-desktop.yml を Ubuntu コンテナ上で実行する E2E テスト
+# playbook-workstation.yml を desktop group のホストとして Ubuntu コンテナ上で実行する E2E テスト
+platforms:
+  - name: ubuntu2404
+    image: ubuntu:24.04
+    command: sleep infinity
+    pre_build_image: true
+    env:
+      USER: tester
+      SHELL: /bin/bash
+    groups:
+      - desktop
 provisioner:
   options:
     # コンテナでは動かせない role (NFS マウント / systemd / GUI アプリ) を除外する

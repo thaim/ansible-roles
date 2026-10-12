@@ -12,16 +12,22 @@ Then, run `poetry shell` for interactive environment or run `poetry run ansible-
 ## required modules
 Run `ansible-galaxy install -r requirements.yml` to install modules.
 
-## run playbooks
-- `poetry run ansible-playbook -i inventories/localhost playbook-desktop.yml`
-- run specific roles: `--tags git,shell`
-- dry run: `--check`
+## run playbook
+Copy `inventories/workstation.example` to `inventories/workstation` and assign hosts to groups, then run:
+
+```sh
+poetry run ansible-playbook -i inventories/workstation playbook-workstation.yml
+```
+
+Options: `--tags git,shell` to run specific roles, `--limit webapp` to limit hosts, `--check` for dry run.
+
+See [docs/inventory.md](docs/inventory.md) for how playbooks and host groups are organized.
 
 ## development
 ### lint
 - `poetry run ansible-lint` — lint the whole repository (same as CI)
 - `poetry run ansible-lint roles/ROLE_NAME` — lint a specific role
-- `poetry run ansible-playbook --syntax-check playbook-desktop.yml` — syntax check
+- `poetry run ansible-playbook --syntax-check playbook-workstation.yml` — syntax check
 
 Settings: `.ansible-lint`, `.yamllint`
 
@@ -29,7 +35,7 @@ Settings: `.ansible-lint`, `.yamllint`
 Molecule runs roles/playbooks in an Ubuntu container and requires Docker.
 
 - `MOLECULE_TARGET_ROLE=git poetry run molecule test -s role` — test a single role
-- `poetry run molecule test -s desktop` — E2E test of `playbook-desktop.yml` (`-s devel` for `playbook-devel.yml`)
+- `poetry run molecule test -s SCENARIO` — E2E test of a playbook; scenarios are split by host group combination (see `molecule/`)
 - comment `/e2e` on a PR to run the E2E test on the PR branch
 
-Shared settings are in `.config/molecule/config.yml`. Each scenario's settings and skipped roles are in `molecule/*/molecule.yml`, and CI workflows are in `.github/workflows/`.
+Shared settings are in `.config/molecule/config.yml`. Each scenario's host groups and skipped roles are in `molecule/*/molecule.yml`, and CI workflows are in `.github/workflows/`.
