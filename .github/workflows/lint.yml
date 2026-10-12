@@ -38,6 +38,13 @@ jobs:
           version=$(poetry run python -c 'from importlib.metadata import version; print(version("ansible-lint"))')
           echo "ansiblelint_version=${version}" >> "$GITHUB_OUTPUT"
 
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.ansible/collections
+          key: ansible-collections-${{ hashFiles('requirements.yml') }}
+
+      - run: poetry run ansible-galaxy collection install -r requirements.yml
+
       # action 内の pip install が何もしないよう、インストール済みと同じバージョンを渡す
       - name: run ansible-lint on reviewdog
         uses: reviewdog/action-ansiblelint@57a0721547b93e9925bd05bf20ea17810bb3cff7 # v1.20.0
