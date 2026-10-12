@@ -18,7 +18,7 @@
 
 - name: Be sure dropbox is running
   ansible.builtin.command: dropbox start
-  when: running.rc != '1'
+  when: running.rc != 1
   changed_when: true
 
 - name: Check if dropbox autostart on login

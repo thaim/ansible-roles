@@ -7,11 +7,11 @@
     state: directory
     mode: '0777'
   with_items:
-    - { item: backup }
-    - { item: Multimedia }
-    - { item: Music }
-    - { item: iso }
-    - { item: Document }
+    - backup
+    - Multimedia
+    - Music
+    - iso
+    - Document
 
 - name: Mount
   become: yes
@@ -19,10 +19,10 @@
     path: "/media/{{ item.path }}"
     src: "{{ item.src }}"
     fstype: nfs
-    opts: default
+    opts: defaults
     state: present
   # yamllint disable rule:commas
-  wtih_items:
+  with_items:
     - { path: "backup",     src: "{{ homenas_client_host }}:/backup" }
     - { path: "iso",        src: "{{ homenas_client_host }}:/iso" }
     - { path: "Multimedia", src: "{{ homenas_client_host }}:/Multimedia" }
