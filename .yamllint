@@ -19,3 +19,7 @@ rules:
     max: 160
   truthy:
     allowed-values: ["true", "false", "yes", "no"]
+    # GitHub Actions の workflow のトップレベルキー on: が truthy として検出されるため、workflow は対象外にする
+    # ansible-lint の yaml ルールも .github/workflows の truthy は無視している
+    ignore:
+      - .github/workflows/

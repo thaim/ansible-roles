@@ -1,8 +1,5 @@
 use_default_rules: true
 
-exclude_paths:
-  - roles/*/files/*
-
 skip_list:
   - git-latest
   - fqcn[action-core]
