@@ -13,7 +13,7 @@ on:
       - "pyproject.toml"
       - "poetry.lock"
       - ".github/workflows/molecule-e2e.yml"
-  # PR ブランチを指定して実行する。PR の "/e2e" コメント (e2e-command.yml) からも起動される
+  # PR ブランチを指定して実行する。PR の "/e2e" コメント (e2e-command.yml) と依存ファイルを変更した PR (e2e-gate.yml) からも起動される
   workflow_dispatch:
     inputs:
       pr_number:
@@ -28,6 +28,22 @@ concurrency:
 permissions: {}
 
 jobs:
+  # PR 番号が指定された場合、実行中であることを PR の commit status (e2e-gate.yml 参照) に表示する
+  start:
+    if: github.event_name == 'workflow_dispatch' && inputs.pr_number != ''
+    permissions:
+      statuses: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: set pending status
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+            -f state=pending -f context="Molecule E2E" -f description="Running" -f target_url="$RUN_URL" --silent
+
   e2e:
     permissions:
       contents: read
@@ -65,12 +81,13 @@ jobs:
         env:
           SCENARIO: ${{ matrix.scenario }}
 
-  # PR 番号が指定された場合のみ、結果を PR にコメントする
+  # PR 番号が指定された場合のみ、結果を PR の commit status とコメントに反映する
   report:
     needs: e2e
     if: always() && github.event_name == 'workflow_dispatch' && inputs.pr_number != ''
     permissions:
       pull-requests: write
+      statuses: write
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -82,8 +99,11 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           case "$RESULT" in
-            success) mark=":white_check_mark:" ;;
-            *) mark=":x:" ;;
+            success) mark=":white_check_mark:"; state=success ;;
+            cancelled) mark=":x:"; state=error ;;
+            *) mark=":x:"; state=failure ;;
           esac
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
+            -f state="$state" -f context="Molecule E2E" -f description="E2E ${RESULT}" -f target_url="$RUN_URL" --silent
           gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" \
             --body "${mark} Molecule E2E: **${RESULT}** (\`${GITHUB_SHA:0:7}\`) ${RUN_URL}"
