@@ -1,4 +1,6 @@
 # ansible
+[![Molecule E2E](https://github.com/thaim/ansible-roles/actions/workflows/molecule-e2e.yml/badge.svg?branch=main)](https://github.com/thaim/ansible-roles/actions/workflows/molecule-e2e.yml?query=branch%3Amain)
+
 My ansible playbooks
 
 ## setup python environment
