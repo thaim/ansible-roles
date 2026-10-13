@@ -25,16 +25,6 @@
     repo: 'https://github.com/nodenv/node-build'
     dest: "{{ ansible_facts.env.HOME }}/.nodenv/plugins/node-build"
 
-- name: Install default node.js
-  ansible.builtin.shell: bash -lc "nodenv install -s {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
-  register: install_nodejs
-  changed_when: "'Installed node-' in install_nodejs.stdout"
-
-- name: Enable node.js for global
-  ansible.builtin.shell: bash -lc "nodenv global {{ NODEJS_VERSION }}"  # noqa: command-instead-of-shell
-  changed_when: true
-
-
 - name: Check if pnpm is installed
   ansible.builtin.command: which pnpm
   changed_when: false

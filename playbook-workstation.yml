@@ -39,7 +39,7 @@
   roles:
     - { role: python, tags: python }
     - { role: ruby, tags: ruby }
-    - { role: nodejs, tags: nodejs, NODEJS_MAJOR_VERSION: 14 }
+    - { role: nodejs, tags: nodejs }
     - { role: yarn, tags: yarn }
     - { role: rust, tags: rust }
     - { role: gcloud, tags: gcloud }

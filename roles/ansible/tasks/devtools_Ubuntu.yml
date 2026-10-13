@@ -4,3 +4,4 @@
   community.general.npm:
     name: '@ansible/ansible-language-server'
     global: true
+    executable: "{{ ansible_facts.env.HOME }}/.nodenv/shims/npm"
