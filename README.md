@@ -40,6 +40,6 @@ Molecule runs roles/playbooks in an Ubuntu container and requires Docker.
 - `poetry run molecule test -s SCENARIO` — E2E test of a playbook; scenarios are split by host group combination (see `molecule/`)
 - comment `/e2e` on a PR to run the E2E test on the PR branch
   - the `Molecule E2E` status on a PR shows whether E2E is required and its result; it is reset to pending on each push to a PR that changes E2E targets
-  - PRs that change dependency files (`pyproject.toml`, `poetry.lock`, `requirements.yml`) run E2E automatically
+  - PRs that update high-impact dependencies (`ansible-core`, `molecule`, `molecule-plugins` in `poetry.lock`, or any collection in `requirements.yml`) run E2E automatically; other dependency updates do not require E2E
 
 Shared settings are in `.config/molecule/config.yml`. Each scenario's host groups and skipped roles are in `molecule/*/molecule.yml`, and CI workflows are in `.github/workflows/`.

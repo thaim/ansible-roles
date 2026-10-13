@@ -2,7 +2,8 @@ name: E2E gate
 
 # PR の head commit に commit status "Molecule E2E" を付け、E2E の要否と実行方法を PR の merge box に表示する。
 # - E2E の対象を変更していない PR: success (E2E 不要)
-# - 依存ファイルを変更した PR: E2E を自動で起動する (状態は molecule-e2e.yml が更新する)
+# - 影響の大きい依存 (E2E_DEPS のパッケージ、requirements.yml の collection) を更新した PR:
+#   E2E を自動で起動する (状態は molecule-e2e.yml が更新する)。それ以外の依存の更新では E2E は不要とする
 # - それ以外の E2E の対象を変更した PR: pending ("/e2e" とコメントすると実行される旨を表示)
 # E2E の結果は molecule-e2e.yml が同じ context に書き込む。新しい commit を push すると pending に戻る
 on:
@@ -20,6 +21,7 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       actions: write
+      contents: read
       pull-requests: read
       statuses: write
     runs-on: ubuntu-latest
@@ -29,21 +31,45 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           HEAD_REF: ${{ github.head_ref }}
           README_URL: ${{ github.server_url }}/${{ github.repository }}#test-molecule
+          # バージョンが変わったら E2E を自動実行する poetry.lock のパッケージ
+          E2E_DEPS: ansible-core molecule molecule-plugins
         run: |
           changed=$(gh api --paginate "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/files" --jq '.[].filename')
-          # molecule-e2e.yml の push の paths と揃える
-          deps='^(requirements\.yml|pyproject\.toml|poetry\.lock)$'
+          # molecule-e2e.yml の push の paths のうち、依存ファイル以外と揃える
           targets='^(playbook-[^/]*\.yml$|roles/|filter_plugins/|molecule/|\.config/molecule/|\.github/workflows/molecule-e2e\.yml$)'
           status() {
             gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${HEAD_SHA}" \
               -f state="$1" -f context="Molecule E2E" -f description="$2" -f target_url="$README_URL" --silent
           }
-          if echo "$changed" | grep -q -E "$deps"; then
+          lock() {
+            gh api -H "Accept: application/vnd.github.raw" "repos/${GITHUB_REPOSITORY}/contents/poetry.lock?ref=$1"
+          }
+
+          # requirements.yml は role が使う collection だけを管理しているため、変更はすべて影響が大きいとみなす
+          risky=""
+          if echo "$changed" | grep -q -x 'requirements\.yml'; then
+            risky="requirements.yml"
+          elif echo "$changed" | grep -q -x 'poetry\.lock'; then
+            lock "$BASE_SHA" > "${RUNNER_TEMP}/base.lock"
+            lock "$HEAD_SHA" > "${RUNNER_TEMP}/head.lock"
+            risky=$(python3 - "${RUNNER_TEMP}/base.lock" "${RUNNER_TEMP}/head.lock" <<'PY'
+          import os, sys, tomllib
+          def versions(path):
+              with open(path, "rb") as f:
+                  return {p["name"]: p["version"] for p in tomllib.load(f).get("package", [])}
+          base, head = versions(sys.argv[1]), versions(sys.argv[2])
+          print(" ".join(n for n in os.environ["E2E_DEPS"].split() if base.get(n) != head.get(n)))
+          PY
+            )
+          fi
+
+          if [ -n "$risky" ]; then
             gh workflow run molecule-e2e.yml --repo "$GITHUB_REPOSITORY" --ref "$HEAD_REF" -f pr_number="$PR_NUMBER"
-            echo "dependency files changed: dispatched molecule-e2e.yml on ${HEAD_REF}"
+            echo "high-impact dependencies changed (${risky}): dispatched molecule-e2e.yml on ${HEAD_REF}"
           elif echo "$changed" | grep -q -E "$targets"; then
             status pending 'Not run yet: comment "/e2e" on this PR to run'
             echo "E2E targets changed: waiting for /e2e"
