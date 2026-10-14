@@ -1,4 +1,5 @@
 # コンテナ上での動作を確認済みで、role 単体テストの対象とする role
+# 各 role の検証は molecule/resources/verify/<role>.yml に置く
 aqua
 build_essential
 fonts

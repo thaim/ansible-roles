@@ -1,0 +1,19 @@
+---
+- name: Check starship command
+  ansible.builtin.command: starship --version
+  changed_when: false
+
+- name: Check direnv command
+  ansible.builtin.command: direnv version
+  changed_when: false
+
+- name: Check starship config file
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/.config/starship.toml"
+  register: verify_starship_config
+
+- name: Assert starship config file exists
+  ansible.builtin.assert:
+    that: verify_starship_config.stat.exists
+    fail_msg: "~/.config/starship.toml does not exist"
+    quiet: true

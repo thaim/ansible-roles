@@ -1,0 +1,15 @@
+---
+# PATH は ~/.profile で設定されるため、ログインシェルで実行する
+- name: Check go command
+  # noqa: command-instead-of-shell
+  ansible.builtin.shell: /bin/bash -lc 'go version'
+  changed_when: false
+
+- name: Check golang devtools
+  # noqa: command-instead-of-shell
+  ansible.builtin.shell: /bin/bash -lc 'which {{ item }}'
+  changed_when: false
+  loop:
+    - gopls
+    - ghq
+    - git-wt
