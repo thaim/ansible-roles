@@ -6,7 +6,7 @@
   hosts: devel
   roles:
     - { role: apt, tags: apt, APT_DEVTOOL: true }
-    - { role: build-essential, tags: build-essential }
+    - { role: build_essential, tags: build_essential }
     - { role: nfs_client, tags: nfs_client }
     - { role: docker, tags: docker }
 
