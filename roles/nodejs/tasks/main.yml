@@ -1,11 +1,13 @@
 ---
 
 - name: Check nodenv is installed
-  ansible.builtin.command: which nodenv
-  changed_when: false
-  failed_when: false
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.nodenv/bin/nodenv"
   register: nodenv_stat
 
 - name: Setup nodenv
   ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
-  when: nodenv_stat.rc != 0
+  when: not nodenv_stat.stat.exists
+
+- name: Setup node.js
+  ansible.builtin.include_tasks: version.yml

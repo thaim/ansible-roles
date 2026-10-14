@@ -1,0 +1,23 @@
+---
+
+- name: Install node.js {{ NODEJS_VERSION }}
+  ansible.builtin.command: "{{ ansible_facts.env.HOME }}/.nodenv/bin/nodenv install -s {{ NODEJS_VERSION }}"
+  register: install_nodejs
+  changed_when: "'Installed node-' in install_nodejs.stdout + install_nodejs.stderr"
+
+- name: Check global node.js version
+  ansible.builtin.command: "{{ ansible_facts.env.HOME }}/.nodenv/bin/nodenv global"
+  register: nodejs_global
+  changed_when: false
+  failed_when: false
+
+- name: Enable node.js for global
+  ansible.builtin.command: "{{ ansible_facts.env.HOME }}/.nodenv/bin/nodenv global {{ NODEJS_VERSION }}"
+  when: nodejs_global.stdout != NODEJS_VERSION | string
+  changed_when: true
+
+- name: Verify node.js version via nodenv shim
+  ansible.builtin.command: "{{ ansible_facts.env.HOME }}/.nodenv/shims/node --version"
+  register: nodejs_version
+  changed_when: false
+  failed_when: nodejs_version.rc != 0 or nodejs_version.stdout != 'v' ~ NODEJS_VERSION
