@@ -1,6 +1,6 @@
 ---
 
-- name: openshift-client | download openshift client archive
+- name: download openshift client archive
   get_url:
     url: "{{ OPENSHIFT_CLIENT_RELEASE_URL }}/v{{ OPENSHIFT_VERSION }}/openshift-origin-client-tools-v{{ OPENSHIFT_VERSION }}-{{ OPENSHIFT_CLI_HASH[item] }}-linux-64bit.tar.gz"  # yamllint disable-line rule:line-length
     dest: /tmp/
@@ -8,7 +8,7 @@
     - "{{ OPENSHIFT_VERSION }}"
 
 
-- name: openshift-client | unarchive installer
+- name: unarchive installer
   unarchive:
     src: "/tmp/openshift-origin-client-tools-v{{ OPENSHIFT_VERSION }}-{{ OPENSHIFT_CLI_HASH[item] }}-linux-64bit.tar.gz"  # yamllint disable-line rule:line-length
     dest: /tmp/
@@ -16,7 +16,7 @@
   with_items:
     - "{{ OPENSHIFT_VERSION }}"
 
-- name: openshift-client | copy binary file
+- name: copy binary file
   become: yes
   copy:
     src: "/tmp/openshift-origin-client-tools-v{{ OPENSHIFT_VERSION }}-{{ OPENSHIFT_CLI_HASH[item] }}-linux-64bit/oc"  # yamllint disable-line rule:line-length

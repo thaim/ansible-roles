@@ -1,6 +1,6 @@
 ---
 
-- name: dev-library | install
+- name: install
   become: yes
   apt:
     name:

@@ -1,18 +1,18 @@
 ---
 
-- name: virt-manager | be sure virt-manager is installed
+- name: be sure virt-manager is installed
   become: yes
   apt: name=virt-manager,libvirt-bin,qemu-kvm
        state=latest
 
-- name: virt-manager | install spice connection
+- name: install spice connection
   become: yes
   apt: name=qemu-kvm-spice,spice-client-gtk
 
-- name: virt-manager | install spice-client
+- name: install spice-client
   become: yes
   apt: name=python-spice-client-gtk
 
-- name: virt-manager | install ask-password
+- name: install ask-password
   become: yes
   apt: name=ssh-askpass,ssh-askpass-gnome
