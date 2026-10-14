@@ -5,6 +5,15 @@
   ],
   "packageRules": [
     {
+      "description": "PR で E2E を自動実行する (e2e-gate.yml)。ansible の実行や Molecule そのものに影響する依存と、role が使う collection が対象",
+      "matchDepNames": ["ansible-core", "molecule", "molecule-plugins"],
+      "addLabels": ["e2e"]
+    },
+    {
+      "matchManagers": ["ansible-galaxy"],
+      "addLabels": ["e2e"]
+    },
+    {
       "matchFileNames": ["roles/aqua/files/aqua.yaml"],
       "groupName": "aqua packages"
     },
