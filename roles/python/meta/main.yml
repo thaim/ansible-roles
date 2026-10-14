@@ -1,5 +1,5 @@
 ---
 
 dependencies:
-  - role: pip-pip3
+  - role: pip_pip3
   - role: nodejs

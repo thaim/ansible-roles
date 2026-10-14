@@ -1,6 +1,6 @@
 ---
 
-- name: azure-cli | check if azure cli is installed
+- name: check if azure cli is installed
   command: which az
   changed_when: false
   failed_when: false

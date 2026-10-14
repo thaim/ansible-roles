@@ -1,5 +1,5 @@
 ---
 
 dependencies:
-  - pip-pip3
+  - pip_pip3
   - unzip
