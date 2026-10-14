@@ -5,12 +5,21 @@
   ],
   "packageRules": [
     {
-      "description": "PR で E2E を自動実行する (e2e-gate.yml)。ansible の実行や Molecule そのものに影響する依存と、role が使う collection が対象",
-      "matchDepNames": ["ansible-core", "molecule", "molecule-plugins"],
+      "description": "PR で E2E を自動実行する (e2e-gate.yml)。後方互換性が保証されないメジャーリリースだけを対象にする。ansible-core は X.Y.Z の Y がメジャーリリースのため、Renovate の minor も含める",
+      "matchDepNames": ["ansible-core"],
+      "matchUpdateTypes": ["major", "minor"],
       "addLabels": ["e2e"]
     },
     {
+      "description": "PR で E2E を自動実行する (e2e-gate.yml)。Molecule のメジャーリリースが対象",
+      "matchDepNames": ["molecule", "molecule-plugins"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["e2e"]
+    },
+    {
+      "description": "PR で E2E を自動実行する (e2e-gate.yml)。role が使う collection のメジャーリリースが対象",
       "matchManagers": ["ansible-galaxy"],
+      "matchUpdateTypes": ["major"],
       "addLabels": ["e2e"]
     },
     {
