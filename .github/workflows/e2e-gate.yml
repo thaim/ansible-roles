@@ -4,7 +4,8 @@ name: E2E gate
 # - E2E の対象を変更していない PR: success (E2E 不要)
 # - "e2e" label が付いた PR: E2E を自動で起動する (状態は molecule-e2e.yml が更新する)。
 #   影響の大きい依存 (ansible-core など) の更新には Renovate が label を付ける (renovate.json 参照)。手動で付けてもよい
-# - それ以外の E2E の対象を変更した PR: pending ("/e2e" とコメントすると実行される旨を表示)
+# - それ以外の E2E の対象を変更した PR: pending
+# どの状態でも description に "/e2e" で実行・再実行できることを表示する (molecule-e2e.yml の状態・結果コメントも同様)
 # E2E の結果は molecule-e2e.yml が同じ context に書き込む。新しい commit を push すると pending に戻る
 on:
   pull_request:
@@ -51,9 +52,9 @@ jobs:
             gh workflow run molecule-e2e.yml --repo "$GITHUB_REPOSITORY" --ref "$HEAD_REF" -f pr_number="$PR_NUMBER"
             echo "labeled e2e: dispatched molecule-e2e.yml on ${HEAD_REF}"
           elif echo "$changed" | grep -q -E "$targets"; then
-            status pending 'Not run yet: comment "/e2e" or add the "e2e" label to run'
+            status pending 'Not run yet: comment "/e2e" on this PR to run'
             echo "E2E targets changed: waiting for /e2e"
           else
-            status success "Not required: no E2E target changed"
+            status success 'Not required: no E2E target changed (comment "/e2e" on this PR to run anyway)'
             echo "no E2E target changed"
           fi

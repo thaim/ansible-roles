@@ -42,7 +42,7 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            -f state=pending -f context="Molecule E2E" -f description="Running" -f target_url="$RUN_URL" --silent
+            -f state=pending -f context="Molecule E2E" -f description='Running (comment "/e2e" on this PR to re-run)' -f target_url="$RUN_URL" --silent
 
   e2e:
     permissions:
@@ -104,6 +104,7 @@ jobs:
             *) mark=":x:"; state=failure ;;
           esac
           gh api --method POST "repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            -f state="$state" -f context="Molecule E2E" -f description="E2E ${RESULT}" -f target_url="$RUN_URL" --silent
-          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" \
-            --body "${mark} Molecule E2E: **${RESULT}** (\`${GITHUB_SHA:0:7}\`) ${RUN_URL}"
+            -f state="$state" -f context="Molecule E2E" -f description="E2E ${RESULT} (comment \"/e2e\" on this PR to re-run)" -f target_url="$RUN_URL" --silent
+          body=$(printf '%s Molecule E2E: **%s** (`%s`) %s\n\nComment `/e2e` on this PR to re-run.' \
+            "$mark" "$RESULT" "${GITHUB_SHA:0:7}" "$RUN_URL")
+          gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "$body"
