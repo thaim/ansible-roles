@@ -6,7 +6,7 @@ authors = ["thaim <thaim24@gmail.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = ">=3.12,<3.14"
+python = ">=3.12,<3.15"
 ansible-core = "~2.20.0"
 jmespath = "^1.0.1"
 

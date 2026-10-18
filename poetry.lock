@@ -62,7 +62,7 @@ filelock = ">=3.8.2"
 jsonschema = ">=4.10.0"
 packaging = ">=22.0"
 pathspec = ">=1.0.3,<1.2.0"
-pyyaml = {version = ">=6.0.1", markers = "python_version < \"3.14\""}
+pyyaml = ">=6.0.1"
 referencing = ">=0.36.2"
 ruamel-yaml = ">=0.18.11"
 subprocess-tee = ">=0.4.1"
@@ -1453,5 +1453,5 @@ dev = ["doc8", "flake8", "flake8-import-order", "rstcheck[sphinx]", "ruff", "sph
 
 [metadata]
 lock-version = "2.1"
-python-versions = ">=3.12,<3.14"
-content-hash = "bfb81e6726848aff557eb2ef707864957fcde7fb0c3212dc0341168bd8fe1b15"
+python-versions = ">=3.12,<3.15"
+content-hash = "683e04f2ee01032c8832281d2ccbe4d5a8224ddaa4d46499ab2e5d5635ea8c0f"
