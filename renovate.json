@@ -14,9 +14,9 @@
       "groupName": "aqua packages"
     },
     {
-      "description": "pyproject.toml の python 制約 (<3.14) に合わせて 3.13 までに留める。ansible-core 2.20 は Python 3.14 に対応しているため、3.14 への更新は別途検証する",
+      "description": "pyproject.toml の python 制約 (<3.15) に合わせて 3.14 までに留める。3.15 への更新は ansible-core の対応を確認してから別途検証する",
       "matchDepNames": ["python"],
-      "allowedVersions": "<3.14"
+      "allowedVersions": "<3.15"
     },
     {
       "description": "poetry が python を更新対象のパッケージとして受け付けず lock ファイル更新が失敗するため、pyproject.toml の python 制約は Renovate で更新しない",
