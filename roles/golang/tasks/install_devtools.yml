@@ -28,20 +28,6 @@
   when: status_godoc.rc != 0
 
 
-# lint tool for go lang
-- name: Check staticcheck insatlled
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "which staticcheck"
-  register: status_staticcheck
-  changed_when: false
-  failed_when: false
-
-- name: Install staticcheck for go lint
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "go install honnef.co/go/tools/cmd/staticcheck@latest"
-  when: status_staticcheck.rc != 0
-
-
 # LSP for go
 - name: Check gopls installed
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
@@ -68,44 +54,3 @@
   # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
   ansible.builtin.shell: /bin/bash -lc "go install github.com/rogpeppe/godef@latest"
   when: status_godef.rc != 0
-
-
-# manage remote repository clones
-- name: Check ghq insatlled
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "which ghq"
-  register: status_ghq
-  changed_when: false
-  failed_when: false
-
-- name: Install ghq
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "go install github.com/x-motemen/ghq@latest"
-  when: status_ghq.rc != 0
-
-
-# git worktree management tool
-- name: Check git-wt installed
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "which git-wt"
-  register: status_git_wt
-  changed_when: false
-  failed_when: false
-
-- name: Install git-wt
-  # noqa: command-instead-of-shell PATHを反映するためにログインシェルで実行する必要がある
-  ansible.builtin.shell: /bin/bash -lc "go install github.com/k1LoW/git-wt@latest"
-  when: status_git_wt.rc != 0
-
-- name: Set shell info for git-wt
-  ansible.builtin.set_fact:
-    shell_info: "{{ ansible_facts.user_shell | shell_config }}"
-
-- name: Setup git-wt hook function
-  ansible.builtin.blockinfile:
-    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK git-wt"
-    block: |
-      # git-wt が生成する git() 関数を __git_wt_hook() として取り込む
-      eval "$(git-wt --init {{ shell_info.name }} | sed 's/^git()/__git_wt_hook()/' | sed '/^    else$/,/^        command git/d')"
-      eval "$(git-wt --init {{ shell_info.name }} --nocd)"

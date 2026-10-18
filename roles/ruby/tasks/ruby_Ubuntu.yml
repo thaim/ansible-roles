@@ -7,6 +7,8 @@
 
 - name: ruby | be sure ruby is installed
   command: "{{ ansible_facts.env.HOME }}/.rbenv/bin/rbenv install {{ RUBY_VERSION }}"
+  environment:
+    RUBY_CONFIGURE_OPTS: "{{ RUBY_CONFIGURE_OPTS }}"
   when: ( ruby_installed_version.stdout == 'system' ) or
         ( ruby_installed_version.stdout is version(RUBY_VERSION, '<') )
 

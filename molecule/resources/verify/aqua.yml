@@ -3,6 +3,17 @@
   ansible.builtin.command: aqua --version
   changed_when: false
 
+# aqua の PATH と git-wt の hook は rc ファイルで設定されるため、対話シェルで実行する
+- name: Check tools installed with aqua
+  # noqa: command-instead-of-shell
+  ansible.builtin.shell: /bin/bash -ic '{{ item }}'
+  changed_when: false
+  loop:
+    - ghq --version
+    - git-wt --version
+    - staticcheck -version
+    - type __git_wt_hook
+
 - name: Check aqua and tool config files
   ansible.builtin.stat:
     path: "{{ ansible_facts.user_dir }}/{{ item }}"

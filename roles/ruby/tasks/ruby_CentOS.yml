@@ -7,6 +7,8 @@
 
 - name: ruby | be sure ruby is installed
   command: rbenv install {{ RUBY_VERSION }}
+  environment:
+    RUBY_CONFIGURE_OPTS: "{{ RUBY_CONFIGURE_OPTS }}"
 
 - name: ruby | update rbenv
   command: rbenv rehash
