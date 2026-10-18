@@ -1,0 +1,21 @@
+---
+- name: Check aqua command
+  ansible.builtin.command: aqua --version
+  changed_when: false
+
+- name: Check aqua and tool config files
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/{{ item }}"
+  register: verify_aqua_files
+  loop:
+    - .config/aquaproj-aqua/aqua.yaml
+    - .config/yamlfmt/.yamlfmt
+
+- name: Assert aqua and tool config files exist
+  ansible.builtin.assert:
+    that: item.stat.exists
+    fail_msg: "{{ item.item }} does not exist"
+    quiet: true
+  loop: "{{ verify_aqua_files.results }}"
+  loop_control:
+    label: "{{ item.item }}"

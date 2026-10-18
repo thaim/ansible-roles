@@ -1,0 +1,12 @@
+---
+- name: Check keychain command
+  ansible.builtin.command: keychain --version
+  changed_when: false
+
+- name: Check ssh client config
+  ansible.builtin.command: grep -qx '    AddKeysToAgent yes' {{ ansible_facts.user_dir }}/.ssh/config
+  changed_when: false
+
+- name: Check root login is denied
+  ansible.builtin.command: grep -qx 'PermitRootLogin no' /etc/ssh/sshd_config
+  changed_when: false

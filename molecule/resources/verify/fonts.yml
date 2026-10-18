@@ -1,0 +1,12 @@
+---
+- name: Find HackGen font files
+  ansible.builtin.find:
+    paths: "{{ ansible_facts.user_dir }}/.fonts"
+    patterns: "HackGen*.ttf"
+  register: verify_hackgen_fonts
+
+- name: Assert HackGen fonts are installed
+  ansible.builtin.assert:
+    that: verify_hackgen_fonts.matched > 0
+    fail_msg: "HackGen fonts are not found in ~/.fonts"
+    quiet: true

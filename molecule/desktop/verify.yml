@@ -1,0 +1,16 @@
+---
+# 各 role の検証は molecule/resources/verify/<role>.yml に置き、role 単体テストと共有する
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Verify each role
+      ansible.builtin.include_tasks: ../resources/verify/{{ verify_role }}.yml
+      loop:
+        - git
+        - shell
+        - ssh
+        - fonts
+        - aqua
+        - golang
+      loop_control:
+        loop_var: verify_role

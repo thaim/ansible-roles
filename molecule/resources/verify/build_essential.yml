@@ -1,0 +1,8 @@
+---
+- name: Check build tools
+  ansible.builtin.command: "{{ item }} --version"
+  changed_when: false
+  loop:
+    - gcc
+    - make
+    - jq

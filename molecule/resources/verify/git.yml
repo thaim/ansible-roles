@@ -1,0 +1,26 @@
+---
+- name: Check git command
+  ansible.builtin.command: git --version
+  changed_when: false
+
+- name: Check git-switch-default subcommand
+  ansible.builtin.command: which git-switch-default
+  changed_when: false
+
+- name: Check git config files
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/{{ item }}"
+  register: verify_git_files
+  loop:
+    - .gitconfig
+    - .config/git/ignore
+    - .config/git/hooks/pre-commit
+
+- name: Assert git config files exist
+  ansible.builtin.assert:
+    that: item.stat.exists
+    fail_msg: "{{ item.item }} does not exist"
+    quiet: true
+  loop: "{{ verify_git_files.results }}"
+  loop_control:
+    label: "{{ item.item }}"

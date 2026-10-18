@@ -1,0 +1,9 @@
+---
+# molecule/resources/verify/<role>.yml で role ごとの成果物を検証する
+- name: Verify
+  hosts: all
+  vars:
+    verify_target_role: "{{ lookup('ansible.builtin.env', 'MOLECULE_TARGET_ROLE') }}"
+  tasks:
+    - name: Verify the role under test
+      ansible.builtin.include_tasks: ../resources/verify/{{ verify_target_role }}.yml
