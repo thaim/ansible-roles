@@ -17,6 +17,7 @@ rbenvを用いてrubyをインストールする．
 Variables
 ---------------
 RUBY_VERSION: インストールするRubyのバージョン
+RUBY_CONFIGURE_OPTS: ruby-build に渡す configure オプション (既定は `--disable-install-doc` でドキュメントを生成しない)
 
 Support OS
 ---------------
