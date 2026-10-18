@@ -3,5 +3,5 @@
 # 'package' or 'extra'
 GIT_INSTALLER: 'package'
 
-# git-wt integration (requires golang role)
+# git-wt integration (requires aqua role)
 GIT_WT_ENABLED: true

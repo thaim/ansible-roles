@@ -40,5 +40,15 @@
   register: aqua_install_package
   changed_when: aqua_install_package.stdout != ''
 
+# aqua の PATH 設定より後に書く必要があるため、git role ではなくここで設定する
+- name: Setup git-wt hook function
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_facts.user_dir }}/{{ shell_info.rc_file }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK git-wt"
+    block: |
+      # git-wt が生成する git() 関数を __git_wt_hook() として取り込む
+      eval "$(git-wt --init {{ shell_info.name }} | sed 's/^git()/__git_wt_hook()/' | sed '/^    else$/,/^        command git/d')"
+      eval "$(git-wt --init {{ shell_info.name }} --nocd)"
+
 - name: Setup global config for each tools
   ansible.builtin.include_tasks: configure.yml
