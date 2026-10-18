@@ -1,8 +1,13 @@
 ## 概要
 
 
-## E2E
-`playbook-*.yml` / `roles/**` / `filter_plugins/**` / `molecule/**` / 依存ファイル (`pyproject.toml` / `poetry.lock` / `requirements.yml`) を変更した PR は、merge 前に E2E を実行する。
-PR に `/e2e` とコメントすると PR ブランチで Molecule E2E が実行され、結果が PR にコメントされる。push 後の再実行も同じ `/e2e` で行う。
+<details>
+<summary>PR コマンド</summary>
 
-- [ ] E2E が不要な変更である、または最新の commit で `/e2e` が成功した
+PR にコメントして実行する。
+
+| コマンド | 内容 |
+|---|---|
+| `/e2e` | PR ブランチで Molecule E2E を実行し、結果を PR にコメントする。再実行も同じコマンドで行う。`playbook-*.yml` / `roles/**` / `filter_plugins/**` / `molecule/**` / 依存ファイルを変更した PR は merge 前に実行する |
+
+</details>
