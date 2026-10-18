@@ -5,6 +5,11 @@
   ],
   "packageRules": [
     {
+      "description": "E2E の対象 (依存ファイル・role) を更新する PR に、/e2e で E2E を実行できることを記載する (.github/pull_request_template.md は Renovate の PR に適用されないため)",
+      "matchFileNames": ["pyproject.toml", "requirements.yml", "roles/**"],
+      "prFooter": "E2E is not run automatically on this PR. Comment `/e2e` to run (or re-run) Molecule E2E on this branch before merging if the update may affect playbooks."
+    },
+    {
       "matchFileNames": ["roles/aqua/files/aqua.yaml"],
       "groupName": "aqua packages"
     },
