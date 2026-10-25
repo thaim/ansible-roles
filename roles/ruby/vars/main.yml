@@ -2,6 +2,9 @@
 
 RUBY_VERSION: 3.3.0
 
+# ruby-build (rbenv install) に渡す configure オプション
+# ri / rdoc ドキュメントの生成に時間がかかるため、既定では生成しない
+RUBY_CONFIGURE_OPTS: '--disable-install-doc'
 
 # rbenvのPATHセットアップを行うシェル設定ファイル
 # bashでは~/.bash_profile (Ubuntu Desktopのみ ~/.bashrc)など。

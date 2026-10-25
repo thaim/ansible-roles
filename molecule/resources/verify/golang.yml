@@ -11,5 +11,3 @@
   changed_when: false
   loop:
     - gopls
-    - ghq
-    - git-wt

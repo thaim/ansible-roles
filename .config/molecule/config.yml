@@ -28,6 +28,8 @@ provisioner:
   env:
     ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/roles
     ANSIBLE_FILTER_PLUGINS: ${MOLECULE_PROJECT_DIRECTORY}/filter_plugins
+    # 所要時間の内訳を確認できるよう、task / role ごとの実行時間を出力する
+    ANSIBLE_CALLBACKS_ENABLED: ansible.posix.profile_tasks,ansible.posix.profile_roles
 
 scenario:
   # changed_when: true のタスクがあり冪等にならないため、idempotence は実行しない

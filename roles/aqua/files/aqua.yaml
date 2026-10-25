@@ -7,6 +7,8 @@ packages:
   - name: rhysd/actionlint@v1.7.12
   - name: simonwhitaker/gibo@v3.0.22
   - name: x-motemen/ghq@v1.11.2
+  - name: k1LoW/git-wt@v0.30.0
+  - name: dominikh/go-tools/staticcheck@2026.2.2
   - name: gohugoio/hugo@v0.167.0
   - name: kubernetes/kubectl@v1.37.1
   - name: ahmetb/kubectx@v0.11.0
