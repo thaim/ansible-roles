@@ -16,4 +16,4 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
-    uses: thaim/actions/.github/workflows/reusable-gha-security.yml@4291f7f54c1f7b0ebd7e7dc6e86dae3e3163b537 # v3.0.0
+    uses: thaim/actions/.github/workflows/reusable-gha-security.yml@cdcff030309dd82f6ad71e8ca8bd2e98988792a3 # v3.1.0
