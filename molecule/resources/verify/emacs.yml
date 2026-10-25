@@ -1,0 +1,19 @@
+---
+- name: Check emacs and vterm build tools
+  ansible.builtin.command: "{{ item }} --version"
+  changed_when: false
+  loop:
+    - emacs
+    - cmake
+    - libtool
+
+- name: Check dot.emacs.d
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/.emacs.d/init.el"
+  register: verify_emacs_init
+
+- name: Assert dot.emacs.d is cloned
+  ansible.builtin.assert:
+    that: verify_emacs_init.stat.exists
+    fail_msg: "{{ ansible_facts.user_dir }}/.emacs.d/init.el does not exist"
+    quiet: true

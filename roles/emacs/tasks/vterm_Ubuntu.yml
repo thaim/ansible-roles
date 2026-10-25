@@ -1,0 +1,8 @@
+---
+
+- name: Install vterm build tools
+  become: yes
+  ansible.builtin.apt:
+    name:
+      - cmake
+      - libtool-bin

@@ -1,0 +1,5 @@
+---
+
+- name: Install emacs with homebrew
+  community.general.homebrew_cask:
+    name: emacs

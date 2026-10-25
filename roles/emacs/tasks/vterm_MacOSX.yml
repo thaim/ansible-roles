@@ -1,0 +1,7 @@
+---
+
+- name: Install vterm build tools with homebrew
+  community.general.homebrew:
+    name:
+      - cmake
+      - libtool

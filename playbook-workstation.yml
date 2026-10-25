@@ -19,6 +19,7 @@
     - { role: fonts, tags: fonts }
     - { role: aqua, tags: aqua }
     - { role: golang, tags: golang }
+    - { role: emacs, tags: emacs }
 
 - name: "Setup desktop environment"
   hosts: desktop

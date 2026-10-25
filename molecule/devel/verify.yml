@@ -13,5 +13,6 @@
         - fonts
         - aqua
         - golang
+        - emacs
       loop_control:
         loop_var: verify_role

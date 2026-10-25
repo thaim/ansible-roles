@@ -1,0 +1,10 @@
+---
+
+# git は dot.emacs.d の clone に使う (role 単体で実行する場合に備えて合わせて入れる)
+- name: Be sure emacs is installed
+  become: yes
+  ansible.builtin.apt:
+    name:
+      - emacs
+      - git
+    update_cache: yes

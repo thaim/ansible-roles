@@ -2,6 +2,7 @@
 # 各 role の検証は molecule/resources/verify/<role>.yml に置く
 aqua
 build_essential
+emacs
 fonts
 git
 golang

@@ -1,15 +1,27 @@
 ---
 
-- name: emacs | be sure emacs is installed
-  become: yes
-  apt: name=emacs24
-       state=latest
+- name: Check if emacs installed
+  ansible.builtin.command: which emacs
+  register: status_emacs
+  changed_when: false
+  failed_when: false
 
-- name: emacs | check if dot.emacs.d exist
-  stat: path={{ ansible_facts.env.HOME }}/.emacs.d/.git
-  register: result
+- name: Install emacs
+  ansible.builtin.include_tasks: install_{{ ansible_facts.distribution }}.yml
+  when: status_emacs.rc != 0
 
-- name: emacs | be sure my dot emacs is copied from github
-  git: repo=https://github.com/thaim/dot.emacs.d
-       dest={{ ansible_facts.env.HOME }}/.emacs.d
-  when: not result.stat.exists
+# vterm のネイティブモジュール (vterm-module) を初回ロード時にビルドするために必要
+- name: Install vterm build dependencies
+  ansible.builtin.include_tasks: vterm_{{ ansible_facts.distribution }}.yml
+
+- name: Check if dot.emacs.d exists
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.user_dir }}/.emacs.d/.git"
+  register: status_dot_emacs
+
+- name: Clone dot.emacs.d
+  ansible.builtin.git:
+    repo: https://github.com/thaim/dot.emacs.d
+    dest: "{{ ansible_facts.user_dir }}/.emacs.d"
+    version: master
+  when: not status_dot_emacs.stat.exists
