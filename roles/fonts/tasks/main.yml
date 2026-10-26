@@ -6,9 +6,15 @@
     state: directory
     mode: "0775"
 
+- name: Check if Ricty installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts.env.HOME }}/.fonts/Ricty-Regular.ttf"
+  register: ricty_font
+  when: FONT_INSTALL_RICTY|bool
+
 - name: Install Ricty
   ansible.builtin.include_tasks: ricty.yml
-  when: FONT_INSTALL_RICTY|bool
+  when: FONT_INSTALL_RICTY|bool and not ricty_font.stat.exists
 
 - name: Install Symbola
   ansible.builtin.include_tasks: symbola.yml

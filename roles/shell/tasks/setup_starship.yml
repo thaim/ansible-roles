@@ -9,7 +9,8 @@
 - name: Install starship
   become: yes
   ansible.builtin.command: /tmp/install_starship.sh --yes
-  changed_when: true
+  args:
+    creates: /usr/local/bin/starship
 
 - name: Set shell info
   ansible.builtin.set_fact:

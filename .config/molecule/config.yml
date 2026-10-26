@@ -32,12 +32,12 @@ provisioner:
     ANSIBLE_CALLBACKS_ENABLED: ansible.posix.profile_tasks,ansible.posix.profile_roles
 
 scenario:
-  # changed_when: true のタスクがあり冪等にならないため、idempotence は実行しない
   test_sequence:
     - destroy
     - syntax
     - create
     - prepare
     - converge
+    - idempotence
     - verify
     - destroy

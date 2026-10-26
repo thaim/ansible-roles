@@ -12,3 +12,5 @@
     dest: ~/.fonts/
     remote_src: yes
     extra_opts: "-j"
+    # -j でディレクトリを除いて展開するため、unarchive の展開済み判定が効かない
+    creates: "{{ ansible_facts.env.HOME }}/.fonts/HackGen-Regular.ttf"
