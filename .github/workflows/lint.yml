@@ -27,16 +27,7 @@ jobs:
           python-version-file: ".python-version"
           cache: poetry
 
-      # poetry.lock の ansible-core / ansible-lint で lint する。action に任せると action が ansible-core を固定せず最新版を入れ、ansible-lint と非互換になるため
-      # setup-python の cache: poetry が作る仮想環境を PATH に追加し、action 内の pip3 / ansible-lint がこの環境を参照するようにする
-      - name: install dependencies from poetry.lock
-        id: deps
-        run: |
-          poetry sync --no-root
-          echo "$(poetry env info --path)/bin" >> "$GITHUB_PATH"
-          # echo "...$(cmd)" の形では cmd の失敗で step を落とせないため、変数に代入してから出力する
-          version=$(poetry run python -c 'from importlib.metadata import version; print(version("ansible-lint"))')
-          echo "ansiblelint_version=${version}" >> "$GITHUB_OUTPUT"
+      - run: poetry sync --no-root
 
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -45,11 +36,21 @@ jobs:
 
       - run: poetry run ansible-galaxy collection install -r requirements.yml
 
-      # action 内の pip install が何もしないよう、インストール済みと同じバージョンを渡す
-      - name: run ansible-lint on reviewdog
-        uses: reviewdog/action-ansiblelint@57a0721547b93e9925bd05bf20ea17810bb3cff7 # v1.20.0
+      - uses: reviewdog/action-setup@d8a7baabd7f3e8544ee4dbde3ee41d0011c3a93f # v1.5.0
         with:
-          github_token: ${{ secrets.github_token }}
-          ansiblelint_version: ${{ steps.deps.outputs.ansiblelint_version }}
-          fail_level: error
-          filter_mode: nofilter
+          reviewdog_version: v0.21.2
+
+      # reviewdog/action-ansiblelint は deprecated な `ansible-lint -p` を固定で使い、pipefail もないため直接実行する
+      # pipefail で ansible-lint 自体の異常終了 (引数エラー等) でも step を失敗させる
+      - name: run ansible-lint on reviewdog
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.github_token }}
+        run: |
+          set -o pipefail
+          poetry run ansible-lint --format=pep8 \
+            | reviewdog -efm="%f:%l: %m" \
+                -name="ansible-lint" \
+                -reporter=github-pr-check \
+                -level=error \
+                -filter-mode=nofilter \
+                -fail-level=error
