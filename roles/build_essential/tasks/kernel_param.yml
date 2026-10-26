@@ -6,3 +6,5 @@
     name: fs.inotify.max_user_watches
     value: '524288'
     reload: yes
+  # コンテナでは /proc/sys が read-only で値を反映できず、毎回 changed になる
+  tags: molecule-idempotence-notest
