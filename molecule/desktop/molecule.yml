@@ -11,6 +11,8 @@ platforms:
     groups:
       - desktop
 provisioner:
-  options:
+  env:
     # コンテナでは動かせない role (NFS マウント / systemd / GUI アプリ) を除外する
-    skip-tags: homenas_client,fluentd,dropbox
+    # options.skip-tags で指定すると molecule が付与する skip-tags (molecule-idempotence-notest など) を上書きしてしまうため、
+    # CLI の --skip-tags に追加される環境変数で指定する
+    ANSIBLE_SKIP_TAGS: homenas_client,fluentd,dropbox
