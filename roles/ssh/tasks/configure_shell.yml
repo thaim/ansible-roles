@@ -14,7 +14,8 @@
       fi
       eval $(keychain --eval --agents ssh --inherit any id_rsa id_ed25519)
     create: yes
-    mode: '0644'
+    # 既存の rc ファイルのパーミッションは変えない (他のインストーラが変更すると冪等にならないため)
+    mode: u+rw
   when: ansible_facts.os_family == 'Debian'
 
 - name: Setup SSH agent for keychain (macOS)
@@ -23,5 +24,5 @@
     regexp: "^ssh-add --apple-use-keychain"
     line: "ssh-add --apple-use-keychain ~/.ssh/id_rsa ~/.ssh/id_ed25519 2>/dev/null || true"
     create: yes
-    mode: '0644'
+    mode: u+rw
   when: ansible_facts.os_family == 'Darwin'
