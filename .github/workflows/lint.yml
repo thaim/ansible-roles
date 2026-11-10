@@ -47,7 +47,7 @@ jobs:
 
       # action 内の pip install が何もしないよう、インストール済みと同じバージョンを渡す
       - name: run ansible-lint on reviewdog
-        uses: reviewdog/action-ansiblelint@57a0721547b93e9925bd05bf20ea17810bb3cff7 # v1.20.0
+        uses: reviewdog/action-ansiblelint@931601fec9976c70b82ee83fd815df9f4d97c179 # v1.21.0
         with:
           github_token: ${{ secrets.github_token }}
           ansiblelint_version: ${{ steps.deps.outputs.ansiblelint_version }}
